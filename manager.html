@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A4FA0">
+<title>SalesData Manager</title>
+<link rel="icon" href="icon.png">
+<style>
+  :root{
+    --brand:#1A4FA0; --brand-dark:#0F2F63; --gold:#F5C84C;
+    --bg:#F2F3F5; --surface:#FFFFFF; --surface-2:#F0EFEC; --line:#E2E1DC;
+    --ink:#0B0B0B; --ink-2:#52514E; --muted:#7A7975;
+    --good:#1E9E4A; --warn:#B86E00; --bad:#C62828; --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:where(:not([data-theme="light"])){
+      --bg:#111; --surface:#1A1A19; --surface-2:#262624; --line:#33332F; --ink:#F0EFEC; --ink-2:#C3C2B7; --muted:#9A998F;
+      --good:#3CB371; --warn:#F0A030; --bad:#EF6B6B;
+    }
+  }
+  :root[data-theme="dark"]{ --bg:#111; --surface:#1A1A19; --surface-2:#262624; --line:#33332F; --ink:#F0EFEC; --ink-2:#C3C2B7; --muted:#9A998F; --good:#3CB371; --warn:#F0A030; --bad:#EF6B6B; }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.4;font-variant-numeric:tabular-nums}
+  button,select,input,textarea{font:inherit;color:inherit}
+  .hidden{display:none!important}
+  header{background:var(--brand);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
+  .hdr{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px}
+  .hdr img{height:44px;background:#fff;border-radius:10px;padding:2px 4px}
+  .hdr .ttl{flex:1;min-width:0} .hdr .ttl b{display:block;font-size:17px} .hdr .ttl span{font-size:12.5px;opacity:.85}
+  .chip{border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:999px;padding:6px 11px;font-size:13px;font-weight:600;cursor:pointer}
+  .tagline{background:var(--brand-dark);color:var(--gold);text-align:center;font-size:12.5px;font-weight:700;padding:6px 10px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px 40px}
+  .tabs{display:flex;gap:4px;margin-top:14px;border-bottom:1px solid var(--line);overflow-x:auto}
+  .tabs button{border:0;background:transparent;padding:10px 14px;font-weight:700;color:var(--muted);border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+  .tabs button.on{color:var(--brand);border-bottom-color:var(--brand)}
+  .cnt{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:var(--warn);color:#fff;font-size:12px;margin-left:4px}
+  .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+  .bar select,.bar input{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-height:38px}
+  .upd{font-size:12.5px;color:var(--muted);margin-left:auto}
+  .btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:9px 14px;min-height:38px;font-weight:700;cursor:pointer}
+  .btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+  .btn.good{background:var(--good)} .btn.bad{background:var(--bad)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-top:12px}
+  .card.large{border-left:5px solid var(--warn)}
+  .rq-h{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+  .rq-id{font-weight:800}
+  .pill{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;border:1px solid var(--line);margin-right:4px}
+  .pill.warn{background:#FFF1DB;color:#8A4B00;border-color:#F3C98A}
+  .pill.good{background:#E3F4E8;color:#1B5E20;border-color:#B5DDC0}
+  .pill.bad{background:#FCE4E4;color:#8F1C1C;border-color:#F0B9B9}
+  .pill.info{background:#E3EDFB;color:#123A78;border-color:#B9CFF0}
+  .pill.mute{background:var(--surface-2);color:var(--ink-2)}
+  .change{font-size:26px;font-weight:900;margin:10px 0 4px}
+  .change .arrow{color:var(--muted);margin:0 8px}
+  .change s{color:var(--muted)}
+  .kv{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;font-size:14px;margin-top:8px}
+  .kv span:nth-child(odd){color:var(--muted)}
+  .note{background:var(--surface-2);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:14px}
+  textarea{width:100%;min-height:60px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface);margin-top:10px}
+  .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .own{color:var(--warn);font-weight:700;font-size:13.5px;margin-top:8px}
+  .ctx{margin-top:10px;font-size:13.5px}
+  .ctx table{width:100%;border-collapse:collapse}
+  .ctx td{padding:5px 6px;border-bottom:1px solid var(--line)}
+  .ctx tr.me td{background:#FFF7E3;font-weight:700}
+  table.t{width:100%;border-collapse:collapse;font-size:14px}
+  table.t th{text-align:left;font-size:12px;color:var(--ink-2);font-weight:600;padding:8px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surface);position:sticky;top:0}
+  table.t td{padding:8px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top}
+  table.t td.num,table.t th.num{text-align:right}
+  tr.void td{color:var(--muted)} tr.void td b{text-decoration:line-through}
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:auto;max-height:70vh}
+  .empty{color:var(--muted);text-align:center;padding:28px 0}
+  a{color:var(--brand)}
+  .login{max-width:380px;margin:40px auto;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+  .login h1{font-size:20px;margin:0 0 4px}
+  .login label{display:block;font-weight:700;margin:14px 0 6px;font-size:14px}
+  .login input{width:100%;font-size:18px;padding:12px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+  .login .btn{width:100%;margin-top:16px;padding:14px;font-size:17px}
+  .err{color:var(--bad);font-weight:600;font-size:14px;margin-top:8px;min-height:1em}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:30;padding:16px}
+  .modal .in{background:var(--surface);border-radius:16px;padding:20px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
+  .modal h2{margin:0 0 4px;font-size:19px}
+  .opt{display:flex;gap:10px;align-items:center;border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;font-weight:700;cursor:pointer}
+  .opt.on{border-color:var(--brand)}
+  .modal input[type=text]{width:100%;font-size:22px;font-weight:800;text-align:center;padding:10px;border:2px solid var(--line);border-radius:12px;background:var(--surface);margin-top:8px}
+  .hist{font-size:13px;margin-top:10px}
+  .hist div{padding:4px 0;border-bottom:1px dashed var(--line)}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1F1F1F;color:#fff;border-radius:12px;padding:10px 16px;font-weight:700;z-index:40;display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr">
+    <img src="logo.png" alt="Super Horse" onerror="this.remove()">
+    <div class="ttl"><b>SalesData · <span data-i="title" style="font-size:inherit;opacity:1"></span></b><span id="who"></span></div>
+    <button class="chip" id="langBtn">EN</button>
+    <button class="chip hidden" id="logoutBtn" data-i="logout"></button>
+  </div>
+</header>
+<div class="tagline" data-i="tagline"></div>
+
+<div class="wrap">
+  <div class="login hidden" id="vLogin">
+    <h1 data-i="loginTitle"></h1>
+    <p style="margin:0;font-size:13.5px;color:var(--muted)" data-i="loginSub"></p>
+    <label for="uName" data-i="username"></label>
+    <input id="uName" autocomplete="username" autocapitalize="none" spellcheck="false">
+    <label for="uPin" data-i="pin"></label>
+    <input id="uPin" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" style="letter-spacing:10px;text-align:center;font-weight:800">
+    <div class="err" id="loginErr"></div>
+    <button class="btn" id="loginBtn" data-i="loginBtn"></button>
+  </div>
+
+  <div id="vApp" class="hidden">
+    <div class="tabs">
+      <button data-tab="queue" class="on"><span data-i="tQueue"></span><span class="cnt hidden" id="qCnt"></span></button>
+      <button data-tab="search" data-i="tSearch"></button>
+      <button data-tab="history" data-i="tHistory"></button>
+    </div>
+
+    <section id="pQueue">
+      <div class="bar"><button class="btn ghost" id="qRefresh" data-i="refresh"></button><span class="upd" id="qUpd"></span></div>
+      <div id="queue"></div>
+    </section>
+
+    <section id="pSearch" class="hidden">
+      <div class="bar">
+        <input type="date" id="sFrom" aria-label="From"><input type="date" id="sTo" aria-label="To">
+        <select id="sEmp" aria-label="Employee"></select>
+        <select id="sStatus" aria-label="Status">
+          <option value="" data-i="fAll"></option><option value="am" data-i="fAm"></option>
+          <option value="v" data-i="fVoid"></option><option value="pend" data-i="fPend"></option>
+        </select>
+        <button class="btn" id="sGo" data-i="search"></button>
+        <span class="upd" id="sUpd"></span>
+      </div>
+      <div class="box" id="results"></div>
+    </section>
+
+    <section id="pHistory" class="hidden">
+      <div class="bar">
+        <select id="hStatus" aria-label="Status">
+          <option value="" data-i="fAllDecided"></option><option value="Approved" data-i="sApproved"></option>
+          <option value="Rejected" data-i="sRejected"></option><option value="Cancelled" data-i="sCancelled"></option>
+        </select>
+        <span class="upd" data-i="last60"></span>
+      </div>
+      <div class="box" id="history"></div>
+    </section>
+  </div>
+</div>
+
+<!-- direct fix -->
+<div class="modal" id="fixModal">
+  <div class="in">
+    <h2 data-i="fixTitle"></h2>
+    <p style="margin:0;color:var(--muted);font-size:14px" id="fixEntry"></p>
+    <label class="opt" data-k="amend"><input type="radio" name="fk" value="amend"><span data-i="fixAmend"></span></label>
+    <div id="fixQtyWrap" class="hidden"><input type="text" id="fixQty" inputmode="numeric" maxlength="4" placeholder="0"></div>
+    <label class="opt" data-k="void"><input type="radio" name="fk" value="void"><span data-i="fixVoid"></span></label>
+    <textarea id="fixNote" maxlength="500" data-ph="fixNotePh"></textarea>
+    <p style="font-size:13px;color:var(--muted)" data-i="fixHow"></p>
+    <div class="hist" id="fixHist"></div>
+    <div class="err" id="fixErr"></div>
+    <div class="acts"><button class="btn" id="fixSend" data-i="fixSend" disabled></button><button class="btn ghost" id="fixClose" data-i="close"></button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================== CONFIG ================== */
+const API_URL = 'https://script.google.com/macros/s/AKfycbwx9JWqWJlHNZlQ2IWpJFFvySi3-HYgj1av-EY830c0ryAxt7UlTzAwJwNkxhgjPYYx/exec';
+const VN = 7 * 3600e3, MAX_BOXES = 2400;
+/* ============================================ */
+const T = {
+  vi:{
+    title:'Quản lý dữ liệu', logout:'Thoát', tagline:'Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển',
+    loginTitle:'Đăng nhập quản lý dữ liệu', loginSub:'Dùng tên đăng nhập và mã PIN SalesData. Chỉ dành cho quản lý dữ liệu và admin.',
+    username:'Tên đăng nhập', pin:'Mã PIN', loginBtn:'Đăng nhập',
+    errLogin:'Sai tên đăng nhập hoặc mã PIN.', errLocked:'Nhập sai quá nhiều lần. Thử lại sau 15 phút.',
+    errForbidden:'Tài khoản này không có quyền quản lý dữ liệu (cần Role = manager).', errNet:'Không kết nối được máy chủ.', errFill:'Nhập tên đăng nhập và mã PIN 4 số.',
+    tQueue:'Chờ duyệt', tSearch:'Tra cứu & sửa', tHistory:'Lịch sử', refresh:'Làm mới', updated:'Cập nhật {t}', search:'Tìm',
+    fAll:'Tất cả trạng thái', fAm:'Đã sửa', fVoid:'Đã hủy', fPend:'Đang chờ duyệt', fAllDecided:'Tất cả đã xử lý',
+    sPending:'Chờ duyệt', sApproved:'Đã duyệt', sRejected:'Từ chối', sCancelled:'Đã hủy yêu cầu', last60:'60 ngày gần nhất',
+    noQueue:'Không có yêu cầu nào đang chờ. 👍', large:'Thay đổi lớn', srcEmp:'Nhân viên báo lỗi', srcMgr:'Quản lý sửa trực tiếp',
+    voidEntry:'Hủy mục', boxes:'thùng', employee:'Nhân viên', entryTime:'Thời gian giao', location:'Vị trí', gps:'GPS',
+    reqBy:'Người yêu cầu', reqAt:'Lúc', reason:'Lý do', openMap:'Mở bản đồ ↗', sentLater:'gửi sau (ngoại tuyến)',
+    rs_wrong_qty:'Sai số thùng', rs_duplicate:'Bị trùng', rs_not_mine:'Không phải của tôi', rs_other:'Khác',
+    approve:'Duyệt', reject:'Từ chối', notePh:'Ghi chú (bắt buộc khi từ chối)', ownReq:'Bạn tạo yêu cầu này — cần một quản lý khác hoặc admin duyệt.',
+    sameDay:'Xem các lượt cùng ngày của nhân viên này', ctxNone:'Không có lượt nào khác trong ngày.',
+    needNote:'Cần ghi lý do khi từ chối.', doneApprove:'Đã duyệt', doneReject:'Đã từ chối', doneFix:'Đã tạo yêu cầu sửa — chờ người khác duyệt',
+    cTime:'Thời gian', cEmp:'Nhân viên', cBoxes:'Thùng', cStatus:'Trạng thái', cMap:'Bản đồ', cReq:'Yêu cầu', cChange:'Thay đổi', cBy:'Người yêu cầu', cRev:'Người duyệt', cNote:'Ghi chú',
+    fix:'Sửa', none:'Không có dữ liệu.', allStaff:'Tất cả nhân viên', amended:'đã sửa', voided:'đã hủy', pendingS:'chờ duyệt', orig:'gốc',
+    fixTitle:'Sửa trực tiếp', fixAmend:'Sửa số thùng', fixVoid:'Hủy mục này (trùng / sai)', fixNotePh:'Lý do (bắt buộc) — ví dụ: đã gọi điện xác nhận với nhân viên',
+    fixHow:'Dữ liệu gốc không bị thay đổi. Yêu cầu này cần một quản lý khác hoặc admin duyệt.', fixSend:'Tạo yêu cầu', close:'Đóng', history:'Lịch sử của mục này',
+    err_pending_exists:'Mục này đã có yêu cầu đang chờ.', err_already_void:'Mục này đã bị hủy.', err_no_change:'Số thùng không thay đổi.',
+    err_own_request:'Không thể tự duyệt yêu cầu của mình.', err_not_pending:'Yêu cầu đã được xử lý.', err_note_required:'Cần ghi lý do.', err_boxes:'Số thùng 1–2.400.',
+  },
+  en:{
+    title:'Data manager', logout:'Log out', tagline:'Accurate data → Better decisions → Growing together',
+    loginTitle:'Data manager login', loginSub:'Use your SalesData username and PIN. Data managers and admin only.',
+    username:'Username', pin:'PIN', loginBtn:'Log in',
+    errLogin:'Wrong username or PIN.', errLocked:'Too many attempts. Try again in 15 minutes.',
+    errForbidden:'This account is not a data manager (needs Role = manager).', errNet:'Cannot reach the server.', errFill:'Enter username and 4-digit PIN.',
+    tQueue:'Pending', tSearch:'Search & fix', tHistory:'History', refresh:'Refresh', updated:'Updated {t}', search:'Search',
+    fAll:'All statuses', fAm:'Amended', fVoid:'Voided', fPend:'Pending review', fAllDecided:'All decided',
+    sPending:'Pending', sApproved:'Approved', sRejected:'Rejected', sCancelled:'Cancelled', last60:'Last 60 days',
+    noQueue:'No requests waiting. 👍', large:'Large change', srcEmp:'Reported by employee', srcMgr:'Direct fix by manager',
+    voidEntry:'Void entry', boxes:'boxes', employee:'Employee', entryTime:'Drop-off time', location:'Location', gps:'GPS',
+    reqBy:'Requested by', reqAt:'At', reason:'Reason', openMap:'Open map ↗', sentLater:'sent later (offline)',
+    rs_wrong_qty:'Wrong box count', rs_duplicate:'Duplicate', rs_not_mine:'Not mine', rs_other:'Other',
+    approve:'Approve', reject:'Reject', notePh:'Note (required to reject)', ownReq:'You created this request — another manager or admin must review it.',
+    sameDay:"Show this employee's other drop-offs that day", ctxNone:'No other drop-offs that day.',
+    needNote:'A note is required to reject.', doneApprove:'Approved', doneReject:'Rejected', doneFix:'Fix request created — waiting for a second reviewer',
+    cTime:'Time', cEmp:'Employee', cBoxes:'Boxes', cStatus:'Status', cMap:'Map', cReq:'Request', cChange:'Change', cBy:'Requested by', cRev:'Reviewed by', cNote:'Note',
+    fix:'Fix', none:'No data.', allStaff:'All staff', amended:'amended', voided:'voided', pendingS:'pending', orig:'original',
+    fixTitle:'Direct fix', fixAmend:'Change box count', fixVoid:'Void this entry (duplicate / wrong)', fixNotePh:'Reason (required) — e.g. confirmed by phone with the employee',
+    fixHow:'The original is never changed. This request must be approved by another manager or admin.', fixSend:'Create request', close:'Close', history:'History of this entry',
+    err_pending_exists:'This entry already has a pending request.', err_already_void:'This entry is already voided.', err_no_change:'Box count unchanged.',
+    err_own_request:'You cannot approve your own request.', err_not_pending:'Already decided.', err_note_required:'A reason is required.', err_boxes:'Boxes must be 1–2,400.',
+  }
+};
+const S = { get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+            set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}, del(k){try{localStorage.removeItem(k)}catch(e){}} };
+const $ = id => document.getElementById(id);
+let lang = S.get('sd_mgr_lang','vi'), session = S.get('sd_mgr_session', null);
+let Q = null, R = null, fixRow = null;
+const t = (k,v) => { let s = T[lang][k] ?? T.en[k] ?? k; if (v) for (const x in v) s = s.replace('{'+x+'}', v[x]); return s; };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nf = n => Number(n).toLocaleString(lang==='vi'?'vi-VN':'en-US');
+const dkey = ts => new Date(ts + VN).toISOString().slice(0,10);
+const hm = ts => new Date(ts + VN).toISOString().slice(11,16);
+const dt = ts => { const k = dkey(ts); return k.slice(8,10)+'/'+k.slice(5,7)+'/'+k.slice(0,4)+' '+hm(ts); };
+const addDays = (k,n) => { const [y,m,d] = k.split('-').map(Number); return new Date(Date.UTC(y,m-1,d+n)).toISOString().slice(0,10); };
+const mapUrl = e => `https://maps.google.com/?q=${e.lat},${e.lng}`;
+function toast(m){ const el=$('toast'); el.textContent=m; el.style.display='block'; clearTimeout(toast.t); toast.t=setTimeout(()=>el.style.display='none',2500); }
+
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i]').forEach(el => el.textContent = t(el.dataset.i));
+  document.querySelectorAll('[data-ph]').forEach(el => el.placeholder = t(el.dataset.ph));
+  $('langBtn').textContent = lang==='vi' ? 'EN' : 'VI';
+  if (Q) renderQueue(); if (R) renderResults(); if (Q) renderHistory();
+}
+$('langBtn').onclick = () => { lang = lang==='vi'?'en':'vi'; S.set('sd_mgr_lang',lang); applyLang(); };
+
+async function api(p){ const r = await fetch(API_URL,{method:'POST',body:JSON.stringify(p)}); if(!r.ok) throw new Error('http'); return r.json(); }
+function nextMidnightVN(){ const n=Date.now(); return Math.floor((n+VN)/86400e3)*86400e3+86400e3-VN; }
+function authFail(r){ if (r && (r.error==='auth'||r.error==='forbidden')) { session=null; S.del('sd_mgr_session'); showLogin(); if (r.error==='forbidden') $('loginErr').textContent=t('errForbidden'); return true; } return false; }
+
+/* login */
+$('uPin').addEventListener('input', e => e.target.value = e.target.value.replace(/\D/g,'').slice(0,4));
+$('uPin').addEventListener('keydown', e => { if (e.key==='Enter') $('loginBtn').click(); });
+$('loginBtn').onclick = async () => {
+  const u=$('uName').value.trim().toLowerCase(), p=$('uPin').value; $('loginErr').textContent='';
+  if (!u || !/^\d{4}$/.test(p)) { $('loginErr').textContent=t('errFill'); return; }
+  $('loginBtn').disabled = true;
+  try {
+    const r = await api({action:'login',username:u,pin:p,app:'manager'});
+    if (!r.ok) $('loginErr').textContent = r.error==='locked' ? t('errLocked') : t('errLogin');
+    else if (r.role!=='manager' && r.role!=='admin') $('loginErr').textContent = t('errForbidden');
+    else { session={token:r.token,username:r.username,name:r.name,role:r.role,expires:nextMidnightVN()}; S.set('sd_mgr_session',session); S.set('sd_mgr_user',u); $('uPin').value=''; showApp(); }
+  } catch(e) { $('loginErr').textContent = t('errNet'); }
+  $('loginBtn').disabled = false;
+};
+$('logoutBtn').onclick = () => { session=null; S.del('sd_mgr_session'); showLogin(); };
+function showLogin(){ $('vLogin').classList.remove('hidden'); $('vApp').classList.add('hidden'); $('logoutBtn').classList.add('hidden'); $('who').textContent=''; }
+function showApp(){ $('vLogin').classList.add('hidden'); $('vApp').classList.remove('hidden'); $('logoutBtn').classList.remove('hidden');
+  $('who').textContent = session.name+' · @'+session.username+' · '+session.role; loadQueue(); }
+
+/* tabs */
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x===b));
+  ['queue','search','history'].forEach(k => $('p'+k[0].toUpperCase()+k.slice(1)).classList.toggle('hidden', k!==b.dataset.tab));
+  if (b.dataset.tab==='search' && !R) doSearch();
+});
+
+/* ---------- queue ---------- */
+async function loadQueue(){
+  $('qRefresh').disabled = true;
+  try { const r = await api({action:'queue',token:session.token}); if (authFail(r)) return; if (r.ok) { Q = r; renderQueue(); renderHistory(); } }
+  catch(e){ toast(t('errNet')); }
+  $('qRefresh').disabled = false;
+}
+$('qRefresh').onclick = loadQueue;
+const reasonTxt = c => t('rs_'+(c.reason||'other'));
+function changeHtml(c){
+  return c.type==='void' ? `<span class="pill bad">${esc(t('voidEntry'))}</span> <s>${nf(c.oldBoxes)}</s> ${esc(t('boxes'))}`
+       : `${nf(c.oldBoxes)}<span class="arrow">→</span>${nf(c.newBoxes)} <span style="font-size:15px;font-weight:600;color:var(--muted)">${esc(t('boxes'))}</span>`;
+}
+function renderQueue(){
+  const pend = Q.requests.filter(c => c.status==='Pending').sort((a,b) => (b.large-a.large) || (a.requestedAt-b.requestedAt));
+  $('qCnt').textContent = pend.length; $('qCnt').classList.toggle('hidden', !pend.length);
+  $('qUpd').textContent = t('updated',{t:hm(Q.generated)});
+  if (!pend.length) { $('queue').innerHTML = `<div class="card empty">${esc(t('noQueue'))}</div>`; return; }
+  $('queue').innerHTML = pend.map(c => {
+    const e = c.entry || {}, own = c.requestedBy === session.username;
+    return `<div class="card ${c.large?'large':''}" data-id="${esc(c.id)}">
+      <div class="rq-h"><span><span class="rq-id">${esc(c.id)}</span> ${c.large?`<span class="pill warn">⚠ ${esc(t('large'))}</span>`:''}
+        <span class="pill ${c.source==='manager'?'info':'mute'}">${esc(c.source==='manager'?t('srcMgr'):t('srcEmp'))}</span></span>
+        <span style="color:var(--muted);font-size:13px">${esc(t('reqAt'))} ${esc(dt(c.requestedAt))}</span></div>
+      <div class="change">${changeHtml(c)}</div>
+      <div class="kv">
+        <span>${esc(t('employee'))}</span><span><b>${esc(e.n||c.owner)}</b> @${esc(c.owner)}</span>
+        <span>${esc(t('entryTime'))}</span><span>${e.t?esc(dt(e.t)):''}${e.off?` · <i>${esc(t('sentLater'))}</i>`:''}</span>
+        <span>${esc(t('location'))}</span><span>${e.lat?`<a href="${mapUrl(e)}" target="_blank" rel="noopener">${esc(t('openMap'))}</a> · ${esc(t('gps'))} ±${e.acc} m ${esc(e.g)}`:''}</span>
+        <span>${esc(t('reason'))}</span><span>${esc(reasonTxt(c))}</span>
+        <span>${esc(t('reqBy'))}</span><span>@${esc(c.requestedBy)}</span>
+      </div>
+      ${c.note?`<div class="note">“${esc(c.note)}”</div>`:''}
+      <div class="ctx"><a href="#" data-ctx="${esc(c.id)}">${esc(t('sameDay'))}</a><div data-ctxbox="${esc(c.id)}"></div></div>
+      ${own ? `<div class="own">${esc(t('ownReq'))}</div>` : `
+      <textarea data-note="${esc(c.id)}" placeholder="${esc(t('notePh'))}"></textarea>
+      <div class="acts"><button class="btn good" data-ap="${esc(c.id)}">✓ ${esc(t('approve'))}</button><button class="btn bad" data-rj="${esc(c.id)}">✕ ${esc(t('reject'))}</button></div>`}
+      <div class="err" data-err="${esc(c.id)}"></div>
+    </div>`;
+  }).join('');
+  $('queue').querySelectorAll('[data-ap]').forEach(b => b.onclick = () => decide(b.dataset.ap, 'approve'));
+  $('queue').querySelectorAll('[data-rj]').forEach(b => b.onclick = () => decide(b.dataset.rj, 'reject'));
+  $('queue').querySelectorAll('[data-ctx]').forEach(a => a.onclick = ev => { ev.preventDefault(); showContext(a.dataset.ctx); });
+}
+async function decide(id, decision){
+  const note = (document.querySelector(`[data-note="${id}"]`)||{}).value?.trim() || '';
+  const errEl = document.querySelector(`[data-err="${id}"]`);
+  if (decision==='reject' && !note) { errEl.textContent = t('needNote'); return; }
+  document.querySelectorAll(`[data-ap="${id}"],[data-rj="${id}"]`).forEach(b => b.disabled = true);
+  try {
+    const r = await api({action:'review',token:session.token,requestId:id,decision,note});
+    if (authFail(r)) return;
+    if (r.ok) { toast(decision==='approve'?t('doneApprove'):t('doneReject')); R = null; await loadQueue(); return; }
+    errEl.textContent = t('err_'+r.error);
+  } catch(e) { errEl.textContent = t('errNet'); }
+  document.querySelectorAll(`[data-ap="${id}"],[data-rj="${id}"]`).forEach(b => b.disabled = false);
+}
+async function showContext(id){
+  const c = Q.requests.find(x => x.id===id), box = document.querySelector(`[data-ctxbox="${id}"]`);
+  if (!c || !c.entry) return;
+  const k = dkey(c.entry.t);
+  box.textContent = '…';
+  try {
+    const r = await api({action:'entries',token:session.token,from:k,to:k});
+    if (authFail(r)) return;
+    const rows = r.rows.filter(x => x.u===c.owner).sort((a,b)=>a.t-b.t);
+    box.innerHTML = rows.length<=1 ? `<p style="color:var(--muted)">${esc(t('ctxNone'))}</p>` :
+      `<table>${rows.map(x => `<tr class="${x.id===c.entryId?'me':''}"><td>${hm(x.t)}</td><td><b>${nf(x.b)}</b> ${esc(t('boxes'))}${x.v?' · '+esc(t('voided')):''}</td><td>±${x.acc} m</td><td><a href="${mapUrl(x)}" target="_blank" rel="noopener">↗</a></td></tr>`).join('')}</table>`;
+  } catch(e) { box.textContent = t('errNet'); }
+}
+
+/* ---------- search & fix ---------- */
+function initSearch(){
+  const td = dkey(Date.now()); $('sTo').value = td; $('sFrom').value = addDays(td,-6);
+}
+$('sGo').onclick = doSearch;
+$('sEmp').onchange = $('sStatus').onchange = () => R && renderResults();
+async function doSearch(){
+  if (!$('sFrom').value || !$('sTo').value) return;
+  $('sGo').disabled = true;
+  try {
+    const r = await api({action:'entries',token:session.token,from:$('sFrom').value,to:$('sTo').value});
+    if (authFail(r)) return;
+    if (r.ok) { R = r; fillEmp(); renderResults(); } else toast(t('errNet'));
+  } catch(e){ toast(t('errNet')); }
+  $('sGo').disabled = false;
+}
+function fillEmp(){
+  const cur = $('sEmp').value, m = new Map();
+  R.users.filter(u => !u.role).forEach(u => m.set(u.u, u.n)); R.rows.forEach(r => m.set(r.u, r.n));
+  $('sEmp').innerHTML = `<option value="">${esc(t('allStaff'))}</option>` + [...m].sort((a,b)=>a[1].localeCompare(b[1],'vi')).map(([u,n])=>`<option value="${esc(u)}">${esc(n)}</option>`).join('');
+  $('sEmp').value = m.has(cur) ? cur : '';
+}
+function statusPills(r){
+  let s = '';
+  if (r.v) s += `<span class="pill bad">${esc(t('voided'))}</span>`;
+  if (r.am) s += `<span class="pill info">${esc(t('amended'))}</span>`;
+  if (r.pend) s += `<span class="pill warn">${esc(t('pendingS'))}</span>`;
+  return s;
+}
+function renderResults(){
+  const e = $('sEmp').value, st = $('sStatus').value;
+  const rows = R.rows.filter(r => (!e || r.u===e) && (!st || (st==='pend' ? !!r.pend : r[st]))).sort((a,b)=>b.t-a.t);
+  $('sUpd').textContent = rows.length + ' · ' + t('updated',{t:hm(R.generated)});
+  $('results').innerHTML = rows.length ? `<table class="t"><thead><tr><th>${esc(t('cTime'))}</th><th>${esc(t('cEmp'))}</th><th class="num">${esc(t('cBoxes'))}</th><th>${esc(t('cStatus'))}</th><th>${esc(t('cMap'))}</th><th></th></tr></thead><tbody>${
+    rows.slice(0,500).map(r => `<tr class="${r.v?'void':''}"><td>${esc(dt(r.t))}</td><td>${esc(r.n)}</td>
+      <td class="num"><b>${nf(r.b)}</b>${r.am?` <span style="color:var(--muted)">(${esc(t('orig'))} ${nf(r.ob)})</span>`:''}</td>
+      <td>${statusPills(r)}</td><td><a href="${mapUrl(r)}" target="_blank" rel="noopener">↗</a></td>
+      <td>${!r.v && !r.pend ? `<button class="btn ghost" style="min-height:30px;padding:4px 10px" data-fix="${esc(r.id)}">${esc(t('fix'))}</button>` : ''}</td></tr>`).join('')}</tbody></table>`
+    : `<div class="empty">${esc(t('none'))}</div>`;
+  $('results').querySelectorAll('[data-fix]').forEach(b => b.onclick = () => openFix(R.rows.find(r => r.id===b.dataset.fix)));
+}
+function openFix(r){
+  fixRow = r; $('fixErr').textContent=''; $('fixNote').value=''; $('fixQty').value='';
+  document.querySelectorAll('input[name=fk]').forEach(i => i.checked=false);
+  document.querySelectorAll('#fixModal .opt').forEach(o => o.classList.remove('on'));
+  $('fixQtyWrap').classList.add('hidden'); $('fixSend').disabled = true;
+  $('fixEntry').textContent = `${r.n} · ${dt(r.t)} · ${nf(r.b)} ${t('boxes')}`;
+  const hist = R.corrections.filter(c => c.entryId===r.id).sort((a,b)=>a.requestedAt-b.requestedAt);
+  $('fixHist').innerHTML = hist.length ? `<b>${esc(t('history'))}</b>` + hist.map(c =>
+    `<div>${esc(dt(c.requestedAt))} · ${esc(c.id)} · ${c.type==='void'?esc(t('voidEntry')):nf(c.oldBoxes)+' → '+nf(c.newBoxes)} · <b>${esc(t('s'+c.status))}</b> ${c.reviewedBy?'· @'+esc(c.reviewedBy):''} ${c.reviewNote?'· “'+esc(c.reviewNote)+'”':''}</div>`).join('') : '';
+  $('fixModal').style.display = 'flex';
+}
+function fixValid(){
+  const k = (document.querySelector('input[name=fk]:checked')||{}).value;
+  if (!k || !$('fixNote').value.trim()) return false;
+  if (k==='amend') { const n = parseInt($('fixQty').value,10); return n>=1 && n<=MAX_BOXES && n!==fixRow.b; }
+  return true;
+}
+document.querySelectorAll('input[name=fk]').forEach(i => i.onchange = () => {
+  document.querySelectorAll('#fixModal .opt').forEach(o => o.classList.toggle('on', o.dataset.k===i.value));
+  $('fixQtyWrap').classList.toggle('hidden', i.value!=='amend'); $('fixSend').disabled = !fixValid();
+});
+$('fixQty').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g,'').replace(/^0+/,'').slice(0,4); $('fixSend').disabled = !fixValid(); });
+$('fixNote').addEventListener('input', () => $('fixSend').disabled = !fixValid());
+$('fixClose').onclick = () => $('fixModal').style.display = 'none';
+$('fixSend').onclick = async () => {
+  if (!fixValid()) return;
+  const k = document.querySelector('input[name=fk]:checked').value;
+  $('fixSend').disabled = true;
+  try {
+    const r = await api({action:'request',token:session.token,entryId:fixRow.id,type:k,newBoxes:k==='amend'?parseInt($('fixQty').value,10):'',reason:k==='amend'?'wrong_qty':'other',note:$('fixNote').value.trim()});
+    if (authFail(r)) return;
+    if (r.ok) { $('fixModal').style.display='none'; toast(t('doneFix')); await doSearch(); loadQueue(); return; }
+    $('fixErr').textContent = t('err_'+r.error);
+  } catch(e) { $('fixErr').textContent = t('errNet'); }
+  $('fixSend').disabled = !fixValid();
+};
+
+/* ---------- history ---------- */
+$('hStatus').onchange = () => Q && renderHistory();
+function renderHistory(){
+  const st = $('hStatus').value;
+  const rows = Q.requests.filter(c => c.status!=='Pending' && (!st || c.status===st)).sort((a,b)=>(b.reviewedAt||0)-(a.reviewedAt||0));
+  const cls = {Approved:'good',Rejected:'bad',Cancelled:'mute'};
+  $('history').innerHTML = rows.length ? `<table class="t"><thead><tr><th>${esc(t('cReq'))}</th><th>${esc(t('cEmp'))}</th><th>${esc(t('cChange'))}</th><th>${esc(t('cStatus'))}</th><th>${esc(t('cBy'))}</th><th>${esc(t('cRev'))}</th><th>${esc(t('cNote'))}</th></tr></thead><tbody>${
+    rows.map(c => `<tr><td>${esc(c.id)}<br><span style="color:var(--muted);font-size:12px">${c.entry?esc(dt(c.entry.t)):''}</span></td><td>${esc(c.entry?c.entry.n:c.owner)}</td>
+      <td>${c.type==='void'?esc(t('voidEntry'))+' ('+nf(c.oldBoxes)+')':nf(c.oldBoxes)+' → '+nf(c.newBoxes)}${c.large?' <span class="pill warn">⚠</span>':''}</td>
+      <td><span class="pill ${cls[c.status]||'mute'}">${esc(t('s'+c.status))}</span></td><td>@${esc(c.requestedBy)}<br><span style="color:var(--muted);font-size:12px">${esc(dt(c.requestedAt))}</span></td>
+      <td>@${esc(c.reviewedBy)}<br><span style="color:var(--muted);font-size:12px">${c.reviewedAt?esc(dt(c.reviewedAt)):''}</span></td>
+      <td style="white-space:normal;min-width:180px">${esc(c.reviewNote||c.note)}</td></tr>`).join('')}</tbody></table>`
+    : `<div class="empty">${esc(t('none'))}</div>`;
+}
+
+/* boot */
+$('uName').value = S.get('sd_mgr_user','');
+initSearch(); applyLang();
+if (session && Date.now() < session.expires) showApp(); else { session=null; S.del('sd_mgr_session'); showLogin(); }
+setInterval(() => { if (!document.hidden && session) loadQueue(); }, 3*60e3);
+</script>
+</body>
+</html>

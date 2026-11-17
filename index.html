@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A4FA0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SalesData">
+<title>SalesData</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" href="icon.png">
+<style>
+  :root{
+    --brand:#1A4FA0; --brand-dark:#123A78; --accent:#F5C84C; --ink:#1A1A1A; --muted:#6B6B6B;
+    --bg:#F4F2EF; --card:#FFFFFF; --line:#E3DFDA;
+    --green:#1E9E4A; --orange:#E07B00; --red:#D0212B;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+       background:var(--bg);color:var(--ink);font-size:17px;line-height:1.4}
+  .wrap{max-width:480px;margin:0 auto;padding:0 16px calc(24px + env(safe-area-inset-bottom))}
+  header{background:var(--brand);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 14px}
+  .hdr{max-width:480px;margin:0 auto;display:flex;align-items:center;gap:12px}
+  .logo{height:58px;width:auto;max-width:90px;object-fit:contain;background:#fff;border-radius:12px;padding:3px 5px}
+  .hero{display:block;width:72%;max-width:260px;margin:2px auto 10px}
+  .logo-fallback{display:none;font-weight:900;letter-spacing:.5px;line-height:1;font-size:14px;
+       background:#fff;color:var(--brand);border-radius:10px;padding:7px 9px;text-align:center}
+  .who{flex:1;min-width:0}
+  .who .name{font-weight:700;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .who .user{font-size:13px;opacity:.85}
+  .hbtns{display:flex;gap:6px}
+  .chip{border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:999px;
+        padding:6px 10px;font-size:13px;font-weight:600}
+  .card{background:var(--card);border-radius:var(--radius);padding:18px;margin-top:14px;border:1px solid var(--line)}
+  h1{font-size:22px;margin:4px 0 2px}
+  .sub{color:var(--muted);font-size:14px;margin:0}
+  label{display:block;font-weight:700;margin:14px 0 6px}
+  input{width:100%;font-size:22px;padding:14px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+  input:focus{outline:none;border-color:var(--brand)}
+  input.big{font-size:40px;font-weight:800;text-align:center;letter-spacing:1px}
+  input.pin{letter-spacing:12px;text-align:center;font-weight:800}
+  .hint{font-size:13px;color:var(--muted);margin-top:6px}
+  .err{color:var(--red);font-size:14px;font-weight:600;margin-top:8px;min-height:1em}
+  .btn{display:block;width:100%;border:0;border-radius:14px;padding:17px;font-size:19px;font-weight:800;
+       background:var(--brand);color:#fff;margin-top:16px}
+  .btn:active{background:var(--brand-dark)}
+  .btn:disabled{background:#C9C4BE;color:#fff}
+  .btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line)}
+  .btn.green{background:var(--green)}
+  .row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:0}
+  .row .k{color:var(--muted)} .row .v{font-weight:700;text-align:right;word-break:break-word}
+  /* GPS */
+  .gps{display:flex;gap:12px;align-items:center}
+  .dot{width:22px;height:22px;border-radius:50%;flex:none;background:#BBB;box-shadow:0 0 0 5px rgba(0,0,0,.06)}
+  .dot.green{background:var(--green);box-shadow:0 0 0 5px rgba(30,158,74,.18)}
+  .dot.orange{background:var(--orange);box-shadow:0 0 0 5px rgba(224,123,0,.18)}
+  .dot.red{background:var(--red);box-shadow:0 0 0 5px rgba(208,33,43,.18)}
+  .dot.wait{animation:pulse 1.2s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  .gps .t{font-weight:800}
+  .gps .d{font-size:13px;color:var(--muted)}
+  .legend{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;font-size:13px;margin-top:12px;
+          padding-top:12px;border-top:1px dashed var(--line);align-items:center}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:50%}
+  .big-num{font-size:46px;font-weight:900;text-align:center;color:var(--brand);margin:6px 0}
+  .center{text-align:center}
+  .tick{width:84px;height:84px;border-radius:50%;background:var(--green);color:#fff;font-size:50px;
+        display:flex;align-items:center;justify-content:center;margin:10px auto}
+  .tick.amber{background:var(--orange)}
+  .banner{background:#FFF4E0;border:1px solid #F3C98A;color:#7A4A00;border-radius:12px;padding:10px 12px;
+          font-size:14px;margin-top:14px;display:none}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;z-index:9}
+  .modal .box{background:#fff;width:100%;max-width:480px;border-radius:20px 20px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom))}
+  .hidden{display:none!important}
+  .tagline{background:#0F2F63;color:#F5C84C;text-align:center;font-size:clamp(10.5px,2.9vw,13px);font-weight:700;
+           padding:7px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mission{position:fixed;inset:0;z-index:10;background:linear-gradient(170deg,#1A4FA0 0%,#0F2F63 100%);
+           color:#fff;display:none;flex-direction:column;overflow-y:auto;
+           padding:calc(28px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom))}
+  .mission .in{max-width:440px;margin:auto;width:100%;text-align:center}
+  .mission img{width:62%;max-width:230px;background:#fff;border-radius:20px;padding:10px 12px;margin-bottom:22px}
+  .mission .hello{font-size:18px;opacity:.9;margin-bottom:14px}
+  .mission .msg{font-size:24px;line-height:1.45;font-weight:700;text-align:left}
+  .mission .msg b{color:#FFE7A3}
+  .mission .ok{background:#fff;color:var(--brand);margin-top:30px;font-size:22px}
+  .tabs{display:flex;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+  .tabs button{flex:1;border:0;background:transparent;padding:12px 6px;font-size:15.5px;font-weight:700;color:var(--muted);border-bottom:3px solid transparent}
+  .tabs button.on{color:var(--brand);border-bottom-color:var(--brand)}
+  .tabs .badge{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:var(--orange);color:#fff;font-size:11.5px;margin-left:4px;vertical-align:2px}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+  .tile .l{font-size:13px;color:var(--muted);font-weight:600}
+  .tile .v{font-size:34px;font-weight:900;color:var(--ink);line-height:1.1;margin-top:4px}
+  .tile .u{font-size:13px;color:var(--muted)}
+  .tile .d{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;gap:6px}
+  .stats b{display:block;font-size:20px} .stats span{font-size:12px;color:var(--muted)}
+  .ctitle{font-weight:800;font-size:16px;margin:0 0 2px} .csub{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+  .mbar{fill:var(--brand)} .mbar.today{fill:var(--accent)} .maxis{fill:var(--muted);font-size:10px}
+  .dayh{font-size:13px;font-weight:800;color:var(--muted);margin:14px 0 4px;display:flex;justify-content:space-between}
+  .ent{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .ent:last-child{border-bottom:0}
+  .ent .tm{font-weight:700;width:48px;flex:none;font-size:15px}
+  .ent .bx{flex:1;min-width:0}
+  .ent .bx b{font-size:18px}
+  .ent .st{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .ent.void .bx b{text-decoration:line-through;color:var(--muted)}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 8px;margin-right:4px}
+  .p-pend{background:#FFF1DB;color:#8A4B00} .p-am{background:#E3EDFB;color:#123A78} .p-void{background:#EEE;color:#555}
+  .p-rej{background:#FCE4E4;color:#8F1C1C} .p-q{background:#FFF1DB;color:#8A4B00}
+  .rbtn{flex:none;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:700;color:var(--ink)}
+  .opt{display:flex;gap:10px;align-items:center;border:2px solid var(--line);border-radius:12px;padding:12px;margin-top:8px;font-weight:700}
+  .opt.on{border-color:var(--brand);background:#F1F6FD}
+  .opt input{width:auto;margin:0}
+  textarea{width:100%;font:inherit;font-size:16px;padding:10px;border:2px solid var(--line);border-radius:12px;min-height:70px}
+  .refresh{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);margin-top:12px}
+  .refresh button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 12px;font-weight:700}
+  .foot{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <img class="logo" src="logo.png" alt="Super Horse" onerror="this.style.display='none';document.getElementById('logoFb').style.display='block'">
+    <div class="logo-fallback" id="logoFb">SUPER<br>HORSE</div>
+    <div class="who">
+      <div class="name" id="hName">SalesData</div>
+      <div class="user" id="hUser" data-i="appTitle"></div>
+    </div>
+    <div class="hbtns">
+      <button class="chip" id="langBtn">EN</button>
+      <button class="chip hidden" id="logoutBtn" data-i="logout"></button>
+    </div>
+  </div>
+</header>
+<div class="tagline hidden" id="tagline" data-i="tagline"></div>
+<nav class="tabs hidden" id="tabs">
+  <button id="tabEntry" class="on" data-i="tabEntry"></button>
+  <button id="tabMine"><span data-i="tabMine"></span><span class="badge hidden" id="mineBadge"></span></button>
+</nav>
+
+<div class="wrap">
+
+  <!-- LOGIN -->
+  <section id="vLogin" class="hidden">
+    <div class="card">
+      <img class="hero" src="logo.png" alt="Super Horse Classic &amp; Pink" onerror="this.remove()">
+      <h1 data-i="loginTitle"></h1>
+      <p class="sub" data-i="loginSub"></p>
+      <label for="uName" data-i="username"></label>
+      <input id="uName" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
+      <label for="uPin" data-i="pin"></label>
+      <input id="uPin" class="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="current-password">
+      <div class="err" id="loginErr"></div>
+      <button class="btn" id="loginBtn" data-i="loginBtn"></button>
+    </div>
+  </section>
+
+  <!-- ENTRY -->
+  <section id="vEntry" class="hidden">
+    <div class="banner" id="queueBanner"></div>
+
+    <div class="card">
+      <div class="gps">
+        <div class="dot wait" id="gDot"></div>
+        <div>
+          <div class="t" id="gTitle"></div>
+          <div class="d" id="gDesc"></div>
+        </div>
+      </div>
+      <div class="legend">
+        <i style="background:var(--green)"></i><span data-i="lgGreen"></span>
+        <i style="background:var(--orange)"></i><span data-i="lgOrange"></span>
+        <i style="background:var(--red)"></i><span data-i="lgRed"></span>
+      </div>
+      <p class="hint" data-i="gpsWhy"></p>
+    </div>
+
+    <div class="card">
+      <label for="boxes" style="margin-top:0" data-i="boxesLabel"></label>
+      <input id="boxes" class="big" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="0">
+      <div class="hint" data-i="boxesHint"></div>
+      <div class="err" id="boxErr"></div>
+      <button class="btn" id="confirmBtn" disabled data-i="confirm"></button>
+      <div class="err center" id="confirmWhy" style="color:var(--muted);font-weight:500"></div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section id="vReview" class="hidden">
+    <div class="card">
+      <h1 data-i="reviewTitle"></h1>
+      <p class="sub" data-i="reviewSub"></p>
+      <div class="big-num" id="rBoxes"></div>
+      <div class="center sub" data-i="boxesUnit"></div>
+      <div style="margin-top:14px">
+        <div class="row"><span class="k" data-i="rEmployee"></span><span class="v" id="rEmp"></span></div>
+        <div class="row"><span class="k" data-i="rTime"></span><span class="v" id="rTime"></span></div>
+        <div class="row"><span class="k" data-i="rGps"></span><span class="v" id="rGps"></span></div>
+        <div class="row"><span class="k" data-i="rAcc"></span><span class="v" id="rAcc"></span></div>
+      </div>
+      <button class="btn green" id="submitBtn" data-i="submit"></button>
+      <button class="btn ghost" id="backBtn" data-i="back"></button>
+    </div>
+  </section>
+
+  <!-- DONE -->
+  <section id="vDone" class="hidden">
+    <div class="card center">
+      <div class="tick" id="dTick">✓</div>
+      <h1 id="dTitle"></h1>
+      <p class="sub" id="dSub"></p>
+      <div class="big-num" id="dBoxes"></div>
+      <button class="btn" id="newBtn" data-i="newEntry"></button>
+    </div>
+  </section>
+
+  <!-- MY SALES (read-only) -->
+  <section id="vMine" class="hidden">
+    <div class="refresh"><span id="mUpd"></span><button id="mRefresh" data-i="refresh"></button></div>
+    <div class="err" id="mErr"></div>
+    <div id="mineBody"></div>
+  </section>
+
+  <div class="foot">SalesData · v3.0.1</div>
+</div>
+
+<!-- Welcome / mission screen (once per login) -->
+<div class="mission" id="mission">
+  <div class="in">
+    <img src="logo.png" alt="Super Horse" onerror="this.remove()">
+    <div class="hello" id="mHello"></div>
+    <div class="msg" id="mMsg"></div>
+    <button class="btn ok" id="mOk">OK</button>
+  </div>
+</div>
+
+<!-- Report a mistake -->
+<div class="modal" id="repModal">
+  <div class="box" style="max-height:92vh;overflow:auto">
+    <h1 data-i="repTitle"></h1>
+    <p class="sub" id="repEntry"></p>
+    <label class="opt" data-k="amend"><input type="radio" name="rk" value="amend"><span data-i="optQty"></span></label>
+    <div id="repQtyWrap" class="hidden">
+      <label for="repQty" data-i="newQty"></label>
+      <input id="repQty" class="big" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0">
+    </div>
+    <label class="opt" data-k="duplicate"><input type="radio" name="rk" value="duplicate"><span data-i="optDup"></span></label>
+    <label class="opt" data-k="not_mine"><input type="radio" name="rk" value="not_mine"><span data-i="optNotMine"></span></label>
+    <label for="repNote" data-i="repNote"></label>
+    <textarea id="repNote" maxlength="300"></textarea>
+    <p class="hint" data-i="repHow"></p>
+    <div class="err" id="repErr"></div>
+    <button class="btn" id="repSend" data-i="repSend" disabled></button>
+    <button class="btn ghost" id="repClose" data-i="cancel"></button>
+  </div>
+</div>
+
+<!-- Large-quantity double check -->
+<div class="modal" id="bigModal">
+  <div class="box center">
+    <h1 data-i="bigTitle"></h1>
+    <div class="big-num" id="bigNum"></div>
+    <p class="sub" data-i="bigSub"></p>
+    <button class="btn green" id="bigYes" data-i="bigYes"></button>
+    <button class="btn ghost" id="bigNo" data-i="bigNo"></button>
+  </div>
+</div>
+
+<script>
+/* ================== CONFIG ================== */
+const API_URL = 'https://script.google.com/macros/s/AKfycbwx9JWqWJlHNZlQ2IWpJFFvySi3-HYgj1av-EY830c0ryAxt7UlTzAwJwNkxhgjPYYx/exec';
+const MIN_BOXES = 1, MAX_BOXES = 2400, BIG_QTY = 500;
+const GREEN_M = 20, ORANGE_M = 50;      // accuracy bands (metres)
+const ORANGE_AFTER_S = 20;              // orange accepted after this many seconds
+const TZ_OFFSET_H = 7;                  // Vietnam time, for daily logout
+/* ============================================ */
+
+const T = {
+  vi:{
+    appTitle:'Ghi nhận giao hàng', logout:'Thoát',
+    loginTitle:'Đăng nhập', loginSub:'Nhập tên đăng nhập và mã PIN 4 số của bạn.',
+    username:'Tên đăng nhập', pin:'Mã PIN (4 số)', loginBtn:'Đăng nhập',
+    errLogin:'Sai tên đăng nhập hoặc mã PIN.', errLocked:'Nhập sai quá nhiều lần. Thử lại sau 15 phút.',
+    errNet:'Không có kết nối mạng. Cần mạng để đăng nhập.', errFill:'Vui lòng nhập tên đăng nhập và đủ 4 số PIN.',
+    errServer:'Lỗi máy chủ. Thử lại sau.',
+    gpsWait:'Đang tìm vị trí GPS…', gpsGreen:'GPS tốt', gpsOrange:'GPS trung bình', gpsRed:'GPS yếu',
+    gpsAcc:'Độ chính xác: ±{m} m',
+    gpsDenied:'Chưa cho phép truy cập vị trí. Hãy bật Vị trí (Location) cho trình duyệt rồi tải lại trang.',
+    gpsNone:'Thiết bị không hỗ trợ GPS.',
+    lgGreen:'Xanh: tốt (±20 m trở xuống) — gửi được',
+    lgOrange:'Cam: trung bình (±21–50 m) — gửi được sau 20 giây chờ',
+    lgRed:'Đỏ: yếu (trên ±50 m) — không gửi được',
+    gpsWhy:'Màu sắc cho biết độ chính xác của vị trí GPS, không phải tín hiệu điện thoại. Để GPS tốt hơn: đứng ngoài trời, tránh mái che và nhà cao tầng, chờ vài giây.',
+    boxesLabel:'Số thùng đã giao', boxesHint:'Từ 1 đến 2.400 thùng', boxesUnit:'thùng',
+    errBoxes:'Nhập số từ 1 đến 2.400.',
+    confirm:'Xác nhận',
+    whyGps:'Chờ GPS chuyển sang màu xanh…', whyOrange:'GPS cam — có thể xác nhận sau {s} giây nữa, hoặc chờ màu xanh.',
+    whyRed:'GPS đỏ — chưa thể gửi. Hãy ra chỗ thoáng.', whyBoxes:'Nhập số thùng.',
+    reviewTitle:'Kiểm tra lại', reviewSub:'Kiểm tra thông tin trước khi gửi.',
+    rEmployee:'Nhân viên', rTime:'Thời gian', rGps:'Vị trí', rAcc:'Độ chính xác GPS',
+    submit:'Gửi', back:'Quay lại sửa',
+    bigTitle:'Số lượng lớn — bạn chắc chắn?', bigSub:'Kiểm tra lại số thùng. Bấm "Đúng" để tiếp tục.',
+    bigYes:'Đúng, tiếp tục', bigNo:'Không, sửa lại',
+    doneTitle:'Gửi thành công', doneSub:'Dữ liệu đã được lưu.',
+    queuedTitle:'Đã lưu trên máy', queuedSub:'Chưa có mạng. Dữ liệu sẽ tự động gửi khi có mạng — không cần nhập lại.',
+    newEntry:'Ghi nhận mới',
+    queueN:'{n} mục chưa gửi — sẽ tự gửi khi có mạng.',
+    expired:'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
+    tagline:'Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển',
+    hello:'Xin chào, {n}!',
+    tabEntry:'Ghi nhận', tabMine:'Doanh số của tôi', refresh:'Làm mới', updatedAt:'Cập nhật {t}', cancel:'Đóng',
+    today:'Hôm nay', thisMonth:'Tháng này', boxes:'thùng', dropsN:'{n} lượt giao', vsLast:'{a} so với cùng kỳ tháng trước', noLast:'tháng trước chưa có dữ liệu',
+    dailyT:'Số thùng mỗi ngày — tháng này', dailyS:'Cột vàng = hôm nay.', activeDays:'Ngày làm việc', avgDrop:'TB thùng / lượt', bestDay:'Ngày tốt nhất',
+    entriesT:'Các lượt giao của tôi', entriesS:'Chỉ xem. Thấy sai? Bấm "Báo lỗi" để quản lý dữ liệu kiểm tra.',
+    noEntries:'Chưa có lượt giao nào trong tháng này.', report:'Báo lỗi', cancelReq:'Hủy yêu cầu',
+    stPend:'Chờ duyệt', stAm:'Đã sửa', stVoid:'Đã hủy', stRej:'Bị từ chối', stQueued:'Chưa gửi (chờ mạng)',
+    pendAmend:'Yêu cầu sửa thành {n} thùng', pendVoid:'Yêu cầu hủy mục này', amFrom:'gốc {o} → {n} thùng', rejBy:'Lý do: {r}',
+    repTitle:'Báo lỗi lượt giao', optQty:'Sai số thùng', newQty:'Số thùng đúng', optDup:'Mục bị trùng (nhập 2 lần)', optNotMine:'Không phải lượt giao của tôi',
+    repNote:'Ghi chú (không bắt buộc)', repHow:'Quản lý dữ liệu sẽ kiểm tra và duyệt. Dữ liệu gốc không bị xóa — mọi thay đổi đều được ghi lại.',
+    repSend:'Gửi yêu cầu', repOk:'Đã gửi yêu cầu. Trạng thái: Chờ duyệt.', repNeedNet:'Cần có mạng để gửi yêu cầu.',
+    errPending:'Mục này đã có yêu cầu đang chờ duyệt.', errWindow:'Đã quá hạn báo lỗi cho mục này. Liên hệ quản lý dữ liệu.',
+    errNoChange:'Số thùng mới giống số hiện tại.', errVoid:'Mục này đã bị hủy.', loadFail:'Không tải được dữ liệu. Kiểm tra mạng rồi bấm Làm mới.',
+    confirmCancel:'Hủy yêu cầu này?',
+    mission:'Mỗi lần giao hàng được <b>ghi nhận chính xác</b> giúp chúng ta biết <b>khách hàng của mình ở đâu</b>. Chúng ta dùng dữ liệu đó để lập kế hoạch tốt hơn, hỗ trợ khách hàng tốt hơn, và <b>cùng nhau phát triển</b> công ty của chúng ta — Super Horse Energy Drink.',
+  },
+  en:{
+    appTitle:'Drop-off record', logout:'Log out',
+    loginTitle:'Log in', loginSub:'Enter your username and 4-digit PIN.',
+    username:'Username', pin:'PIN (4 digits)', loginBtn:'Log in',
+    errLogin:'Wrong username or PIN.', errLocked:'Too many wrong attempts. Try again in 15 minutes.',
+    errNet:'No internet connection. Login needs a connection.', errFill:'Enter your username and all 4 PIN digits.',
+    errServer:'Server error. Please try again later.',
+    gpsWait:'Finding GPS position…', gpsGreen:'GPS good', gpsOrange:'GPS fair', gpsRed:'GPS poor',
+    gpsAcc:'Accuracy: ±{m} m',
+    gpsDenied:'Location access is blocked. Turn on Location for your browser, then reload the page.',
+    gpsNone:'This device does not support GPS.',
+    lgGreen:'Green: good (±20 m or better) — can submit',
+    lgOrange:'Orange: fair (±21–50 m) — can submit after 20 s wait',
+    lgRed:'Red: poor (worse than ±50 m) — cannot submit',
+    gpsWhy:'The colour shows how accurate the GPS position is, not your phone signal. For better GPS: stand outdoors, away from roofs and tall buildings, and wait a few seconds.',
+    boxesLabel:'Boxes dropped off', boxesHint:'1 to 2,400 boxes', boxesUnit:'boxes',
+    errBoxes:'Enter a number from 1 to 2,400.',
+    confirm:'Confirm',
+    whyGps:'Waiting for GPS to turn green…', whyOrange:'GPS orange — you can confirm in {s} s, or wait for green.',
+    whyRed:'GPS red — cannot submit yet. Move to an open area.', whyBoxes:'Enter the number of boxes.',
+    reviewTitle:'Check again', reviewSub:'Check the details before sending.',
+    rEmployee:'Employee', rTime:'Time', rGps:'Location', rAcc:'GPS accuracy',
+    submit:'Submit', back:'Go back and edit',
+    bigTitle:'Large quantity — are you sure?', bigSub:'Check the number of boxes. Tap "Yes" to continue.',
+    bigYes:'Yes, continue', bigNo:'No, edit',
+    doneTitle:'Sent successfully', doneSub:'The record has been saved.',
+    queuedTitle:'Saved on phone', queuedSub:'No internet. It will send automatically when connected — no need to re-enter.',
+    newEntry:'New entry',
+    queueN:'{n} record(s) not sent yet — will send automatically when online.',
+    expired:'Your session has expired. Please log in again.',
+    tagline:'Accurate data → Better decisions → Growing together',
+    hello:'Hello, {n}!',
+    tabEntry:'Record', tabMine:'My sales', refresh:'Refresh', updatedAt:'Updated {t}', cancel:'Close',
+    today:'Today', thisMonth:'This month', boxes:'boxes', dropsN:'{n} drop-offs', vsLast:'{a} vs same point last month', noLast:'no data last month',
+    dailyT:'Boxes per day — this month', dailyS:'Gold bar = today.', activeDays:'Active days', avgDrop:'Avg boxes / drop', bestDay:'Best day',
+    entriesT:'My drop-offs', entriesS:'View only. Spot a mistake? Tap "Report" and a data manager will check it.',
+    noEntries:'No drop-offs yet this month.', report:'Report', cancelReq:'Cancel request',
+    stPend:'Pending review', stAm:'Amended', stVoid:'Voided', stRej:'Rejected', stQueued:'Not sent yet (waiting for signal)',
+    pendAmend:'Asked to change to {n} boxes', pendVoid:'Asked to void this entry', amFrom:'original {o} → {n} boxes', rejBy:'Reason: {r}',
+    repTitle:'Report a mistake', optQty:'Wrong number of boxes', newQty:'Correct number of boxes', optDup:'Duplicate (entered twice)', optNotMine:'Not my drop-off',
+    repNote:'Note (optional)', repHow:'A data manager will check and approve it. The original is never deleted — every change is logged.',
+    repSend:'Send request', repOk:'Request sent. Status: Pending review.', repNeedNet:'You need signal to send a request.',
+    errPending:'This entry already has a request waiting.', errWindow:'Too late to report this entry. Contact a data manager.',
+    errNoChange:'The new number is the same as the current one.', errVoid:'This entry is already voided.', loadFail:'Could not load data. Check signal, then tap Refresh.',
+    confirmCancel:'Cancel this request?',
+    mission:'Every drop-off you <b>record accurately</b> shows us <b>where our customers are</b>. We use that data to plan smarter, support our customers better, and <b>grow our company, Super Horse Energy Drink, together</b>.',
+  }
+};
+
+/* ---------- storage helpers (safe) ---------- */
+const S = {
+  get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},
+  del(k){try{localStorage.removeItem(k)}catch(e){}}
+};
+const $ = id => document.getElementById(id);
+
+let lang = S.get('sh_lang','vi');
+let session = S.get('sh_session',null);   // {token,username,name,expires}
+let gps = {watch:null, best:null, start:0, status:'wait', timer:null};
+let pending = null;                        // record being reviewed
+
+function t(k,vars){let s=(T[lang][k]||k);if(vars)for(const x in vars)s=s.replace('{'+x+'}',vars[x]);return s}
+function applyLang(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i]').forEach(el=>el.textContent=t(el.dataset.i));
+  $('langBtn').textContent = lang==='vi'?'EN':'VI';
+  renderHeader(); renderGps(); updateConfirm(); renderQueue(); if(mine) renderMine();
+  if($('mission').style.display==='flex') showMission();
+}
+$('langBtn').onclick=()=>{lang=lang==='vi'?'en':'vi';S.set('sh_lang',lang);applyLang()};
+
+/* ---------- views ---------- */
+function show(v){
+  ['vLogin','vEntry','vReview','vDone','vMine'].forEach(x=>$(x).classList.toggle('hidden',x!==v));
+  $('tagline').classList.toggle('hidden',v==='vLogin');
+  $('tabs').classList.toggle('hidden',v==='vLogin'||v==='vReview');
+  $('tabEntry').classList.toggle('on',v!=='vMine'); $('tabMine').classList.toggle('on',v==='vMine');
+  if(v==='vMine') loadMine();
+  if(v==='vEntry') startGps(); else if(v!=='vReview') stopGps();
+  window.scrollTo(0,0);
+}
+
+/* ---------- session (daily, midnight Vietnam time) ---------- */
+function nextMidnightVN(){
+  const off=TZ_OFFSET_H*3600e3, now=Date.now();
+  return Math.floor((now+off)/86400e3)*86400e3+86400e3-off;
+}
+function sessionValid(){return session && session.token && Date.now()<session.expires}
+function renderHeader(){
+  if(sessionValid()){
+    $('hName').textContent=session.name||session.username;
+    $('hUser').textContent='@'+session.username;
+    $('logoutBtn').classList.remove('hidden');
+  }else{
+    $('hName').textContent='SalesData';
+    $('hUser').textContent=t('appTitle');
+    $('logoutBtn').classList.add('hidden');
+  }
+}
+$('logoutBtn').onclick=()=>{session=null;mine=null;S.del('sh_session');S.del('sh_mine');renderHeader();show('vLogin')};
+
+/* ---------- API ---------- */
+async function api(payload){
+  const r=await fetch(API_URL,{method:'POST',body:JSON.stringify(payload)}); // text/plain: no CORS preflight
+  if(!r.ok) throw new Error('http '+r.status);
+  return r.json();
+}
+
+/* ---------- login ---------- */
+$('uPin').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,4)});
+$('uPin').addEventListener('keydown',e=>{if(e.key==='Enter')$('loginBtn').click()});
+$('loginBtn').onclick=async()=>{
+  const u=$('uName').value.trim().toLowerCase(), p=$('uPin').value;
+  $('loginErr').textContent='';
+  if(!u||!/^\d{4}$/.test(p)){$('loginErr').textContent=t('errFill');return}
+  if(!navigator.onLine){$('loginErr').textContent=t('errNet');return}
+  const b=$('loginBtn'); b.disabled=true;
+  try{
+    const res=await api({action:'login',username:u,pin:p,app:'field'});
+    if(res.ok){
+      session={token:res.token,username:res.username,name:res.name,role:res.role||'',expires:nextMidnightVN()}; mine=null;
+      S.set('sh_session',session); S.set('sh_lastUser',u);
+      $('uPin').value=''; renderHeader(); show('vEntry'); flushQueue(); showMission();
+    }else{
+      $('loginErr').textContent = res.error==='locked'?t('errLocked'):t('errLogin');
+    }
+  }catch(e){$('loginErr').textContent=navigator.onLine?t('errServer'):t('errNet')}
+  b.disabled=false;
+};
+
+/* ---------- GPS (runs only while entry screen is open & visible) ---------- */
+function startGps(){
+  if(gps.watch!==null) return;
+  if(!('geolocation' in navigator)){gps.status='none';renderGps();return}
+  gps.best=null; gps.start=Date.now(); gps.status='wait';
+  gps.watch=navigator.geolocation.watchPosition(onPos,onPosErr,{enableHighAccuracy:true,maximumAge:0,timeout:30000});
+  clearInterval(gps.timer); gps.timer=setInterval(()=>{renderGps();updateConfirm()},1000);
+  renderGps();
+}
+function stopGps(){
+  if(gps.watch!==null){navigator.geolocation.clearWatch(gps.watch);gps.watch=null}
+  clearInterval(gps.timer); gps.timer=null;
+}
+function onPos(p){
+  const c=p.coords, fix={lat:c.latitude,lng:c.longitude,acc:Math.round(c.accuracy),at:Date.now()};
+  // keep the most accurate recent fix (fresh within 30 s)
+  if(!gps.best || fix.acc<=gps.best.acc || Date.now()-gps.best.at>30000) gps.best=fix;
+  renderGps(); updateConfirm();
+}
+function onPosErr(e){
+  if(e.code===1){gps.status='denied';renderGps();updateConfirm()}
+}
+function band(acc){return acc<=GREEN_M?'green':acc<=ORANGE_M?'orange':'red'}
+function renderGps(){
+  const dot=$('gDot'), ti=$('gTitle'), de=$('gDesc');
+  dot.className='dot';
+  if(gps.status==='denied'){dot.classList.add('red');ti.textContent=t('gpsRed');de.textContent=t('gpsDenied');return}
+  if(gps.status==='none'){dot.classList.add('red');ti.textContent=t('gpsRed');de.textContent=t('gpsNone');return}
+  if(!gps.best){dot.classList.add('wait');ti.textContent=t('gpsWait');de.textContent='';return}
+  const b=band(gps.best.acc);
+  dot.classList.add(b);
+  ti.textContent=t(b==='green'?'gpsGreen':b==='orange'?'gpsOrange':'gpsRed');
+  de.textContent=t('gpsAcc',{m:gps.best.acc})+' · '+gps.best.lat.toFixed(6)+', '+gps.best.lng.toFixed(6);
+}
+function gpsOk(){
+  if(!gps.best) return {ok:false,why:t('whyGps')};
+  const b=band(gps.best.acc);
+  if(b==='green') return {ok:true};
+  if(b==='red') return {ok:false,why:t('whyRed')};
+  const left=ORANGE_AFTER_S-Math.floor((Date.now()-gps.start)/1000);
+  return left<=0?{ok:true}:{ok:false,why:t('whyOrange',{s:left})};
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden) stopGps();
+  else if(!$('vEntry').classList.contains('hidden')) startGps();
+});
+
+/* ---------- boxes ---------- */
+function boxVal(){const v=$('boxes').value;return /^\d+$/.test(v)?parseInt(v,10):NaN}
+function boxesOk(){const n=boxVal();return n>=MIN_BOXES&&n<=MAX_BOXES}
+$('boxes').addEventListener('input',e=>{
+  e.target.value=e.target.value.replace(/\D/g,'').replace(/^0+/,'').slice(0,4);
+  $('boxErr').textContent = e.target.value && !boxesOk() ? t('errBoxes') : '';
+  updateConfirm();
+});
+function updateConfirm(){
+  if($('vEntry').classList.contains('hidden')) return;
+  const g=gpsOk(), b=boxesOk();
+  $('confirmBtn').disabled=!(g.ok&&b);
+  $('confirmWhy').textContent = !g.ok ? g.why : (!b ? t('whyBoxes') : '');
+}
+
+/* ---------- confirm #1 → review ---------- */
+$('confirmBtn').onclick=()=>{
+  if(!sessionValid()){alert(t('expired'));show('vLogin');return}
+  const g=gpsOk(); if(!g.ok||!boxesOk()) return;
+  const n=boxVal();
+  const go=()=>{
+    const f=gps.best;
+    pending={id:uid(),boxes:n,lat:f.lat,lng:f.lng,acc:f.acc,gpsStatus:band(f.acc),deviceTime:new Date().toISOString()};
+    $('rBoxes').textContent=n.toLocaleString(lang==='vi'?'vi-VN':'en-US');
+    $('rEmp').textContent=(session.name||'')+' (@'+session.username+')';
+    $('rTime').textContent=fmtTime(new Date(pending.deviceTime));
+    $('rGps').textContent=f.lat.toFixed(6)+', '+f.lng.toFixed(6);
+    $('rAcc').innerHTML='<span class="dot '+pending.gpsStatus+'" style="display:inline-block;width:12px;height:12px;vertical-align:middle;margin-right:6px;box-shadow:none"></span>±'+f.acc+' m';
+    show('vReview');
+  };
+  if(n>BIG_QTY){
+    $('bigNum').textContent=n.toLocaleString(lang==='vi'?'vi-VN':'en-US');
+    $('bigModal').style.display='flex';
+    $('bigYes').onclick=()=>{$('bigModal').style.display='none';go()};
+    $('bigNo').onclick=()=>{$('bigModal').style.display='none';$('boxes').focus()};
+  } else go();
+};
+$('backBtn').onclick=()=>{pending=null;show('vEntry')};
+
+/* ---------- confirm #2 → submit ---------- */
+$('submitBtn').onclick=async()=>{
+  if(!pending) return;
+  const rec={...pending,token:session.token,username:session.username,name:session.name};
+  const b=$('submitBtn'); b.disabled=true;
+  let sent=false;
+  if(navigator.onLine){
+    try{
+      const res=await api({action:'submit',...rec});
+      if(res.ok) sent=true;
+      else if(res.error==='auth'){alert(t('expired'));session=null;S.del('sh_session');renderHeader();b.disabled=false;show('vLogin');return}
+    }catch(e){}
+  }
+  if(!sent){rec.offline=true;const q=S.get('sh_queue',[]);q.push(rec);S.set('sh_queue',q)}
+  b.disabled=false;
+  $('dTick').className='tick'+(sent?'':' amber'); $('dTick').textContent=sent?'✓':'⏳';
+  $('dTitle').textContent=t(sent?'doneTitle':'queuedTitle');
+  $('dSub').textContent=t(sent?'doneSub':'queuedSub');
+  $('dBoxes').textContent=rec.boxes.toLocaleString(lang==='vi'?'vi-VN':'en-US')+' '+t('boxesUnit');
+  pending=null; $('boxes').value=''; show('vDone'); renderQueue();
+};
+$('newBtn').onclick=()=>{
+  if(!sessionValid()){session=null;S.del('sh_session');renderHeader();show('vLogin');return}
+  show('vEntry'); updateConfirm();
+};
+
+/* ---------- offline queue ---------- */
+let flushing=false;
+async function flushQueue(){
+  if(flushing||!navigator.onLine) return;
+  let q=S.get('sh_queue',[]); if(!q.length) return;
+  flushing=true;
+  const keep=[];
+  for(const rec of q){
+    try{
+      const res=await api({action:'submit',...rec});
+      if(!res.ok) keep.push(rec);   // keep on any failure; server ignores duplicates by id
+    }catch(e){keep.push(rec)}
+  }
+  S.set('sh_queue',keep); flushing=false; renderQueue();
+}
+function renderQueue(){
+  const n=S.get('sh_queue',[]).length, el=$('queueBanner');
+  el.style.display=n?'block':'none'; el.textContent=t('queueN',{n});
+}
+window.addEventListener('online',flushQueue);
+setInterval(()=>{if(!document.hidden)flushQueue()},30000);
+
+/* ---------- welcome / mission (once per login) ---------- */
+function showMission(){
+  $('mHello').textContent=t('hello',{n:session.name||session.username});
+  $('mMsg').innerHTML=t('mission');
+  $('mission').style.display='flex';
+}
+$('mOk').onclick=()=>{$('mission').style.display='none';updateConfirm()};
+
+/* ---------- MY SALES (read-only) ---------- */
+let mine = S.get('sh_mine', null);          // last loaded copy, so the tab opens instantly
+let repEntry = null;
+const VN = 7*3600e3;
+const dkey = ts => new Date(ts+VN).toISOString().slice(0,10);
+const hm = ts => new Date(ts+VN).toISOString().slice(11,16);
+const nf = n => Number(n).toLocaleString(lang==='vi'?'vi-VN':'en-US',{maximumFractionDigits:1});
+const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function dayLabel(k){const [y,m,d]=k.split('-').map(Number);return new Date(Date.UTC(y,m-1,d)).toLocaleDateString(lang==='vi'?'vi-VN':'en-GB',{weekday:'short',day:'2-digit',month:'2-digit',timeZone:'UTC'})}
+
+$('tabEntry').onclick=()=>{ if(!sessionValid()){show('vLogin');return} show('vEntry'); updateConfirm(); };
+$('tabMine').onclick=()=>{ if(!sessionValid()){show('vLogin');return} show('vMine'); };
+$('mRefresh').onclick=()=>loadMine(true);
+
+async function loadMine(){
+  if(mine && mine.u===session.username) renderMine();
+  if(!navigator.onLine){ $('mErr').textContent = mine ? '' : t('loadFail'); return; }
+  $('mRefresh').disabled=true; $('mErr').textContent='';
+  try{
+    const r=await api({action:'me',token:session.token});
+    if(r.ok){ mine={...r,u:session.username}; S.set('sh_mine',mine); renderMine(); }
+    else if(r.error==='auth'){ alert(t('expired')); session=null; S.del('sh_session'); renderHeader(); show('vLogin'); }
+    else $('mErr').textContent=t('loadFail');
+  }catch(e){ $('mErr').textContent=t('loadFail'); }
+  $('mRefresh').disabled=false;
+}
+
+function renderMine(){
+  if(!mine || !session || mine.u!==session.username){ $('mineBody').innerHTML=''; return; }
+  const today=mine.today, mStart=today.slice(0,8)+'01';
+  const live=mine.rows.filter(r=>!r.v);
+  const todayR=live.filter(r=>dkey(r.t)===today), monthR=live.filter(r=>dkey(r.t)>=mStart);
+  // same point last month
+  const [y,m,d]=today.split('-').map(Number), lmEnd=new Date(Date.UTC(y,m-1,0)).getUTCDate();
+  const lmStart=new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,10), lmCut=lmStart.slice(0,8)+String(Math.min(d,lmEnd)).padStart(2,'0');
+  const lastR=live.filter(r=>{const k=dkey(r.t);return k>=lmStart&&k<=lmCut});
+  const sum=a=>a.reduce((s,r)=>s+r.b,0);
+  const mB=sum(monthR), lB=sum(lastR);
+  let delta=t('noLast');
+  if(lB){const p=Math.round((mB-lB)/lB*100);delta=t('vsLast',{a:(p>0?'▲ ':p<0?'▼ ':'■ ')+Math.abs(p)+'%'})}
+  // daily bars
+  const days=d, per=new Array(days).fill(0); monthR.forEach(r=>{per[Number(dkey(r.t).slice(8,10))-1]+=r.b});
+  const W=Math.min(448,innerWidth-64), H=120, max=Math.max(1,...per), bw=W/days;
+  let svg=`<svg width="${W}" height="${H+16}" role="img" aria-label="${esc(t('dailyT'))}">`;
+  per.forEach((v,i)=>{const h=Math.round(v/max*(H-6)), x=i*bw+1, w=Math.max(2,bw-2);
+    if(v) svg+=`<rect class="mbar${i===days-1?' today':''}" x="${x}" y="${H-h}" width="${w}" height="${h}" rx="${Math.min(3,w/2)}"><title>${i+1}: ${v}</title></rect>`;
+    if(i===0||(i+1)%5===0||i===days-1) svg+=`<text class="maxis" x="${x+w/2}" y="${H+12}" text-anchor="middle">${i+1}</text>`;});
+  svg+=`<line x1="0" x2="${W}" y1="${H}" y2="${H}" stroke="#ddd"/></svg>`;
+  const active=per.filter(v=>v>0).length, best=Math.max(0,...per), bestD=per.indexOf(best)+1;
+  // entries: this month (+ last month while still reportable), newest first, with offline queue on top
+  const showFrom = mine.earliestReport < mStart ? mine.earliestReport : mStart;
+  const corrBy = {}; (mine.corrections||[]).forEach(c=>{ (corrBy[c.entryId]=corrBy[c.entryId]||[]).push(c); });
+  const list = mine.rows.filter(r=>dkey(r.t)>=showFrom).sort((a,b)=>b.t-a.t);
+  const queued = S.get('sh_queue',[]).filter(q=>q.username===session.username);
+  let html='', cur='';
+  if(queued.length){ html+=`<div class="dayh"><span>⏳ ${esc(t('stQueued'))}</span></div>`;
+    queued.forEach(q=>{ html+=`<div class="ent"><div class="tm">${hm(Date.parse(q.deviceTime))}</div><div class="bx"><b>${nf(q.boxes)}</b> ${esc(t('boxes'))}<div class="st"><span class="pill p-q">${esc(t('stQueued'))}</span></div></div></div>`; }); }
+  list.forEach(r=>{
+    const k=dkey(r.t);
+    if(k!==cur){ cur=k; const tot=sum(list.filter(x=>dkey(x.t)===k&&!x.v));
+      html+=`<div class="dayh"><span>${esc(k===today?t('today')+' · '+dayLabel(k):dayLabel(k))}</span><span>${nf(tot)} ${esc(t('boxes'))}</span></div>`; }
+    const cs=(corrBy[r.id]||[]).sort((a,b)=>(a.requestedAt||0)-(b.requestedAt||0)), last=cs[cs.length-1];
+    const pend=cs.find(c=>c.status==='Pending');
+    let st='';
+    if(r.v) st+=`<span class="pill p-void">${esc(t('stVoid'))}</span>`;
+    if(r.am) st+=`<span class="pill p-am">${esc(t('stAm'))}</span>${esc(t('amFrom',{o:nf(r.ob),n:nf(r.b)}))}`;
+    if(pend) st+=`<span class="pill p-pend">✏️ ${esc(t('stPend'))}</span>${esc(pend.type==='void'?t('pendVoid'):t('pendAmend',{n:nf(pend.newBoxes)}))}`;
+    else if(last && last.status==='Rejected') st+=`<span class="pill p-rej">${esc(t('stRej'))}</span>${esc(t('rejBy',{r:last.reviewNote}))}`;
+    const canReport = !r.v && !pend && k>=mine.earliestReport;
+    const btn = pend && pend.requestedBy===session.username ? `<button class="rbtn" data-cancel="${esc(pend.id)}">${esc(t('cancelReq'))}</button>`
+              : canReport ? `<button class="rbtn" data-rep="${esc(r.id)}">⚠️ ${esc(t('report'))}</button>` : '';
+    html+=`<div class="ent${r.v?' void':''}"><div class="tm">${hm(r.t)}</div><div class="bx"><b>${nf(r.b)}</b> ${esc(t('boxes'))}${st?`<div class="st">${st}</div>`:''}</div>${btn}</div>`;
+  });
+  if(!list.length && !queued.length) html+=`<p class="sub" style="padding:10px 0">${esc(t('noEntries'))}</p>`;
+  const pendN = (mine.corrections||[]).filter(c=>c.status==='Pending').length;
+  $('mineBadge').textContent=pendN; $('mineBadge').classList.toggle('hidden',!pendN);
+  $('mineBody').innerHTML=`
+    <div class="tiles" style="margin-top:8px">
+      <div class="tile"><div class="l">${esc(t('today'))}</div><div class="v">${nf(sum(todayR))}</div><div class="u">${esc(t('boxes'))}</div><div class="d">${esc(t('dropsN',{n:todayR.length}))}</div></div>
+      <div class="tile"><div class="l">${esc(t('thisMonth'))}</div><div class="v">${nf(mB)}</div><div class="u">${esc(t('boxes'))}</div><div class="d">${esc(t('dropsN',{n:monthR.length}))}</div></div>
+    </div>
+    <div class="card" style="padding:12px 14px"><div class="d" style="font-size:13px;color:var(--muted);text-align:center">${esc(delta)}</div></div>
+    <div class="card"><p class="ctitle">${esc(t('dailyT'))}</p><p class="csub">${esc(t('dailyS'))}</p>${svg}
+      <div class="stats" style="margin-top:12px"><div><b>${active}</b><span>${esc(t('activeDays'))}</span></div>
+      <div><b>${monthR.length?nf(mB/monthR.length):'–'}</b><span>${esc(t('avgDrop'))}</span></div>
+      <div><b>${best?nf(best):'–'}</b><span>${esc(t('bestDay'))}${best?' ('+bestD+')':''}</span></div></div></div>
+    <div class="card"><p class="ctitle">${esc(t('entriesT'))}</p><p class="csub">${esc(t('entriesS'))}</p>${html}</div>`;
+  $('mUpd').textContent=t('updatedAt',{t:hm(mine.generated)});
+  $('mineBody').querySelectorAll('[data-rep]').forEach(b=>b.onclick=()=>openReport(mine.rows.find(r=>r.id===b.dataset.rep)));
+  $('mineBody').querySelectorAll('[data-cancel]').forEach(b=>b.onclick=async()=>{
+    if(!confirm(t('confirmCancel'))) return;
+    if(!navigator.onLine){ alert(t('repNeedNet')); return; }
+    b.disabled=true; try{ await api({action:'cancel',token:session.token,requestId:b.dataset.cancel}); }catch(e){}
+    loadMine();
+  });
+}
+
+/* report a mistake */
+function openReport(r){
+  repEntry=r; $('repErr').textContent=''; $('repNote').value=''; $('repQty').value='';
+  document.querySelectorAll('input[name=rk]').forEach(i=>i.checked=false);
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('on'));
+  $('repQtyWrap').classList.add('hidden'); $('repSend').disabled=true;
+  $('repEntry').textContent=dayLabel(dkey(r.t))+' · '+hm(r.t)+' · '+nf(r.b)+' '+t('boxes');
+  $('repModal').style.display='flex';
+}
+function repValid(){
+  const k=(document.querySelector('input[name=rk]:checked')||{}).value;
+  if(!k) return false;
+  if(k==='amend'){ const n=parseInt($('repQty').value,10); return n>=MIN_BOXES&&n<=MAX_BOXES&&n!==repEntry.b; }
+  return true;
+}
+document.querySelectorAll('input[name=rk]').forEach(i=>i.onchange=()=>{
+  document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.k===i.value&&i.checked));
+  $('repQtyWrap').classList.toggle('hidden',i.value!=='amend'); if(i.value==='amend') setTimeout(()=>$('repQty').focus(),50);
+  $('repSend').disabled=!repValid();
+});
+$('repQty').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').replace(/^0+/,'').slice(0,4);$('repSend').disabled=!repValid()});
+$('repClose').onclick=()=>{$('repModal').style.display='none'};
+$('repSend').onclick=async()=>{
+  if(!repValid()) return;
+  if(!navigator.onLine){ $('repErr').textContent=t('repNeedNet'); return; }
+  const k=document.querySelector('input[name=rk]:checked').value;
+  const body={action:'request',token:session.token,entryId:repEntry.id,note:$('repNote').value.trim(),
+    type:k==='amend'?'amend':'void', reason:k==='amend'?'wrong_qty':k, newBoxes:k==='amend'?parseInt($('repQty').value,10):''};
+  $('repSend').disabled=true;
+  try{
+    const r=await api(body);
+    if(r.ok){ $('repModal').style.display='none'; alert(t('repOk')); loadMine(); return; }
+    const map={pending_exists:'errPending',window_closed:'errWindow',no_change:'errNoChange',already_void:'errVoid',boxes:'errBoxes',auth:'expired'};
+    $('repErr').textContent=t(map[r.error]||'errServer');
+  }catch(e){ $('repErr').textContent=t('repNeedNet'); }
+  $('repSend').disabled=!repValid();
+};
+
+/* ---------- utils ---------- */
+function uid(){return (crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2))}
+function fmtTime(d){return d.toLocaleString(lang==='vi'?'vi-VN':'en-GB',{timeZone:'Asia/Ho_Chi_Minh',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'})}
+
+/* ---------- boot ---------- */
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+$('uName').value=S.get('sh_lastUser','');
+applyLang();
+if(sessionValid()){show('vEntry');flushQueue()} else {session=null;S.del('sh_session');renderHeader();show('vLogin')}
+</script>
+</body>
+</html>
