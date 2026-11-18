@@ -119,6 +119,12 @@
   textarea{width:100%;font:inherit;font-size:16px;padding:10px;border:2px solid var(--line);border-radius:12px;min-height:70px}
   .refresh{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);margin-top:12px}
   .refresh button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 12px;font-weight:700}
+  .busy{position:fixed;inset:0;z-index:20;background:linear-gradient(170deg,#1A4FA0 0%,#0F2F63 100%);color:#fff;display:none;
+        flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+  .busy .spin{width:74px;height:74px;border-radius:50%;border:7px solid rgba(255,255,255,.25);border-top-color:#F5C84C;animation:spin .9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .busy h2{font-size:26px;margin:22px 0 6px} .busy p{font-size:16px;opacity:.9;margin:0;max-width:320px}
+  .busy .bx{font-size:44px;font-weight:900;color:#F5C84C;margin-top:14px}
   .foot{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
 </style>
 </head>
@@ -227,7 +233,7 @@
     <div id="mineBody"></div>
   </section>
 
-  <div class="foot">SalesData · v3.0.1</div>
+  <div class="foot">SalesData · v3.0.2</div>
 </div>
 
 <!-- Welcome / mission screen (once per login) -->
@@ -238,6 +244,12 @@
     <div class="msg" id="mMsg"></div>
     <button class="btn ok" id="mOk">OK</button>
   </div>
+</div>
+
+<!-- Sending overlay -->
+<div class="busy" id="busy" role="alertdialog" aria-live="assertive">
+  <div class="spin"></div>
+  <h2 id="busyT"></h2><p id="busyS"></p><div class="bx" id="busyB"></div>
 </div>
 
 <!-- Report a mistake -->
@@ -314,6 +326,7 @@ const T = {
     expired:'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
     tagline:'Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển',
     hello:'Xin chào, {n}!',
+    sending:'Đang gửi…', sendingSub:'Đã nhận lệnh gửi. Vui lòng chờ — không cần bấm lại.', loggingIn:'Đang đăng nhập…', pleaseWait:'Vui lòng chờ…',
     tabEntry:'Ghi nhận', tabMine:'Doanh số của tôi', refresh:'Làm mới', updatedAt:'Cập nhật {t}', cancel:'Đóng',
     today:'Hôm nay', thisMonth:'Tháng này', boxes:'thùng', dropsN:'{n} lượt giao', vsLast:'{a} so với cùng kỳ tháng trước', noLast:'tháng trước chưa có dữ liệu',
     dailyT:'Số thùng mỗi ngày — tháng này', dailyS:'Cột vàng = hôm nay.', activeDays:'Ngày làm việc', avgDrop:'TB thùng / lượt', bestDay:'Ngày tốt nhất',
@@ -361,6 +374,7 @@ const T = {
     expired:'Your session has expired. Please log in again.',
     tagline:'Accurate data → Better decisions → Growing together',
     hello:'Hello, {n}!',
+    sending:'Sending…', sendingSub:'Submit received. Please wait — no need to tap again.', loggingIn:'Logging in…', pleaseWait:'Please wait…',
     tabEntry:'Record', tabMine:'My sales', refresh:'Refresh', updatedAt:'Updated {t}', cancel:'Close',
     today:'Today', thisMonth:'This month', boxes:'boxes', dropsN:'{n} drop-offs', vsLast:'{a} vs same point last month', noLast:'no data last month',
     dailyT:'Boxes per day — this month', dailyS:'Gold bar = today.', activeDays:'Active days', avgDrop:'Avg boxes / drop', bestDay:'Best day',
@@ -432,8 +446,16 @@ function renderHeader(){
 $('logoutBtn').onclick=()=>{session=null;mine=null;S.del('sh_session');S.del('sh_mine');renderHeader();show('vLogin')};
 
 /* ---------- API ---------- */
-async function api(payload){
-  const r=await fetch(API_URL,{method:'POST',body:JSON.stringify(payload)}); // text/plain: no CORS preflight
+function busy(on,title,sub,boxes){
+  $('busy').style.display=on?'flex':'none';
+  if(on){$('busyT').textContent=title||t('pleaseWait');$('busyS').textContent=sub||'';$('busyB').textContent=boxes||''}
+}
+async function api(payload,timeoutMs){
+  const ctl=('AbortController' in window)?new AbortController():null;
+  const timer=ctl&&timeoutMs?setTimeout(()=>ctl.abort(),timeoutMs):null;
+  let r;
+  try{ r=await fetch(API_URL,{method:'POST',body:JSON.stringify(payload),signal:ctl?ctl.signal:undefined}); } // text/plain: no CORS preflight
+  finally{ if(timer) clearTimeout(timer); }
   if(!r.ok) throw new Error('http '+r.status);
   return r.json();
 }
@@ -446,7 +468,7 @@ $('loginBtn').onclick=async()=>{
   $('loginErr').textContent='';
   if(!u||!/^\d{4}$/.test(p)){$('loginErr').textContent=t('errFill');return}
   if(!navigator.onLine){$('loginErr').textContent=t('errNet');return}
-  const b=$('loginBtn'); b.disabled=true;
+  const b=$('loginBtn'); b.disabled=true; busy(true,t('loggingIn'));
   try{
     const res=await api({action:'login',username:u,pin:p,app:'field'});
     if(res.ok){
@@ -457,7 +479,7 @@ $('loginBtn').onclick=async()=>{
       $('loginErr').textContent = res.error==='locked'?t('errLocked'):t('errLogin');
     }
   }catch(e){$('loginErr').textContent=navigator.onLine?t('errServer'):t('errNet')}
-  b.disabled=false;
+  busy(false); b.disabled=false;
 };
 
 /* ---------- GPS (runs only while entry screen is open & visible) ---------- */
@@ -550,15 +572,17 @@ $('backBtn').onclick=()=>{pending=null;show('vEntry')};
 $('submitBtn').onclick=async()=>{
   if(!pending) return;
   const rec={...pending,token:session.token,username:session.username,name:session.name};
-  const b=$('submitBtn'); b.disabled=true;
+  const b=$('submitBtn'); if(b.disabled) return; b.disabled=true;
+  busy(true,t('sending'),t('sendingSub'),rec.boxes.toLocaleString(lang==='vi'?'vi-VN':'en-US')+' '+t('boxesUnit'));
   let sent=false;
   if(navigator.onLine){
     try{
-      const res=await api({action:'submit',...rec});
+      const res=await api({action:'submit',...rec},15000);   // slow network: give up after 15 s and keep it on the phone
       if(res.ok) sent=true;
-      else if(res.error==='auth'){alert(t('expired'));session=null;S.del('sh_session');renderHeader();b.disabled=false;show('vLogin');return}
+      else if(res.error==='auth'){busy(false);alert(t('expired'));session=null;S.del('sh_session');renderHeader();b.disabled=false;show('vLogin');return}
     }catch(e){}
   }
+  busy(false);
   if(!sent){rec.offline=true;const q=S.get('sh_queue',[]);q.push(rec);S.set('sh_queue',q)}
   b.disabled=false;
   $('dTick').className='tick'+(sent?'':' amber'); $('dTick').textContent=sent?'✓':'⏳';
