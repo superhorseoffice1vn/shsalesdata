@@ -1,6 +1,6 @@
 // SalesData service worker — lets the app open with no signal (data queue lives in the page).
-const CACHE = 'salesdata-v9';
-const FILES = ['./', './index.html', './manifest.json', './logo.png', './icon.png'];
+const CACHE = 'salesdata-v10';
+const FILES = ['./', './index.html', './manifest.json', './logo.png', './icon.png', './guide-sales.html', './guide.css', './guide.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => Promise.all(FILES.map(f => c.add(f).catch(() => {})))));

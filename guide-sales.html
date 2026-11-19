@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1A4FA0">
+<title data-vi="Hướng dẫn nhân viên bán hàng · SalesData" data-en="Sales staff guide · SalesData">Hướng dẫn nhân viên bán hàng · SalesData</title>
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="guide.css">
+<script src="guide.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <img src="logo.png" alt="Super Horse">
+  <div class="t">SalesData <small><span class="vi">Hướng dẫn nhân viên bán hàng</span><span class="en">Sales staff guide</span></small></div>
+  <a class="chip" id="backBtn" href="index.html" style="display:none"><span class="vi">← Về ứng dụng</span><span class="en">← Back to app</span></a>
+  <button class="chip" id="langBtn">English</button>
+</div></header>
+<div class="tagline"><span class="vi">Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển</span><span class="en">Accurate data → Better decisions → Growing together</span></div>
+
+<div class="wrap">
+<nav class="toc" id="toc"></nav>
+<main>
+  <div class="hero">
+    <span class="role"><span class="vi">Nhân viên bán hàng</span><span class="en">Sales staff</span></span>
+    <h1><span class="vi">Hướng dẫn sử dụng SalesData</span><span class="en">How to use SalesData</span></h1>
+    <p><span class="vi">Ghi nhận mỗi lần giao thùng Super Horse cho khách hàng sau đại lý cấp 1, xem doanh số của bạn, và báo lỗi khi nhập sai.</span>
+       <span class="en">Record every drop-off of Super Horse boxes to customers below DL1 distributors, see your own sales, and report a mistake if you entered something wrong.</span></p>
+  </div>
+  <details class="mtoc" id="mtoc"></details>
+
+  <section>
+    <h2 id="why"><span class="vi">Vì sao cần ghi nhận?</span><span class="en">Why we record drop-offs</span></h2>
+    <p class="vi">Mỗi lần giao hàng được <b>ghi nhận chính xác</b> giúp chúng ta biết <b>khách hàng của mình ở đâu</b>. Chúng ta dùng dữ liệu đó để lập kế hoạch tốt hơn, hỗ trợ khách hàng tốt hơn, và cùng nhau phát triển công ty của chúng ta — Super Horse Energy Drink.</p>
+    <p class="en">Every drop-off you <b>record accurately</b> shows us <b>where our customers are</b>. We use that data to plan smarter, support our customers better, and grow our company, Super Horse Energy Drink, together.</p>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Dữ liệu dùng để</span><span class="en">We use the data to</span></th><th></th></tr>
+      <tr><td><b><span class="vi">Tìm thị trường</span><span class="en">Find our markets</span></b></td><td><span class="vi">Biết khu vực nào bán chạy và nơi cần mở rộng.</span><span class="en">See which areas sell most and where to expand.</span></td></tr>
+      <tr><td><b><span class="vi">Kế hoạch hàng & giao hàng</span><span class="en">Plan stock & delivery</span></b></td><td><span class="vi">Đúng số lượng, đúng nơi, đúng lúc.</span><span class="en">The right amount, in the right place, at the right time.</span></td></tr>
+      <tr><td><b><span class="vi">Hỗ trợ nhà phân phối</span><span class="en">Support distributors</span></b></td><td><span class="vi">Hiểu cách hàng đi từ đại lý cấp 1 và giúp họ bán nhiều hơn.</span><span class="en">Understand how product moves on from DL1 and help them sell more.</span></td></tr>
+      <tr><td><b><span class="vi">Marketing đúng chỗ</span><span class="en">Target marketing</span></b></td><td><span class="vi">Quảng bá ở nơi hiệu quả nhất.</span><span class="en">Promote where it has the most impact.</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2 id="start"><span class="n">1</span><span class="vi">Bắt đầu</span><span class="en">Getting started</span></h2>
+    <ol class="steps">
+      <li><b><span class="vi">Mở đường link ứng dụng</span><span class="en">Open the app link</span></b>
+        <span class="vi">Quản lý sẽ gửi cho bạn đường link, tên đăng nhập và mã PIN 4 số. <b>Giữ bí mật mã PIN.</b></span>
+        <span class="en">Your manager sends you the link, your username and a 4-digit PIN. <b>Keep your PIN private.</b></span></li>
+      <li><b><span class="vi">Thêm vào màn hình chính</span><span class="en">Add it to your home screen</span></b>
+        <span class="vi">iPhone (Safari): bấm <b>Chia sẻ</b> → <b>Thêm vào MH chính</b>. Android (Chrome): bấm <b>⋮</b> → <b>Thêm vào màn hình chính</b>. Lần sau chỉ cần chạm vào biểu tượng.</span>
+        <span class="en">iPhone (Safari): tap <b>Share</b> → <b>Add to Home Screen</b>. Android (Chrome): tap <b>⋮</b> → <b>Add to Home screen</b>. Next time, just tap the icon.</span></li>
+      <li><b><span class="vi">Cho phép Vị trí</span><span class="en">Allow Location</span></b>
+        <span class="vi">Khi điện thoại hỏi, chọn <b>Cho phép</b>. Ứng dụng cần vị trí để ghi nơi giao hàng.</span>
+        <span class="en">When the phone asks, choose <b>Allow</b>. The app needs your location to record where the boxes were delivered.</span></li>
+      <li><b><span class="vi">Đăng nhập mỗi sáng</span><span class="en">Log in each morning</span></b>
+        <span class="vi">Nhập tên đăng nhập và mã PIN, bấm <span class="btnlike">Đăng nhập</span>. Phiên đăng nhập hết hạn lúc nửa đêm. Đăng nhập cần có mạng — hãy đăng nhập trước khi đi.</span>
+        <span class="en">Enter your username and PIN and tap <span class="btnlike">Log in</span>. Your login ends at midnight. Logging in needs signal, so do it before you head out.</span></li>
+      <li><b><span class="vi">Đọc lời chào và bấm OK</span><span class="en">Read the welcome message and tap OK</span></b></li>
+    </ol>
+    <div class="figs">
+      <figure><img src="guide-img/s1-login.jpg" alt="" loading="lazy"><figcaption><span class="vi">Màn hình đăng nhập</span><span class="en">Login screen</span></figcaption></figure>
+      <figure><img src="guide-img/s2-welcome.jpg" alt="" loading="lazy"><figcaption><span class="vi">Lời chào sau khi đăng nhập</span><span class="en">Welcome message after login</span></figcaption></figure>
+    </div>
+    <p><span class="vi">Nút <b>EN</b> / <b>VI</b> ở góc trên đổi ngôn ngữ. Nút <b>?</b> mở hướng dẫn này.</span><span class="en">The <b>EN</b> / <b>VI</b> button at the top switches language. The <b>?</b> button opens this guide.</span></p>
+  </section>
+
+  <section>
+    <h2 id="record"><span class="n">2</span><span class="vi">Ghi nhận một lượt giao hàng</span><span class="en">Record a drop-off</span></h2>
+    <p class="lead"><span class="vi">Làm ngay tại điểm giao hàng — mỗi điểm giao là một lần ghi nhận.</span><span class="en">Do it at the drop-off point, one entry for each place you deliver to.</span></p>
+    <ol class="steps">
+      <li><b><span class="vi">Chờ GPS chuyển xanh</span><span class="en">Wait for green GPS</span></b>
+        <span class="vi">Màu sắc cho biết <b>độ chính xác của vị trí</b>, không phải tín hiệu điện thoại.</span>
+        <span class="en">The colour shows <b>how accurate your location is</b>, not your phone signal.</span>
+        <div class="tbl"><table>
+          <tr><td><span class="dot g"></span><b><span class="vi">Xanh</span><span class="en">Green</span></b> ±20 m</td><td><span class="vi">Gửi được ngay.</span><span class="en">You can submit now.</span></td></tr>
+          <tr><td><span class="dot o"></span><b><span class="vi">Cam</span><span class="en">Orange</span></b> ±21–50 m</td><td><span class="vi">Gửi được sau 20 giây chờ (hoặc chờ chuyển xanh).</span><span class="en">You can submit after waiting 20 seconds (or wait for green).</span></td></tr>
+          <tr><td><span class="dot r"></span><b><span class="vi">Đỏ</span><span class="en">Red</span></b> &gt;50 m</td><td><span class="vi">Chưa gửi được. Ra chỗ thoáng.</span><span class="en">Cannot submit yet. Move to an open spot.</span></td></tr>
+        </table></div></li>
+      <li><b><span class="vi">Nhập số thùng</span><span class="en">Enter the number of boxes</span></b>
+        <span class="vi">Từ 1 đến 2.400 thùng. Trên 500 thùng, ứng dụng hỏi lại để tránh gõ nhầm.</span>
+        <span class="en">From 1 to 2,400 boxes. Above 500, the app asks you to double-check to catch typos.</span></li>
+      <li><b><span class="vi">Bấm Xác nhận</span><span class="en">Tap Confirm</span></b> <span class="vi"><span class="btnlike">Xác nhận</span> sáng lên khi GPS và số thùng hợp lệ.</span><span class="en"><span class="btnlike">Confirm</span> turns on when the GPS and box count are OK.</span></li>
+      <li><b><span class="vi">Kiểm tra lại rồi bấm Gửi</span><span class="en">Check, then tap Submit</span></b>
+        <span class="vi">Màn hình <b>Kiểm tra lại</b> hiện số thùng, thời gian và vị trí. Bấm <span class="btnlike g2">Gửi</span>, hoặc <span class="btnlike w">Quay lại sửa</span> nếu cần sửa.</span>
+        <span class="en">The <b>Check again</b> screen shows boxes, time and location. Tap <span class="btnlike g2">Submit</span>, or <span class="btnlike w">Go back and edit</span> to change it.</span></li>
+      <li><b><span class="vi">Chờ màn hình "Đang gửi…"</span><span class="en">Wait for "Sending…"</span></b>
+        <span class="vi">Màn hình xanh hiện ngay khi bạn bấm Gửi. <b>Không cần bấm lại.</b></span>
+        <span class="en">A blue screen appears as soon as you tap Submit. <b>No need to tap again.</b></span></li>
+      <li><b><span class="vi">Xem kết quả</span><span class="en">See the result</span></b>
+        <span class="vi">✓ <b>Gửi thành công</b> — đã lưu. ⏳ <b>Đã lưu trên máy</b> — chưa có mạng, sẽ tự gửi sau. Bấm <span class="btnlike">Ghi nhận mới</span> cho điểm giao tiếp theo.</span>
+        <span class="en">✓ <b>Sent successfully</b>: saved. ⏳ <b>Saved on phone</b>: no signal, it will send automatically later. Tap <span class="btnlike">New entry</span> for your next drop-off.</span></li>
+    </ol>
+    <div class="figs">
+      <figure><img src="guide-img/s4-entry-ready.jpg" alt="" loading="lazy"><figcaption><span class="vi">GPS xanh, đã nhập số thùng</span><span class="en">Green GPS, boxes entered</span></figcaption></figure>
+      <figure><img src="guide-img/s3b-gps-orange.jpg" alt="" loading="lazy"><figcaption><span class="vi">GPS cam — chờ 20 giây</span><span class="en">Orange GPS: wait 20 seconds</span></figcaption></figure>
+      <figure><img src="guide-img/s5-review.jpg" alt="" loading="lazy"><figcaption><span class="vi">Kiểm tra lại trước khi gửi</span><span class="en">Check before sending</span></figcaption></figure>
+      <figure><img src="guide-img/s6-sending.jpg" alt="" loading="lazy"><figcaption><span class="vi">Đang gửi — không cần bấm lại</span><span class="en">Sending: no need to tap again</span></figcaption></figure>
+      <figure><img src="guide-img/s7-done.jpg" alt="" loading="lazy"><figcaption><span class="vi">Gửi thành công</span><span class="en">Sent successfully</span></figcaption></figure>
+    </div>
+    <p class="tip"><span class="vi">Để GPS tốt hơn: đứng ngoài trời, tránh mái che và nhà cao tầng, chờ vài giây.</span><span class="en">For better GPS: stand outdoors, away from roofs and tall buildings, and wait a few seconds.</span></p>
+  </section>
+
+  <section>
+    <h2 id="mine"><span class="n">3</span><span class="vi">Xem doanh số của tôi</span><span class="en">See my sales</span></h2>
+    <p><span class="vi">Chạm tab <b>Doanh số của tôi</b>. Đây là màn hình <b>chỉ xem</b> — bạn không thể sửa dữ liệu ở đây.</span>
+       <span class="en">Tap the <b>My sales</b> tab. This screen is <b>view only</b>; you can't change data here.</span></p>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Mục</span><span class="en">Item</span></th><th><span class="vi">Ý nghĩa</span><span class="en">What it shows</span></th></tr>
+      <tr><td><b><span class="vi">Hôm nay</span><span class="en">Today</span></b></td><td><span class="vi">Tổng số thùng và số lượt giao hôm nay.</span><span class="en">Total boxes and drop-offs today.</span></td></tr>
+      <tr><td><b><span class="vi">Tháng này</span><span class="en">This month</span></b></td><td><span class="vi">Tổng tháng, và so với cùng kỳ tháng trước (▲ tăng / ▼ giảm).</span><span class="en">Month total, compared with the same point last month (▲ up / ▼ down).</span></td></tr>
+      <tr><td><b><span class="vi">Số thùng mỗi ngày</span><span class="en">Boxes per day</span></b></td><td><span class="vi">Biểu đồ cột của tháng này. Cột vàng = hôm nay.</span><span class="en">Bar chart for this month. Gold bar = today.</span></td></tr>
+      <tr><td><b><span class="vi">Ngày làm việc · TB / lượt · Ngày tốt nhất</span><span class="en">Active days · Avg / drop · Best day</span></b></td><td><span class="vi">Số ngày có giao hàng, trung bình thùng mỗi lượt, ngày nhiều nhất.</span><span class="en">Days with deliveries, average boxes per drop-off, and your biggest day.</span></td></tr>
+      <tr><td><b><span class="vi">Các lượt giao của tôi</span><span class="en">My drop-offs</span></b></td><td><span class="vi">Từng lượt giao theo ngày, mới nhất trước, kèm trạng thái.</span><span class="en">Each drop-off by day, newest first, with its status.</span></td></tr>
+    </table></div>
+    <div class="figs">
+      <figure><img src="guide-img/s8-mine.jpg" alt="" loading="lazy"><figcaption><span class="vi">Doanh số của tôi</span><span class="en">My sales</span></figcaption></figure>
+      <figure><img src="guide-img/s9-entries.jpg" alt="" loading="lazy"><figcaption><span class="vi">Danh sách lượt giao</span><span class="en">List of drop-offs</span></figcaption></figure>
+    </div>
+    <h3><span class="vi">Trạng thái</span><span class="en">Statuses</span></h3>
+    <div class="tbl"><table>
+      <tr><td><span class="pill p-q"><span class="vi">Chưa gửi (chờ mạng)</span><span class="en">Not sent yet</span></span></td><td><span class="vi">Đang lưu trên điện thoại, sẽ tự gửi khi có mạng.</span><span class="en">Saved on your phone; sends automatically when you have signal.</span></td></tr>
+      <tr><td><span class="pill p-pend">✏️ <span class="vi">Chờ duyệt</span><span class="en">Pending review</span></span></td><td><span class="vi">Bạn đã báo lỗi, quản lý dữ liệu chưa xử lý.</span><span class="en">You reported a mistake; a data manager hasn't reviewed it yet.</span></td></tr>
+      <tr><td><span class="pill p-am"><span class="vi">Đã sửa</span><span class="en">Amended</span></span></td><td><span class="vi">Đã duyệt. Hiện số gốc → số mới.</span><span class="en">Approved. Shows original → new number.</span></td></tr>
+      <tr><td><span class="pill p-void"><span class="vi">Đã hủy</span><span class="en">Voided</span></span></td><td><span class="vi">Mục bị trùng/sai đã được hủy — không tính vào doanh số.</span><span class="en">Duplicate or wrong entry was voided and no longer counts.</span></td></tr>
+      <tr><td><span class="pill p-rej"><span class="vi">Bị từ chối</span><span class="en">Rejected</span></span></td><td><span class="vi">Quản lý không đồng ý. Lý do hiện ngay bên cạnh.</span><span class="en">The manager didn't agree. The reason is shown next to it.</span></td></tr>
+    </table></div>
+    <p><span class="vi">Số trên tab (ví dụ <span class="pill p-pend">1</span>) là số yêu cầu đang chờ duyệt. Bấm <span class="btnlike w">Làm mới</span> để cập nhật.</span>
+       <span class="en">The number on the tab (e.g. <span class="pill p-pend">1</span>) is how many of your requests are waiting. Tap <span class="btnlike w">Refresh</span> to update.</span></p>
+  </section>
+
+  <section>
+    <h2 id="report"><span class="n">4</span><span class="vi">Báo lỗi khi nhập sai</span><span class="en">Report a mistake</span></h2>
+    <p><span class="vi">Bạn không thể tự sửa dữ liệu. Nếu nhập sai, hãy <b>báo lỗi</b> để quản lý dữ liệu kiểm tra. <b>Đừng gửi thêm một lượt mới để "sửa"</b> — sẽ thành trùng.</span>
+       <span class="en">You can't edit data yourself. If you entered something wrong, <b>report it</b> so a data manager can check. <b>Don't submit a second entry to "fix" it</b>: that creates a duplicate.</span></p>
+    <ol class="steps">
+      <li><b><span class="vi">Mở tab Doanh số của tôi</span><span class="en">Open My sales</span></b><span class="vi">Tìm lượt giao bị sai.</span><span class="en">Find the wrong entry.</span></li>
+      <li><b><span class="vi">Bấm ⚠️ Báo lỗi</span><span class="en">Tap ⚠️ Report</span></b></li>
+      <li><b><span class="vi">Chọn loại lỗi</span><span class="en">Choose what's wrong</span></b>
+        <span class="vi"><b>Sai số thùng</b> (nhập số đúng) · <b>Mục bị trùng</b> (nhập 2 lần) · <b>Không phải lượt giao của tôi</b>. Thêm ghi chú nếu cần.</span>
+        <span class="en"><b>Wrong number of boxes</b> (type the correct number) · <b>Duplicate</b> (entered twice) · <b>Not my drop-off</b>. Add a note if useful.</span></li>
+      <li><b><span class="vi">Bấm Gửi yêu cầu</span><span class="en">Tap Send request</span></b><span class="vi">Cần có mạng. Trạng thái chuyển thành <span class="pill p-pend">✏️ Chờ duyệt</span>.</span><span class="en">Needs signal. The status changes to <span class="pill p-pend">✏️ Pending review</span>.</span></li>
+      <li><b><span class="vi">Chờ kết quả</span><span class="en">Wait for the result</span></b><span class="vi">Mở lại tab để xem: Đã sửa, Đã hủy, hoặc Bị từ chối (kèm lý do).</span><span class="en">Check the tab again later: Amended, Voided, or Rejected (with a reason).</span></li>
+    </ol>
+    <div class="figs"><figure><img src="guide-img/s10-report.jpg" alt="" loading="lazy"><figcaption><span class="vi">Báo lỗi lượt giao</span><span class="en">Report a mistake</span></figcaption></figure></div>
+    <div class="flow">
+      <div class="b"><b><span class="vi">Bạn báo lỗi</span><span class="en">You report</span></b><span class="vi">Chọn lỗi, gửi yêu cầu</span><span class="en">Choose the mistake, send</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Chờ duyệt</span><span class="en">Pending</span></b><span class="vi">Quản lý dữ liệu kiểm tra</span><span class="en">A data manager checks it</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Kết quả</span><span class="en">Result</span></b><span class="vi">Đã sửa / Đã hủy / Bị từ chối</span><span class="en">Amended / Voided / Rejected</span></div>
+    </div>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Quy tắc</span><span class="en">Rule</span></th><th></th></tr>
+      <tr><td><b><span class="vi">Thời hạn</span><span class="en">Time limit</span></b></td><td><span class="vi">Báo lỗi được cho các lượt trong tháng này. Lượt của tháng trước: đến hết ngày 3 tháng này.</span><span class="en">You can report entries from this month. Last month's entries: until the 3rd of this month.</span></td></tr>
+      <tr><td><b><span class="vi">Mỗi lần một yêu cầu</span><span class="en">One at a time</span></b></td><td><span class="vi">Một lượt giao chỉ có một yêu cầu đang chờ.</span><span class="en">Each entry can only have one request waiting.</span></td></tr>
+      <tr><td><b><span class="vi">Đổi ý?</span><span class="en">Changed your mind?</span></b></td><td><span class="vi">Bấm <span class="btnlike w">Hủy yêu cầu</span> khi yêu cầu còn đang chờ.</span><span class="en">Tap <span class="btnlike w">Cancel request</span> while it's still pending.</span></td></tr>
+      <tr><td><b><span class="vi">Dữ liệu gốc</span><span class="en">The original</span></b></td><td><span class="vi">Không bao giờ bị xóa. Mọi thay đổi đều được ghi lại.</span><span class="en">Is never deleted. Every change is logged.</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2 id="faq"><span class="vi">Câu hỏi thường gặp</span><span class="en">FAQ</span></h2>
+    <div class="faqtools"><button data-faq="open"><span class="vi">Mở tất cả</span><span class="en">Open all</span></button><button data-faq="close"><span class="vi">Đóng tất cả</span><span class="en">Close all</span></button></div>
+
+    <details class="q"><summary><span class="vi">Tôi muốn thay đổi dữ liệu đã gửi thì làm thế nào?</span><span class="en">How do I change data I've already sent?</span></summary><div class="a">
+      <span class="vi">Bạn không thể tự sửa dữ liệu. Vào tab <b>Doanh số của tôi</b>, tìm lượt giao cần sửa và bấm <b>⚠️ Báo lỗi</b>: chọn sai số thùng (nhập số đúng), mục bị trùng, hoặc không phải lượt giao của tôi. Quản lý dữ liệu sẽ kiểm tra và duyệt; bạn xem kết quả ngay trong tab đó (xem mục 4). Dữ liệu gốc luôn được giữ lại và mọi thay đổi đều được ghi nhật ký.</span>
+      <span class="en">You can't edit data yourself. Open <b>My sales</b>, find the entry and tap <b>⚠️ Report</b>: choose wrong number of boxes (type the correct number), duplicate, or not my drop-off. A data manager checks and approves it, and you see the result in the same tab (see section 4). The original is always kept and every change is logged.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Thông tin bán hàng được lưu ở đâu?</span><span class="en">Where is the sales information stored?</span></summary><div class="a">
+      <span class="vi">Trên hệ thống Google Sheets của công ty, kèm một bản sao lưu riêng để kiểm toán. Chỉ admin truy cập trực tiếp được; quản lý dữ liệu làm việc qua trang quản lý; nhân viên chỉ xem dữ liệu của chính mình trong ứng dụng. Khi không có mạng, lượt giao được lưu tạm trên điện thoại (⏳) cho đến khi gửi được.</span>
+      <span class="en">In the company's Google Sheets, with a separate backup copy for audit. Only the admin has direct access; data managers work through the manager page; staff see only their own data in the app. Without signal, a drop-off waits on your phone (⏳) until it can be sent.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Có biết được đại lý nhập bao nhiêu, bán bao nhiêu và tồn kho bao nhiêu không?</span><span class="en">Can we see how much a distributor buys, sells and has in stock?</span></summary><div class="a">
+      <span class="vi">Hiện tại chưa. Ứng dụng chỉ ghi nhận <b>nơi thùng được giao sau đại lý cấp 1</b> (ai giao, bao nhiêu thùng, khi nào, ở đâu). Ứng dụng chưa ghi hàng đến từ đại lý nào và chưa có số liệu tồn kho. Tính năng này đang được xem xét cho phiên bản sau.</span>
+      <span class="en">Not yet. The app only records <b>where boxes are dropped off below DL1</b> (who, how many, when and where). It doesn't yet record which distributor the boxes came from, and it has no stock figures. This is being considered for a future version.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Ứng dụng có làm hao pin không?</span><span class="en">Does the app drain my battery?</span></summary><div class="a">
+      <span class="vi">Không. GPS chỉ hoạt động khi màn hình nhập liệu đang mở, và tự tắt khi bạn khóa máy hoặc chuyển ứng dụng. Ứng dụng không theo dõi bạn khi chạy nền.</span>
+      <span class="en">No. GPS only runs while the entry screen is open, and it stops when you lock the phone or switch apps. The app never tracks you in the background.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Tôi có bị theo dõi vị trí không?</span><span class="en">Am I being tracked?</span></summary><div class="a">
+      <span class="vi">Không. Vị trí chỉ được ghi lại đúng lúc bạn bấm Gửi, để biết hàng được giao ở đâu.</span>
+      <span class="en">No. Your location is recorded only at the moment you tap Submit, to show where the boxes were delivered.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Nếu không có Wi-Fi hoặc 4G/5G thì sao?</span><span class="en">What if I have no Wi-Fi or 4G/5G?</span></summary><div class="a">
+      <span class="vi">Vẫn ghi nhận được — GPS dùng vệ tinh. Dữ liệu được lưu trên điện thoại (⏳) và tự gửi khi có mạng, không cần nhập lại. Không xóa dữ liệu trình duyệt hoặc xóa ứng dụng khi còn mục chưa gửi. Đăng nhập và báo lỗi thì cần có mạng.</span>
+      <span class="en">You can still record. GPS works from satellites. The entry is saved on your phone (⏳) and sends automatically when you have signal, with no need to re-enter it. Don't clear browser data or delete the app while entries are waiting. Logging in and reporting a mistake do need signal.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Mạng yếu, màn hình "Đang gửi…" lâu quá?</span><span class="en">Slow signal: "Sending…" takes a long time?</span></summary><div class="a">
+      <span class="vi">Chờ tối đa 15 giây. Nếu vẫn chưa gửi được, ứng dụng tự lưu trên máy (⏳) và gửi sau. Không cần bấm lại — dữ liệu không bị trùng.</span>
+      <span class="en">It waits up to 15 seconds. If it still can't send, the app saves it on your phone (⏳) and sends it later. No need to tap again; it won't be counted twice.</span></div></details>
+
+    <details class="q"><summary><span class="vi">GPS màu cam hoặc đỏ thì làm gì?</span><span class="en">The GPS is orange or red. What do I do?</span></summary><div class="a">
+      <span class="vi">Ra ngoài trời, tránh mái che và nhà cao tầng, chờ vài giây. Cam: gửi được sau 20 giây. Đỏ: chưa gửi được.</span>
+      <span class="en">Step outside, away from roofs and tall buildings, and wait a few seconds. Orange: you can submit after 20 seconds. Red: you can't submit yet.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Vị trí bị chặn — bật lại thế nào?</span><span class="en">Location is blocked. How do I turn it on?</span></summary><div class="a">
+      <span class="vi">iPhone: Cài đặt → Quyền riêng tư & Bảo mật → Dịch vụ định vị → bật, rồi chọn Safari → "Khi dùng ứng dụng". Android: Cài đặt → Vị trí → bật; trong Chrome: ⋮ → Cài đặt → Cài đặt trang web → Vị trí → cho phép trang SalesData. Sau đó tải lại ứng dụng.</span>
+      <span class="en">iPhone: Settings → Privacy & Security → Location Services → on, then Safari → "While Using the App". Android: Settings → Location → on; in Chrome: ⋮ → Settings → Site settings → Location → allow the SalesData site. Then reload the app.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Tôi nhập sai số thùng. Sửa thế nào?</span><span class="en">I entered the wrong number. How do I fix it?</span></summary><div class="a">
+      <span class="vi">Dùng <b>⚠️ Báo lỗi</b> trong tab Doanh số của tôi (xem mục 4). Không gửi thêm một lượt mới để sửa.</span>
+      <span class="en">Use <b>⚠️ Report</b> in the My sales tab (see section 4). Don't submit a second entry to correct it.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Tôi lỡ gửi một lượt hai lần.</span><span class="en">I sent the same drop-off twice.</span></summary><div class="a">
+      <span class="vi">Báo lỗi trên một trong hai lượt và chọn <b>Mục bị trùng</b>. Sau khi duyệt, lượt đó bị hủy và không tính vào doanh số.</span>
+      <span class="en">Report one of the two entries and choose <b>Duplicate</b>. Once approved, it's voided and no longer counts.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Yêu cầu của tôi bị từ chối. Tại sao?</span><span class="en">My request was rejected. Why?</span></summary><div class="a">
+      <span class="vi">Lý do hiện ngay bên cạnh trạng thái "Bị từ chối". Nếu chưa đồng ý, hãy liên hệ quản lý dữ liệu và giải thích thêm.</span>
+      <span class="en">The reason is shown next to the "Rejected" status. If you still disagree, contact a data manager and explain.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Quá hạn báo lỗi thì sao?</span><span class="en">Too late to report it?</span></summary><div class="a">
+      <span class="vi">Nút Báo lỗi sẽ không hiện. Hãy liên hệ trực tiếp quản lý dữ liệu — họ vẫn có thể sửa, kèm lý do.</span>
+      <span class="en">The Report button won't show. Contact a data manager directly; they can still make the correction, with a reason.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Quên tên đăng nhập hoặc mã PIN?</span><span class="en">Forgot my username or PIN?</span></summary><div class="a">
+      <span class="vi">Liên hệ quản lý của bạn để được tra cứu hoặc cấp mã PIN mới. Nhập sai PIN 5 lần sẽ bị khóa 15 phút.</span>
+      <span class="en">Ask your manager to look it up or give you a new PIN. After 5 wrong PINs, your login is locked for 15 minutes.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Tại sao phải đăng nhập mỗi ngày?</span><span class="en">Why do I log in every day?</span></summary><div class="a">
+      <span class="vi">Để bảo mật. Phiên đăng nhập hết hạn lúc nửa đêm.</span><span class="en">For security. Your login ends at midnight.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Một "thùng" được tính thế nào?</span><span class="en">What counts as one "box"?</span></summary><div class="a">
+      <span class="vi">Một thùng carton nguyên, đúng như khi xuất từ nhà máy.</span><span class="en">One full carton, exactly as shipped from the factory.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Giao ở nhiều nơi: nhập một lần hay nhiều lần?</span><span class="en">Several places: one entry or several?</span></summary><div class="a">
+      <span class="vi">Mỗi điểm giao nhập một lần, ngay tại điểm đó.</span><span class="en">One entry at each place, made while you're there.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Có thể đăng nhập hộ đồng nghiệp không?</span><span class="en">Can I log in for a colleague?</span></summary><div class="a">
+      <span class="vi">Không. Mọi lượt giao được ghi dưới tên của bạn. Giữ bí mật mã PIN.</span><span class="en">No. Every entry is recorded under your name. Keep your PIN private.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Đổi điện thoại mới?</span><span class="en">I changed phones.</span></summary><div class="a">
+      <span class="vi">Chỉ cần đăng nhập trên máy mới. Nếu máy cũ còn mục ⏳ chưa gửi, hãy kết nối mạng cho máy cũ trước.</span>
+      <span class="en">Just log in on the new phone. If the old phone still has ⏳ entries waiting, connect it to signal first so they send.</span></div></details>
+  </section>
+</main>
+</div>
+<footer>SalesData · Super Horse Energy Drink · <a href="guide.html"><span class="vi">Tất cả hướng dẫn</span><span class="en">All guides</span></a></footer>
+</body>
+</html>

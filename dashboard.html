@@ -171,7 +171,8 @@
   <div class="hdr">
     <img src="logo.png" alt="Super Horse" onerror="this.remove()">
     <div class="ttl"><b>SalesData · <span data-i="dash" style="font-size:inherit;opacity:1"></span></b><span id="who"></span></div>
-    <button class="chip" id="langBtn">VI</button>
+    <a class="chip" id="helpBtn" href="guide-admin.html?from=app" title="Help / Hướng dẫn" aria-label="Help" style="text-decoration:none;font-weight:800;min-width:34px;text-align:center">?</a>
+      <button class="chip" id="langBtn">VI</button>
     <button class="chip hidden" id="logoutBtn" data-i="logout"></button>
   </div>
 </header>
@@ -390,7 +391,7 @@ const wdShort = k => { const [y,m,d]=k.split('-').map(Number); return new Date(D
 function applyLang(){
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-i]').forEach(el => el.textContent = t(el.dataset.i));
-  $('langBtn').textContent = lang === 'vi' ? 'EN' : 'VI';
+  $('langBtn').textContent = lang === 'vi' ? 'EN' : 'VI'; $('helpBtn').href='guide-admin.html?from=app&lang='+lang;
   if (data) { fillEmpSelect(); render(); }
 }
 $('langBtn').onclick = () => { lang = lang==='vi'?'en':'vi'; S.set('sd_dash_lang',lang); applyLang(); };

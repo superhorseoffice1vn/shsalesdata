@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1A4FA0">
+<title data-vi="Hướng dẫn quản lý dữ liệu · SalesData" data-en="Data manager guide · SalesData">Hướng dẫn quản lý dữ liệu · SalesData</title>
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="guide.css">
+<script src="guide.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <img src="logo.png" alt="Super Horse">
+  <div class="t">SalesData <small><span class="vi">Hướng dẫn quản lý dữ liệu</span><span class="en">Data manager guide</span></small></div>
+  <a class="chip" id="backBtn" href="manager.html" style="display:none"><span class="vi">← Về trang quản lý</span><span class="en">← Back to manager</span></a>
+  <button class="chip" id="langBtn">English</button>
+</div></header>
+<div class="tagline"><span class="vi">Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển</span><span class="en">Accurate data → Better decisions → Growing together</span></div>
+
+<div class="wrap">
+<nav class="toc" id="toc"></nav>
+<main>
+  <div class="hero">
+    <span class="role"><span class="vi">Quản lý dữ liệu</span><span class="en">Data manager</span></span>
+    <h1><span class="vi">Duyệt và sửa dữ liệu bán hàng</span><span class="en">Reviewing and correcting sales data</span></h1>
+    <p><span class="vi">Bạn giữ cho dữ liệu chính xác: kiểm tra yêu cầu báo lỗi của nhân viên, duyệt hoặc từ chối, và sửa trực tiếp khi cần — mọi thao tác đều được ghi lại.</span>
+       <span class="en">You keep the data accurate: check the mistakes staff report, approve or reject them, and make direct fixes when needed. Every action is logged.</span></p>
+  </div>
+  <details class="mtoc" id="mtoc"></details>
+
+  <section>
+    <h2 id="rules"><span class="n">1</span><span class="vi">Nguyên tắc quan trọng</span><span class="en">The ground rules</span></h2>
+    <div class="tbl"><table>
+      <tr><td><b><span class="vi">Dữ liệu gốc không bao giờ bị thay đổi</span><span class="en">The original is never changed</span></b></td><td><span class="vi">Sửa = tạo một bản sửa đã duyệt bên cạnh bản gốc. Hủy = đánh dấu "Đã hủy", không xóa.</span><span class="en">A fix is an approved correction recorded next to the original. Voiding marks an entry as void; nothing is deleted.</span></td></tr>
+      <tr><td><b><span class="vi">Không tự duyệt</span><span class="en">No self-approval</span></b></td><td><span class="vi">Bạn không thể duyệt yêu cầu do chính bạn tạo. Quản lý còn lại hoặc admin phải duyệt.</span><span class="en">You can't approve a request you created. The other manager or the admin must review it.</span></td></tr>
+      <tr><td><b><span class="vi">Luôn có lý do</span><span class="en">Always give a reason</span></b></td><td><span class="vi">Bắt buộc khi từ chối và khi sửa trực tiếp. Nhân viên sẽ thấy lý do từ chối.</span><span class="en">Required to reject and to make a direct fix. Staff see your rejection reason.</span></td></tr>
+      <tr><td><b><span class="vi">Chỉ sửa được số thùng</span><span class="en">Only the box count can change</span></b></td><td><span class="vi">Hoặc hủy cả mục. GPS và thời gian không bao giờ sửa được.</span><span class="en">Or the whole entry can be voided. GPS and time can never be changed.</span></td></tr>
+      <tr><td><b><span class="vi">Chỉ làm việc qua trang quản lý</span><span class="en">Work only through the manager page</span></b></td><td><span class="vi">Bạn không có quyền mở Google Sheet. Mọi thay đổi đi qua manager.html để được ghi nhật ký.</span><span class="en">You don't have access to the Google Sheet. Every change goes through manager.html so it's logged.</span></td></tr>
+    </table></div>
+    <div class="flow">
+      <div class="b"><b><span class="vi">Yêu cầu</span><span class="en">Request</span></b><span class="vi">Nhân viên báo lỗi, hoặc bạn sửa trực tiếp</span><span class="en">Staff report it, or you make a direct fix</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Chờ duyệt</span><span class="en">Pending</span></b><span class="vi">Hiện trong tab Chờ duyệt</span><span class="en">Appears in the Pending tab</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Người khác duyệt</span><span class="en">Someone else reviews</span></b><span class="vi">Duyệt ✓ hoặc Từ chối ✕ (kèm lý do)</span><span class="en">Approve ✓ or Reject ✕ (with reason)</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Ghi nhật ký</span><span class="en">Logged</span></b><span class="vi">Báo cáo dùng số đã duyệt; bản gốc giữ nguyên</span><span class="en">Reports use the approved number; the original stays</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="login"><span class="n">2</span><span class="vi">Đăng nhập</span><span class="en">Logging in</span></h2>
+    <p><span class="vi">Mở trang <b>manager.html</b> (link do admin gửi), dùng tên đăng nhập và mã PIN SalesData của bạn. Tài khoản phải có Role = <code>manager</code>. Đăng nhập mỗi ngày (hết hạn lúc nửa đêm). Dùng được trên điện thoại hoặc máy tính.</span>
+       <span class="en">Open <b>manager.html</b> (the link the admin sends you) and use your SalesData username and PIN. Your account must have Role = <code>manager</code>. Log in each day (it ends at midnight). Works on phone or computer.</span></p>
+    <p class="tip"><span class="vi">Mỗi sáng lúc 7:00, nếu có yêu cầu đang chờ, bạn sẽ nhận một email liệt kê chúng. Không có yêu cầu thì không có email.</span><span class="en">At 07:00 each morning, if requests are waiting, you get one email listing them. No requests, no email.</span></p>
+  </section>
+
+  <section>
+    <h2 id="queue"><span class="n">3</span><span class="vi">Duyệt yêu cầu (tab Chờ duyệt)</span><span class="en">Reviewing requests (Pending tab)</span></h2>
+    <p><span class="vi">Mỗi yêu cầu là một thẻ. Thẻ có viền cam <b>⚠ Thay đổi lớn</b> (từ 200 thùng) được xếp lên đầu.</span><span class="en">Each request is a card. Cards with an orange edge marked <b>⚠ Large change</b> (200 boxes or more) are listed first.</span></p>
+    <div class="figs">
+      <figure><img src="guide-img/m1-queue.jpg" alt="" loading="lazy"><figcaption><span class="vi">Tab Chờ duyệt</span><span class="en">Pending tab</span></figcaption></figure>
+      <figure><img src="guide-img/m2-card.jpg" alt="" loading="lazy"><figcaption><span class="vi">Thẻ yêu cầu, đang xem các lượt cùng ngày</span><span class="en">A request card with same-day drop-offs shown</span></figcaption></figure>
+    </div>
+    <h3><span class="vi">Đọc một thẻ yêu cầu</span><span class="en">Reading a request card</span></h3>
+    <div class="tbl"><table>
+      <tr><td><b><span class="vi">Thay đổi</span><span class="en">Change</span></b></td><td><span class="vi">Số hiện tại → số đề nghị, hoặc <b>Hủy mục</b>.</span><span class="en">Current number → proposed number, or <b>Void entry</b>.</span></td></tr>
+      <tr><td><b><span class="vi">Nguồn</span><span class="en">Source</span></b></td><td><span class="vi"><i>Nhân viên báo lỗi</i> hoặc <i>Quản lý sửa trực tiếp</i>.</span><span class="en"><i>Reported by employee</i> or <i>Direct fix by manager</i>.</span></td></tr>
+      <tr><td><b><span class="vi">Nhân viên · Thời gian · Vị trí</span><span class="en">Employee · Time · Location</span></b></td><td><span class="vi">Chi tiết lượt giao gốc. <i>Mở bản đồ</i> xem đúng điểm giao.</span><span class="en">Details of the original drop-off. <i>Open map</i> shows the exact spot.</span></td></tr>
+      <tr><td><b><span class="vi">Lý do · Ghi chú</span><span class="en">Reason · Note</span></b></td><td><span class="vi">Điều người yêu cầu đã chọn và viết.</span><span class="en">What the requester chose and wrote.</span></td></tr>
+      <tr><td><b><span class="vi">Xem các lượt cùng ngày</span><span class="en">Show other drop-offs that day</span></b></td><td><span class="vi">Liệt kê mọi lượt của nhân viên đó trong ngày (dòng tô vàng là lượt đang xét). Rất hữu ích để phát hiện mục trùng.</span><span class="en">Lists all that employee's drop-offs that day (the highlighted row is the one in question). Very useful for spotting duplicates.</span></td></tr>
+    </table></div>
+    <h3><span class="vi">Duyệt hoặc từ chối</span><span class="en">Approve or reject</span></h3>
+    <ol class="steps">
+      <li><b><span class="vi">Kiểm tra</span><span class="en">Check</span></b><span class="vi">Xem bản đồ, các lượt cùng ngày; gọi nhân viên hoặc đại lý nếu là thay đổi lớn.</span><span class="en">Look at the map and same-day drop-offs; call the employee or distributor for large changes.</span></li>
+      <li><b><span class="vi">Duyệt</span><span class="en">Approve</span></b><span class="vi">Bấm <span class="btnlike g2">✓ Duyệt</span>. Ghi chú không bắt buộc.</span><span class="en">Tap <span class="btnlike g2">✓ Approve</span>. A note is optional.</span></li>
+      <li><b><span class="vi">Hoặc từ chối</span><span class="en">Or reject</span></b><span class="vi">Viết lý do vào ô ghi chú, rồi bấm <span class="btnlike r2">✕ Từ chối</span>. Nhân viên sẽ đọc lý do này — viết rõ ràng, lịch sự.</span><span class="en">Write the reason in the note box, then tap <span class="btnlike r2">✕ Reject</span>. The employee reads this reason, so keep it clear and polite.</span></li>
+    </ol>
+    <p class="warn"><span class="vi">Nếu thẻ ghi "Bạn tạo yêu cầu này — cần một quản lý khác hoặc admin duyệt", nút Duyệt/Từ chối sẽ không hiện. Hãy báo quản lý còn lại.</span><span class="en">If a card says "You created this request — another manager or admin must review it", there are no Approve/Reject buttons. Let the other manager know.</span></p>
+  </section>
+
+  <section>
+    <h2 id="fix"><span class="n">4</span><span class="vi">Tra cứu & sửa trực tiếp</span><span class="en">Search & direct fixes</span></h2>
+    <p><span class="vi">Dùng khi bạn phát hiện lỗi mà nhân viên chưa báo, hoặc khi đã quá hạn báo lỗi.</span><span class="en">Use it when you find a mistake staff haven't reported, or when it's past their reporting deadline.</span></p>
+    <ol class="steps">
+      <li><b><span class="vi">Tìm lượt giao</span><span class="en">Find the entry</span></b><span class="vi">Chọn khoảng ngày, nhân viên, trạng thái (đã sửa / đã hủy / đang chờ), bấm <span class="btnlike">Tìm</span>.</span><span class="en">Pick a date range, employee and status (amended / voided / pending), then tap <span class="btnlike">Search</span>.</span></li>
+      <li><b><span class="vi">Bấm Sửa</span><span class="en">Tap Fix</span></b><span class="vi">Cửa sổ hiện lịch sử sửa của mục đó (nếu có).</span><span class="en">The window shows that entry's correction history, if any.</span></li>
+      <li><b><span class="vi">Chọn loại sửa</span><span class="en">Choose the fix</span></b><span class="vi"><b>Sửa số thùng</b> (nhập số đúng) hoặc <b>Hủy mục này</b>.</span><span class="en"><b>Change box count</b> (enter the correct number) or <b>Void this entry</b>.</span></li>
+      <li><b><span class="vi">Ghi lý do (bắt buộc)</span><span class="en">Write the reason (required)</span></b><span class="vi">Ví dụ: "Đã gọi điện xác nhận với nhân viên".</span><span class="en">For example: "Confirmed by phone with the employee".</span></li>
+      <li><b><span class="vi">Bấm Tạo yêu cầu</span><span class="en">Tap Create request</span></b><span class="vi">Yêu cầu vào hàng chờ — quản lý còn lại hoặc admin phải duyệt.</span><span class="en">It goes into the queue; the other manager or the admin must approve it.</span></li>
+    </ol>
+    <div class="figs">
+      <figure class="wide"><img src="guide-img/m3-search.jpg" alt="" loading="lazy"><figcaption><span class="vi">Tra cứu & sửa</span><span class="en">Search & fix</span></figcaption></figure>
+      <figure><img src="guide-img/m4-fix.jpg" alt="" loading="lazy"><figcaption><span class="vi">Sửa trực tiếp — cần lý do</span><span class="en">Direct fix: a reason is required</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="history"><span class="n">5</span><span class="vi">Lịch sử</span><span class="en">History</span></h2>
+    <p><span class="vi">Tab <b>Lịch sử</b> liệt kê mọi yêu cầu đã xử lý trong 60 ngày gần nhất: Đã duyệt, Từ chối, Đã hủy yêu cầu — kèm người yêu cầu, người duyệt, thời gian và ghi chú. Lọc theo trạng thái ở trên cùng.</span>
+       <span class="en">The <b>History</b> tab lists every decided request from the last 60 days (Approved, Rejected, Cancelled) with who asked, who reviewed, when, and the notes. Filter by status at the top.</span></p>
+    <div class="figs"><figure class="wide"><img src="guide-img/m5-history.jpg" alt="" loading="lazy"><figcaption><span class="vi">Lịch sử</span><span class="en">History</span></figcaption></figure></div>
+  </section>
+
+  <section>
+    <h2 id="practice"><span class="n">6</span><span class="vi">Cách làm tốt</span><span class="en">Good practice</span></h2>
+    <ul>
+      <li><span class="vi">Xử lý hàng chờ <b>mỗi ngày</b>, đặc biệt trước ngày 3 hằng tháng để chốt số liệu tháng trước.</span><span class="en">Clear the queue <b>every day</b>, especially before the 3rd of each month so last month's figures can be closed.</span></li>
+      <li><span class="vi">Với <b>thay đổi lớn</b> (⚠): luôn gọi xác nhận với nhân viên hoặc đại lý trước khi duyệt.</span><span class="en">For <b>large changes</b> (⚠), always confirm by phone with the employee or distributor before approving.</span></li>
+      <li><span class="vi">Với <b>mục trùng</b>: mở "các lượt cùng ngày" — hai lượt cùng số thùng, cách nhau vài phút, cùng vị trí là dấu hiệu rõ.</span><span class="en">For <b>duplicates</b>, open the same-day list. Two entries with the same boxes, minutes apart, at the same spot are a clear sign.</span></li>
+      <li><span class="vi">Viết lý do đủ để người khác hiểu sau 6 tháng.</span><span class="en">Write reasons that someone else will still understand in 6 months.</span></li>
+      <li><span class="vi">Không chia sẻ mã PIN, không đăng nhập hộ người khác.</span><span class="en">Never share your PIN or log in for someone else.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 id="faq"><span class="vi">Câu hỏi thường gặp</span><span class="en">FAQ</span></h2>
+    <div class="faqtools"><button data-faq="open"><span class="vi">Mở tất cả</span><span class="en">Open all</span></button><button data-faq="close"><span class="vi">Đóng tất cả</span><span class="en">Close all</span></button></div>
+    <details class="q"><summary><span class="vi">Tại sao tôi không duyệt được yêu cầu của chính mình?</span><span class="en">Why can't I approve my own request?</span></summary><div class="a">
+      <span class="vi">Để mọi thay đổi đều được hai người kiểm tra. Đây là nguyên tắc kiểm toán cơ bản.</span><span class="en">So every change is checked by two people. It's a basic audit rule.</span></div></details>
+    <details class="q"><summary><span class="vi">Tôi duyệt nhầm. Làm sao đảo lại?</span><span class="en">I approved something by mistake. How do I undo it?</span></summary><div class="a">
+      <span class="vi">Với sửa số thùng: tạo một <b>sửa trực tiếp</b> mới về số đúng, ghi rõ lý do "duyệt nhầm CR-…". Với mục <b>đã hủy</b>: không thể khôi phục trong ứng dụng — liên hệ admin.</span>
+      <span class="en">For a box-count change, create a new <b>direct fix</b> back to the correct number with the reason "approved in error, CR-…". For a <b>voided</b> entry, it can't be restored in the app; contact the admin.</span></div></details>
+    <details class="q"><summary><span class="vi">Tôi có thể xóa một lượt giao không?</span><span class="en">Can I delete an entry?</span></summary><div class="a">
+      <span class="vi">Không. Dùng <b>Hủy mục</b> — mục bị loại khỏi báo cáo nhưng vẫn được lưu để kiểm toán.</span><span class="en">No. Use <b>Void</b>: the entry is removed from reports but kept for audit.</span></div></details>
+    <details class="q"><summary><span class="vi">Có sửa được vị trí hoặc thời gian không?</span><span class="en">Can I change the location or time?</span></summary><div class="a">
+      <span class="vi">Không. Nếu vị trí/thời gian sai hoàn toàn, hãy hủy mục và yêu cầu nhân viên ghi nhận lại đúng chỗ.</span><span class="en">No. If the location or time is completely wrong, void the entry and ask the employee to record it again at the right place.</span></div></details>
+    <details class="q"><summary><span class="vi">Nhân viên nói yêu cầu bị từ chối sai.</span><span class="en">An employee says their request was wrongly rejected.</span></summary><div class="a">
+      <span class="vi">Kiểm tra lại với họ. Nếu họ đúng, tạo một sửa trực tiếp kèm lý do — người còn lại sẽ duyệt.</span><span class="en">Check with them. If they're right, create a direct fix with a reason, and the other reviewer approves it.</span></div></details>
+    <details class="q"><summary><span class="vi">Tại sao tôi không mở được Google Sheet?</span><span class="en">Why can't I open the Google Sheet?</span></summary><div class="a">
+      <span class="vi">Có chủ đích. Nếu sửa trực tiếp trong Sheet, thay đổi sẽ không qua quy trình duyệt và không được ghi nhật ký.</span><span class="en">On purpose. Edits made directly in the Sheet would skip the review process and the audit log.</span></div></details>
+    <details class="q"><summary><span class="vi">Tôi không nhận được email buổi sáng.</span><span class="en">I don't get the morning email.</span></summary><div class="a">
+      <span class="vi">Email chỉ gửi khi có yêu cầu chờ. Kiểm tra thư rác, và nhờ admin kiểm tra địa chỉ email của bạn trong danh sách người dùng.</span><span class="en">It's only sent when requests are waiting. Check spam, and ask the admin to check your email address in the user list.</span></div></details>
+    <details class="q"><summary><span class="vi">Trang tự cập nhật không?</span><span class="en">Does the page update by itself?</span></summary><div class="a">
+      <span class="vi">Hàng chờ tự làm mới mỗi 3 phút. Bấm <b>Làm mới</b> để cập nhật ngay.</span><span class="en">The queue refreshes every 3 minutes. Tap <b>Refresh</b> to update now.</span></div></details>
+    <details class="q"><summary><span class="vi">Quên mã PIN?</span><span class="en">Forgot my PIN?</span></summary><div class="a">
+      <span class="vi">Liên hệ admin để được cấp mã mới. Sai 5 lần sẽ bị khóa 15 phút.</span><span class="en">Ask the admin for a new one. After 5 wrong tries, login is locked for 15 minutes.</span></div></details>
+  </section>
+</main>
+</div>
+<footer>SalesData · Super Horse Energy Drink · <a href="guide.html"><span class="vi">Tất cả hướng dẫn</span><span class="en">All guides</span></a></footer>
+</body>
+</html>

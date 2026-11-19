@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" data-default-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1A4FA0">
+<title data-vi="Hướng dẫn admin · SalesData" data-en="Admin guide · SalesData">Admin guide · SalesData</title>
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="guide.css">
+<script src="guide.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <img src="logo.png" alt="Super Horse">
+  <div class="t">SalesData <small><span class="vi">Hướng dẫn admin</span><span class="en">Admin guide</span></small></div>
+  <a class="chip" id="backBtn" href="dashboard.html" style="display:none"><span class="vi">← Về báo cáo</span><span class="en">← Back to dashboard</span></a>
+  <button class="chip" id="langBtn">Tiếng Việt</button>
+</div></header>
+<div class="tagline"><span class="vi">Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển</span><span class="en">Accurate data → Better decisions → Growing together</span></div>
+
+<div class="wrap">
+<nav class="toc" id="toc"></nav>
+<main>
+  <div class="hero">
+    <span class="role">Admin</span>
+    <h1><span class="vi">Báo cáo, người dùng và kiểm toán</span><span class="en">Reporting, users and audit</span></h1>
+    <p><span class="vi">Admin là chủ sở hữu quy trình: quản lý người dùng, xem toàn bộ báo cáo, theo dõi mọi sửa đổi và kiểm tra bản sao lưu.</span>
+       <span class="en">The admin is the process owner: you manage users, see all reporting, follow every amendment and verify the backup.</span></p>
+  </div>
+  <details class="mtoc" id="mtoc"></details>
+
+  <section>
+    <h2 id="roles"><span class="n">1</span><span class="vi">Vai trò và quyền</span><span class="en">Roles and access</span></h2>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Vai trò (cột Role)</span><span class="en">Role (Role column)</span></th><th><span class="vi">Trang</span><span class="en">Page</span></th><th><span class="vi">Được làm</span><span class="en">Can do</span></th></tr>
+      <tr><td><b><span class="vi">(trống) Nhân viên bán hàng</span><span class="en">(blank) Sales staff</span></b></td><td>index.html</td><td><span class="vi">Ghi nhận giao hàng, xem doanh số của mình, báo lỗi. Không sửa được gì.</span><span class="en">Record drop-offs, view own sales, report mistakes. Cannot edit anything.</span></td></tr>
+      <tr><td><b><code>manager</code> <span class="vi">Quản lý dữ liệu</span><span class="en">Data manager</span></b></td><td>manager.html</td><td><span class="vi">Duyệt/từ chối, tra cứu, sửa trực tiếp (cần người thứ hai duyệt), lịch sử.</span><span class="en">Approve/reject, search, direct fixes (need a second approver), history.</span></td></tr>
+      <tr><td><b><code>admin</code></b></td><td>dashboard.html + manager.html</td><td><span class="vi">Mọi thứ ở trên, cộng báo cáo, mục Sửa đổi & kiểm toán, Kiểm tra bản sao lưu.</span><span class="en">Everything above, plus the dashboard, Amendments & audit, and Verify backup.</span></td></tr>
+    </table></div>
+    <p class="tip"><span class="vi">Không ai được duyệt yêu cầu của chính mình — kể cả admin. Bảng điều khiển (dashboard) chỉ để xem: nó không thể thay đổi dữ liệu.</span><span class="en">Nobody can approve their own request, including the admin. The dashboard is view-only; it cannot change data.</span></p>
+  </section>
+
+  <section>
+    <h2 id="users"><span class="n">2</span><span class="vi">Quản lý người dùng</span><span class="en">Managing users</span></h2>
+    <p><span class="vi">Mọi người dùng nằm trong tab <b>Users</b> của Google Sheet chính. Thay đổi có hiệu lực ngay — không cần triển khai lại.</span><span class="en">All users live in the <b>Users</b> tab of the main Google Sheet. Changes take effect immediately; no redeploy needed.</span></p>
+    <div class="tbl"><table>
+      <tr><th>Username</th><th>PIN</th><th>Employee Name</th><th>Active</th><th>Role</th><th>Email</th></tr>
+      <tr><td>an.nguyen</td><td>4252</td><td>Nguyễn Văn An</td><td>☑</td><td></td><td></td></tr>
+      <tr><td>thu.mgr</td><td>6223</td><td>Ngô Thị Thu</td><td>☑</td><td>manager</td><td>thu@…</td></tr>
+      <tr><td>art</td><td>…</td><td>Art</td><td>☑</td><td>admin</td><td></td></tr>
+    </table></div>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Việc cần làm</span><span class="en">Task</span></th><th><span class="vi">Cách làm</span><span class="en">How</span></th></tr>
+      <tr><td><b><span class="vi">Thêm nhân viên</span><span class="en">Add someone</span></b></td><td><span class="vi">Thêm một dòng. Username viết thường, không dấu, không khoảng trắng. PIN 4 số, duy nhất, tránh 1234/0000/năm sinh.</span><span class="en">Add a row. Username lowercase, no accents or spaces. PIN 4 digits, unique; avoid 1234, 0000 and birth years.</span></td></tr>
+      <tr><td><b><span class="vi">Đặt lại PIN</span><span class="en">Reset a PIN</span></b></td><td><span class="vi">Sửa ô PIN. Gửi mã mới riêng cho người đó.</span><span class="en">Change the PIN cell. Send the new PIN to that person privately.</span></td></tr>
+      <tr><td><b><span class="vi">Khóa tài khoản</span><span class="en">Block someone</span></b></td><td><span class="vi">Bỏ tick <b>Active</b> — bị chặn ngay lập tức, kể cả phiên đang mở. Dữ liệu cũ vẫn giữ nguyên.</span><span class="en">Untick <b>Active</b>. They're blocked immediately, even mid-session. Their past data stays.</span></td></tr>
+      <tr><td><b><span class="vi">Quản lý dữ liệu</span><span class="en">Data managers</span></b></td><td><span class="vi">Role = <code>manager</code>, và điền <b>Email</b> để nhận email nhắc buổi sáng.</span><span class="en">Role = <code>manager</code>, and fill in <b>Email</b> so they get the morning reminder.</span></td></tr>
+    </table></div>
+    <p class="warn"><span class="vi">Chỉ mình admin được có quyền truy cập Google Sheet chính. Kiểm tra nút <b>Chia sẻ</b> định kỳ.</span><span class="en">Only the admin should have access to the main Google Sheet. Check the <b>Share</b> button from time to time.</span></p>
+  </section>
+
+  <section>
+    <h2 id="dashboard"><span class="n">3</span><span class="vi">Bảng điều khiển (dashboard)</span><span class="en">The dashboard</span></h2>
+    <p><span class="vi">Mở <b>dashboard.html</b> và đăng nhập bằng tài khoản admin. Chọn khoảng thời gian và nhân viên ở thanh lọc trên cùng. Trang tự làm mới mỗi 5 phút.</span>
+       <span class="en">Open <b>dashboard.html</b> and log in with your admin account. Pick the date range and employee in the filter bar at the top. The page refreshes every 5 minutes.</span></p>
+    <div class="figs"><figure class="wide"><img src="guide-img/a1-top.jpg" alt="" loading="lazy"><figcaption><span class="vi">Phần đầu bảng điều khiển</span><span class="en">Top of the dashboard</span></figcaption></figure></div>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Mục</span><span class="en">Section</span></th><th><span class="vi">Cho biết</span><span class="en">Tells you</span></th></tr>
+      <tr><td><b><span class="vi">Ô chỉ số</span><span class="en">KPI tiles</span></b></td><td><span class="vi">Tổng thùng, số lượt, TB/lượt, nhân viên hoạt động, thùng/người/ngày, % GPS xanh — so với kỳ trước cùng độ dài.</span><span class="en">Boxes, drop-offs, avg per drop-off, active staff, boxes per staff-day, GPS green %, compared with the previous period of the same length.</span></td></tr>
+      <tr><td><b><span class="vi">Sửa đổi & kiểm toán</span><span class="en">Amendments & audit</span></b></td><td><span class="vi">Mọi yêu cầu sửa (xem mục 4).</span><span class="en">Every correction (see section 4).</span></td></tr>
+      <tr><td><b><span class="vi">Thùng theo ngày · Giờ trong ngày</span><span class="en">Boxes per day · Time of day</span></b></td><td><span class="vi">Xu hướng và giờ giao hàng.</span><span class="en">Trend and delivery hours.</span></td></tr>
+      <tr><td><b><span class="vi">Bản đồ nhiệt</span><span class="en">Heat map</span></b></td><td><span class="vi">Nhân viên × ngày. Ô trống = không giao. Chạm một ô để mở ngày đó trên dòng thời gian.</span><span class="en">Employee × date. Blank cells = no deliveries. Tap a cell to open that day in the timeline.</span></td></tr>
+      <tr><td><b><span class="vi">Dòng thời gian</span><span class="en">Daily timeline</span></b></td><td><span class="vi">Mỗi chấm là một lượt (to = nhiều thùng); đường kẻ = lượt đầu đến lượt cuối. Chấm viền cam = đã sửa/đang chờ.</span><span class="en">Each dot is a drop-off (bigger = more boxes); the line runs first to last. Orange-ringed dots = amended or pending.</span></td></tr>
+      <tr><td><b><span class="vi">Bản đồ</span><span class="en">Map</span></b></td><td><span class="vi">Mọi điểm giao trong khoảng thời gian.</span><span class="en">Every drop-off location in the range.</span></td></tr>
+      <tr><td><b><span class="vi">Hiệu suất nhân viên</span><span class="en">Employee performance</span></b></td><td><span class="vi">Bảng sắp xếp được theo mọi cột.</span><span class="en">Table you can sort by any column.</span></td></tr>
+      <tr><td><b><span class="vi">Kiểm tra dữ liệu</span><span class="en">Data checks</span></b></td><td><span class="vi">Có thể trùng (cùng người, &lt;15 phút, &lt;100 m), trên 500 thùng, GPS cam, gửi sau.</span><span class="en">Possible duplicates (same person, &lt;15 min, &lt;100 m), over 500 boxes, GPS orange, sent later.</span></td></tr>
+      <tr><td><b><span class="vi">Xuất CSV</span><span class="en">Export CSV</span></b></td><td><span class="vi">Tải dữ liệu đã lọc cho Excel, gồm số gốc, số đã duyệt và trạng thái.</span><span class="en">Downloads the filtered data for Excel, with original boxes, approved boxes and status.</span></td></tr>
+    </table></div>
+    <div class="figs">
+      <figure class="wide"><img src="guide-img/a3-heat.jpg" alt="" loading="lazy"><figcaption><span class="vi">Bản đồ nhiệt</span><span class="en">Heat map</span></figcaption></figure>
+      <figure class="wide"><img src="guide-img/a4-timeline.jpg" alt="" loading="lazy"><figcaption><span class="vi">Dòng thời gian trong ngày</span><span class="en">Daily timeline</span></figcaption></figure>
+    </div>
+    <p class="tip"><span class="vi">Mọi số liệu dùng <b>số đã duyệt</b>; mục đã hủy không được tính. Vì vậy tổng trên báo cáo có thể khác tổng cột Boxes trong tab Dropoffs — đó là đúng.</span><span class="en">All figures use the <b>approved</b> numbers, and voided entries are excluded. So dashboard totals can differ from summing the Boxes column in the Dropoffs tab, and that's expected.</span></p>
+  </section>
+
+  <section>
+    <h2 id="audit"><span class="n">4</span><span class="vi">Sửa đổi & kiểm toán</span><span class="en">Amendments & audit</span></h2>
+    <p><span class="vi">Ngay dưới các ô chỉ số. Mỗi dòng là một yêu cầu: gốc → sau sửa, người yêu cầu, người duyệt, thời gian, ghi chú. Dòng tô vàng = đang chờ hoặc thay đổi lớn.</span>
+       <span class="en">Right under the KPI tiles. Each row is one request: original → amended, who asked, who reviewed, when, and the notes. Highlighted rows = pending or large changes.</span></p>
+    <div class="figs"><figure class="wide"><img src="guide-img/a2-amend.jpg" alt="" loading="lazy"><figcaption><span class="vi">Sửa đổi & kiểm toán, sau khi kiểm tra bản sao lưu</span><span class="en">Amendments & audit, after Verify backup</span></figcaption></figure></div>
+    <div class="tbl"><table>
+      <tr><td><b><span class="vi">Mục đã sửa / đã hủy</span><span class="en">Entries amended / voided</span></b></td><td><span class="vi">Số yêu cầu đã duyệt theo loại.</span><span class="en">Approved requests by type.</span></td></tr>
+      <tr><td><b><span class="vi">Chờ duyệt / Từ chối</span><span class="en">Pending / Rejected</span></b></td><td><span class="vi">Hàng chờ còn lại và các yêu cầu bị từ chối.</span><span class="en">What's still waiting, and what was turned down.</span></td></tr>
+      <tr><td><b><span class="vi">Chênh lệch thùng</span><span class="en">Net box change</span></b></td><td><span class="vi">Tổng tác động của các sửa đổi đã duyệt lên doanh số.</span><span class="en">The total effect of approved corrections on sales.</span></td></tr>
+      <tr><td><b><span class="vi">Thay đổi lớn</span><span class="en">Large changes</span></b></td><td><span class="vi">Yêu cầu từ 200 thùng trở lên — nên xem lại.</span><span class="en">Requests of 200 boxes or more, worth a look.</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2 id="backup"><span class="n">5</span><span class="vi">Bản sao lưu và kiểm tra</span><span class="en">The backup and Verify backup</span></h2>
+    <p><span class="vi">Mỗi lượt giao và mỗi sự kiện sửa được ghi đồng thời vào một Google Sheet <b>sao lưu riêng</b> trong Drive của bạn ("SalesData BACKUP — admin only"). Không chia sẻ file này. Mỗi dòng có một "dấu vân tay" (hash) liên kết với dòng trước — nếu ai sửa hoặc xóa một dòng, chuỗi bị đứt.</span>
+       <span class="en">Every drop-off and every correction event is also written to a <b>separate backup</b> Google Sheet in your Drive ("SalesData BACKUP — admin only"). Never share it. Each row carries a fingerprint (hash) linked to the row before, so if anyone edits or deletes a row, the chain breaks.</span></p>
+    <h3><span class="vi">Kiểm tra bản sao lưu</span><span class="en">Verify backup</span></h3>
+    <p><span class="vi">Bấm <span class="btnlike w">Kiểm tra bản sao lưu</span> trong mục Sửa đổi & kiểm toán. Kết quả xanh ✓ = mọi thứ khớp.</span><span class="en">Tap <span class="btnlike w">Verify backup</span> in Amendments & audit. A green ✓ means everything matches.</span></p>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Kết quả</span><span class="en">Result</span></th><th><span class="vi">Nghĩa là</span><span class="en">Means</span></th><th><span class="vi">Nên làm</span><span class="en">What to do</span></th></tr>
+      <tr><td><b><span class="vi">Sheet chính bị sửa</span><span class="en">Main sheet edited</span></b></td><td><span class="vi">Ai đó sửa trực tiếp tab Dropoffs.</span><span class="en">Someone typed directly into the Dropoffs tab.</span></td><td><span class="vi">Sheet chính → Tệp → Lịch sử phiên bản để xem ai/khi nào; khôi phục giá trị gốc từ bản sao lưu.</span><span class="en">Main Sheet → File → Version history to see who and when; restore the original value from the backup.</span></td></tr>
+      <tr><td><b><span class="vi">Bị xóa khỏi sheet chính</span><span class="en">Deleted from main sheet</span></b></td><td><span class="vi">Một dòng gốc đã bị xóa.</span><span class="en">An original row was deleted.</span></td><td><span class="vi">Như trên; chép lại dòng từ bản sao lưu.</span><span class="en">As above; copy the row back from the backup.</span></td></tr>
+      <tr><td><b><span class="vi">Dòng sao lưu bị thay đổi</span><span class="en">Backup row altered</span></b></td><td><span class="vi">Bản sao lưu đã bị sửa.</span><span class="en">The backup itself was edited.</span></td><td><span class="vi">Mở bản sao lưu → Lịch sử phiên bản. Chỉ bạn có quyền, nên thường là sửa nhầm.</span><span class="en">Open the backup → Version history. Only you have access, so it's usually an accidental edit.</span></td></tr>
+      <tr><td><b><span class="vi">Chưa có trong sao lưu</span><span class="en">Not yet in backup</span></b></td><td><span class="vi">Ghi sao lưu bị lỗi tạm thời.</span><span class="en">A backup write failed temporarily.</span></td><td><span class="vi">Việc chạy tự động lúc 7:00 sẽ tự bổ sung. Nếu vẫn còn, chạy <b>setup</b> trong Apps Script.</span><span class="en">The 07:00 job fills it automatically. If it persists, run <b>setup</b> in Apps Script.</span></td></tr>
+    </table></div>
+    <h3><span class="vi">Việc tự động mỗi sáng 7:00</span><span class="en">Automatic jobs at 07:00 every day</span></h3>
+    <ul>
+      <li><span class="vi">Bổ sung dòng thiếu vào bản sao lưu, kiểm tra lại chuỗi hash và so khớp với sheet chính. <b>Chỉ email cho bạn nếu có vấn đề.</b></span><span class="en">Fills any gaps in the backup, re-checks the hash chains and compares with the main sheet. <b>Emails you only if something is wrong.</b></span></li>
+      <li><span class="vi">Nếu có yêu cầu chờ duyệt, gửi một email cho cả hai quản lý dữ liệu.</span><span class="en">If requests are waiting, sends one email to both data managers.</span></li>
+    </ul>
+    <p class="tip"><span class="vi">Tìm link bản sao lưu: Apps Script → <b>Executions</b> → lần chạy <b>setup</b> → nhật ký. Hoặc tìm "SalesData BACKUP" trong Google Drive.</span><span class="en">To find the backup link: Apps Script → <b>Executions</b> → the <b>setup</b> run → log. Or search Google Drive for "SalesData BACKUP".</span></p>
+  </section>
+
+  <section>
+    <h2 id="sheet"><span class="n">6</span><span class="vi">Các tab trong Google Sheet</span><span class="en">What's in the Google Sheets</span></h2>
+    <div class="tbl"><table>
+      <tr><th>Sheet</th><th>Tab</th><th><span class="vi">Nội dung</span><span class="en">Contents</span></th></tr>
+      <tr><td rowspan="5"><b><span class="vi">Chính</span><span class="en">Main</span></b></td><td>Dropoffs</td><td><span class="vi">Nhật ký gốc. Không bao giờ sửa.</span><span class="en">Original log. Never edit.</span></td></tr>
+      <tr><td>Corrections</td><td><span class="vi">Mọi yêu cầu sửa và kết quả duyệt.</span><span class="en">Every correction request and its outcome.</span></td></tr>
+      <tr><td>Audit</td><td><span class="vi">Mọi lần đăng nhập, yêu cầu, duyệt, từ chối, kiểm tra sao lưu.</span><span class="en">Every login, request, approval, rejection and backup check.</span></td></tr>
+      <tr><td>Users</td><td><span class="vi">Danh sách người dùng (bạn quản lý).</span><span class="en">The user list (you maintain it).</span></td></tr>
+      <tr><td>Sessions</td><td><span class="vi">Phiên đăng nhập (ẩn, tự động).</span><span class="en">Logins (hidden, automatic).</span></td></tr>
+      <tr><td rowspan="2"><b><span class="vi">Sao lưu</span><span class="en">Backup</span></b></td><td>Dropoffs_Original</td><td><span class="vi">Bản sao từng lượt giao, có hash.</span><span class="en">Copy of every drop-off, hash-chained.</span></td></tr>
+      <tr><td>Corrections_Events</td><td><span class="vi">Mọi sự kiện yêu cầu/duyệt/từ chối/hủy, có hash.</span><span class="en">Every request/approve/reject/cancel event, hash-chained.</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2 id="maint"><span class="n">7</span><span class="vi">Bảo trì</span><span class="en">Maintenance</span></h2>
+    <div class="tbl"><table>
+      <tr><td><b><span class="vi">Đổi mã backend (Code.gs)</span><span class="en">Backend change (Code.gs)</span></b></td><td><span class="vi">Deploy → Manage deployments → ✏️ → Version: <b>New version</b> → Deploy. URL giữ nguyên.</span><span class="en">Deploy → Manage deployments → ✏️ → Version: <b>New version</b> → Deploy. The URL stays the same.</span></td></tr>
+      <tr><td><b><span class="vi">Đổi trang ứng dụng</span><span class="en">App page change</span></b></td><td><span class="vi">Tải file mới lên GitHub. Nhân viên nhận bản mới lần mở tiếp theo có mạng.</span><span class="en">Upload the new file to GitHub. Staff get it the next time they open the app with signal.</span></td></tr>
+      <tr><td><b><span class="vi">Dọn phiên cũ</span><span class="en">Old logins</span></b></td><td><span class="vi">Tùy chọn: chạy <b>cleanupSessions</b> mỗi tháng.</span><span class="en">Optional: run <b>cleanupSessions</b> monthly.</span></td></tr>
+      <tr><td><b><span class="vi">Đổi quy tắc</span><span class="en">Change a rule</span></b></td><td><span class="vi">Ở đầu Code.gs: MAX_BOXES (2.400), LARGE_CHANGE (200), GRACE_DAYS (3). Sau khi sửa phải triển khai phiên bản mới.</span><span class="en">At the top of Code.gs: MAX_BOXES (2,400), LARGE_CHANGE (200), GRACE_DAYS (3). Deploy a new version afterwards.</span></td></tr>
+      <tr><td><b><span class="vi">Không bao giờ đưa lên GitHub</span><span class="en">Never put on GitHub</span></b></td><td><span class="vi">Code.gs và danh sách PIN.</span><span class="en">Code.gs and the PIN list.</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2 id="faq"><span class="vi">Câu hỏi thường gặp</span><span class="en">FAQ</span></h2>
+    <div class="faqtools"><button data-faq="open"><span class="vi">Mở tất cả</span><span class="en">Open all</span></button><button data-faq="close"><span class="vi">Đóng tất cả</span><span class="en">Close all</span></button></div>
+    <details class="q"><summary><span class="vi">Bảng điều khiển có chỉ để xem không?</span><span class="en">Is the dashboard read-only?</span></summary><div class="a">
+      <span class="vi">Có. Nó chỉ đọc dữ liệu và chạy kiểm tra sao lưu (ghi một dòng vào tab Audit). Sửa dữ liệu chỉ qua manager.html.</span><span class="en">Yes. It only reads data and runs the backup check (which adds one line to the Audit tab). Corrections happen only through manager.html.</span></div></details>
+    <details class="q"><summary><span class="vi">Có nên cho quản lý dữ liệu quyền admin?</span><span class="en">Should a data manager get admin access?</span></summary><div class="a">
+      <span class="vi">Làm được (Role = admin), nhưng không khuyến khích: người sửa dữ liệu không nên đồng thời là người kiểm tra. Họ vẫn không mở được bản sao lưu và không tự duyệt được.</span><span class="en">It's possible (Role = admin), but not recommended: the people who edit data shouldn't also be the ones who check it. They still couldn't open the backup or approve their own requests.</span></div></details>
+    <details class="q"><summary><span class="vi">Nhân viên nghỉ việc?</span><span class="en">Someone leaves the company?</span></summary><div class="a">
+      <span class="vi">Bỏ tick Active. Họ bị chặn ngay; mọi dữ liệu của họ vẫn còn trong báo cáo.</span><span class="en">Untick Active. They're blocked at once; all their data stays in the reports.</span></div></details>
+    <details class="q"><summary><span class="vi">Một mục bị hủy nhầm — làm sao khôi phục?</span><span class="en">An entry was voided by mistake. How do I restore it?</span></summary><div class="a">
+      <span class="vi">Ứng dụng không cho khôi phục mục đã hủy. Mở tab Corrections, tìm yêu cầu hủy đó và đổi Status từ "Approved" thành "Rejected", ghi lý do vào Review Note. Bản sao lưu vẫn giữ lịch sử gốc; mọi sửa trực tiếp trong Sheet nên được ghi chú lại.</span>
+      <span class="en">The app can't restore a voided entry. Open the Corrections tab, find that void request and change its Status from "Approved" to "Rejected", with a reason in Review Note. The backup keeps the original history; note any direct Sheet edit like this.</span></div></details>
+    <details class="q"><summary><span class="vi">Tại sao tổng báo cáo khác với tổng trong Sheet?</span><span class="en">Why don't dashboard totals match the Sheet?</span></summary><div class="a">
+      <span class="vi">Báo cáo dùng số đã duyệt và bỏ mục đã hủy. Xuất CSV để xem cả số gốc và số đã duyệt cạnh nhau.</span><span class="en">The dashboard uses approved numbers and leaves out voided entries. Export CSV to see original and approved side by side.</span></div></details>
+    <details class="q"><summary><span class="vi">Đổi giờ gửi email 7:00?</span><span class="en">Change the 07:00 email time?</span></summary><div class="a">
+      <span class="vi">Trong Code.gs, hàm setupTriggers_ có atHour(7). Đổi giờ, lưu, chạy setup lại.</span><span class="en">In Code.gs, setupTriggers_ has atHour(7). Change the hour, save, and run setup again.</span></div></details>
+    <details class="q"><summary><span class="vi">Tôi lỡ sửa tab Dropoffs.</span><span class="en">I accidentally edited the Dropoffs tab.</span></summary><div class="a">
+      <span class="vi">Bấm Hoàn tác (Ctrl/Cmd+Z), hoặc dùng Lịch sử phiên bản. Chạy Kiểm tra bản sao lưu để xác nhận đã khớp lại.</span><span class="en">Undo (Ctrl/Cmd+Z) or use Version history. Then run Verify backup to confirm it matches again.</span></div></details>
+    <details class="q"><summary><span class="vi">Có theo dõi được nhập, bán, tồn kho của từng đại lý không?</span><span class="en">Can we track each distributor's purchases, sales and stock?</span></summary><div class="a">
+      <span class="vi">Chưa. Ứng dụng ghi nhận lượt giao sau đại lý cấp 1 nhưng chưa ghi đại lý nguồn và chưa nhận dữ liệu xuất hàng từ nhà máy cho đại lý. Đây là phạm vi của phiên bản sau.</span>
+      <span class="en">Not yet. The app records drop-offs below DL1 but not the source distributor, and it doesn't take in factory deliveries to each DL1. That's planned as a future version.</span></div></details>
+    <details class="q"><summary><span class="vi">Nhân viên báo "Lỗi máy chủ"?</span><span class="en">Staff see "Server error"?</span></summary><div class="a">
+      <span class="vi">Mở URL web app trên trình duyệt: phải thấy {"ok":true,"app":"SalesData","v":3}. Nếu không, kiểm tra phần triển khai (Execute as Me, Anyone) và rằng URL trong các trang HTML khớp.</span><span class="en">Open the web app URL in a browser; it should show {"ok":true,"app":"SalesData","v":3}. If not, check the deployment (Execute as Me, access Anyone) and that the URL in the HTML pages matches.</span></div></details>
+  </section>
+</main>
+</div>
+<footer>SalesData · Super Horse Energy Drink · <a href="guide.html"><span class="vi">Tất cả hướng dẫn</span><span class="en">All guides</span></a></footer>
+</body>
+</html>

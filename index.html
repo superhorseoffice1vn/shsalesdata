@@ -139,6 +139,7 @@
       <div class="user" id="hUser" data-i="appTitle"></div>
     </div>
     <div class="hbtns">
+      <a class="chip" id="helpBtn" href="guide-sales.html?from=app" title="Help / Hướng dẫn" aria-label="Help" style="text-decoration:none;font-weight:800;min-width:34px;text-align:center">?</a>
       <button class="chip" id="langBtn">EN</button>
       <button class="chip hidden" id="logoutBtn" data-i="logout"></button>
     </div>
@@ -164,6 +165,7 @@
       <input id="uPin" class="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="current-password">
       <div class="err" id="loginErr"></div>
       <button class="btn" id="loginBtn" data-i="loginBtn"></button>
+      <p class="center" style="margin:14px 0 0"><a href="guide-sales.html?from=app" id="helpLink" style="color:var(--brand);font-weight:700">📖 <span data-i="guideLink"></span></a></p>
     </div>
   </section>
 
@@ -233,7 +235,7 @@
     <div id="mineBody"></div>
   </section>
 
-  <div class="foot">SalesData · v3.0.2</div>
+  <div class="foot">SalesData · v3.1</div>
 </div>
 
 <!-- Welcome / mission screen (once per login) -->
@@ -326,7 +328,7 @@ const T = {
     expired:'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
     tagline:'Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển',
     hello:'Xin chào, {n}!',
-    sending:'Đang gửi…', sendingSub:'Đã nhận lệnh gửi. Vui lòng chờ — không cần bấm lại.', loggingIn:'Đang đăng nhập…', pleaseWait:'Vui lòng chờ…',
+    guideLink:'Hướng dẫn sử dụng & câu hỏi thường gặp', sending:'Đang gửi…', sendingSub:'Đã nhận lệnh gửi. Vui lòng chờ — không cần bấm lại.', loggingIn:'Đang đăng nhập…', pleaseWait:'Vui lòng chờ…',
     tabEntry:'Ghi nhận', tabMine:'Doanh số của tôi', refresh:'Làm mới', updatedAt:'Cập nhật {t}', cancel:'Đóng',
     today:'Hôm nay', thisMonth:'Tháng này', boxes:'thùng', dropsN:'{n} lượt giao', vsLast:'{a} so với cùng kỳ tháng trước', noLast:'tháng trước chưa có dữ liệu',
     dailyT:'Số thùng mỗi ngày — tháng này', dailyS:'Cột vàng = hôm nay.', activeDays:'Ngày làm việc', avgDrop:'TB thùng / lượt', bestDay:'Ngày tốt nhất',
@@ -374,7 +376,7 @@ const T = {
     expired:'Your session has expired. Please log in again.',
     tagline:'Accurate data → Better decisions → Growing together',
     hello:'Hello, {n}!',
-    sending:'Sending…', sendingSub:'Submit received. Please wait — no need to tap again.', loggingIn:'Logging in…', pleaseWait:'Please wait…',
+    guideLink:'User guide & FAQ', sending:'Sending…', sendingSub:'Submit received. Please wait — no need to tap again.', loggingIn:'Logging in…', pleaseWait:'Please wait…',
     tabEntry:'Record', tabMine:'My sales', refresh:'Refresh', updatedAt:'Updated {t}', cancel:'Close',
     today:'Today', thisMonth:'This month', boxes:'boxes', dropsN:'{n} drop-offs', vsLast:'{a} vs same point last month', noLast:'no data last month',
     dailyT:'Boxes per day — this month', dailyS:'Gold bar = today.', activeDays:'Active days', avgDrop:'Avg boxes / drop', bestDay:'Best day',
@@ -409,7 +411,7 @@ function t(k,vars){let s=(T[lang][k]||k);if(vars)for(const x in vars)s=s.replace
 function applyLang(){
   document.documentElement.lang=lang;
   document.querySelectorAll('[data-i]').forEach(el=>el.textContent=t(el.dataset.i));
-  $('langBtn').textContent = lang==='vi'?'EN':'VI';
+  $('langBtn').textContent = lang==='vi'?'EN':'VI'; $('helpBtn').href=$('helpLink').href='guide-sales.html?from=app&lang='+lang;
   renderHeader(); renderGps(); updateConfirm(); renderQueue(); if(mine) renderMine();
   if($('mission').style.display==='flex') showMission();
 }
