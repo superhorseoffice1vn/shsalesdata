@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1A4FA0">
+<title data-vi="SalesData · Trang chủ" data-en="SalesData · Home">SalesData · Trang chủ</title>
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="guide.css">
+<script src="guide.js"></script>
+<style>
+  .cards{margin-top:14px}
+  @media(min-width:760px){ .cards.c4{grid-template-columns:repeat(2,1fr)} }
+  @media(min-width:1040px){ .cards.c4{grid-template-columns:repeat(4,1fr)} }
+  .card{display:flex;flex-direction:column}
+  .card p{flex:1}
+  .who{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 2px}
+  .who span{font-size:11.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;border-radius:999px;padding:2px 8px;background:var(--surface-2);color:var(--ink-2)}
+  .card .go{margin-top:8px}
+  .sec-h{font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:28px 0 0}
+  .tip{font-size:15px}
+  .glinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .glinks a{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;text-decoration:none;color:var(--ink);font-weight:700}
+  .glinks a:hover{border-color:var(--brand)}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <img src="logo.png" alt="Super Horse">
+  <div class="t">SalesData <small><span class="vi">Trang chủ — tất cả ứng dụng</span><span class="en">Home — all apps</span></small></div>
+  <button class="chip" id="langBtn">English</button>
+</div></header>
+<div class="tagline"><span class="vi">Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển</span><span class="en">Accurate data → Better decisions → Growing together</span></div>
+
+<div class="wrap" style="grid-template-columns:1fr">
+<main>
+  <div class="hero">
+    <h1><span class="vi">Chọn ứng dụng</span><span class="en">Choose an app</span></h1>
+    <p><span class="vi">Mỗi trang có đăng nhập riêng bằng tên đăng nhập và mã PIN SalesData. Trang chỉ mở được nếu tài khoản của bạn có đúng vai trò.</span>
+       <span class="en">Each page has its own login with your SalesData username and PIN. A page only opens if your account has the right role.</span></p>
+  </div>
+
+  <div class="cards c4" id="apps"></div>
+
+  <div class="sec-h"><span class="vi">Hướng dẫn sử dụng</span><span class="en">User guides</span></div>
+  <div class="glinks" id="guides"></div>
+
+  <p class="tip"><span class="vi">Hãy lưu (bookmark) <b>trang này</b>. Khi thêm hoặc bớt ứng dụng, đường link này vẫn giữ nguyên.</span>
+     <span class="en">Bookmark <b>this page</b>. When apps are added or removed, this link stays the same.</span></p>
+</main>
+</div>
+<footer>SalesData · Super Horse Energy Drink</footer>
+
+<script>
+/* ===== Edit this list to add or remove apps — nothing else needs to change ===== */
+const APPS = [
+  { href:'./',             icon:'📦', roles:['Sales'],
+    vi:{ t:'Ứng dụng bán hàng', d:'Cho nhân viên bán hàng: ghi nhận giao hàng, kho DL1, kiểm kê, doanh số của tôi.' },
+    en:{ t:'Sales app',        d:'For sales staff: record drop-offs, DL1 stock, stocktakes, my sales.' } },
+  { href:'hq.html',        icon:'🚚', roles:['HQ','Admin'],
+    vi:{ t:'Xuất hàng (HQ)',   d:'Phòng kinh doanh HQ nhập phiếu xuất hàng tới DL1 và theo dõi trạng thái nhận hàng.' },
+    en:{ t:'Dispatches (HQ)',  d:'HQ sales office enters deliveries to DL1s and tracks whether they were received.' } },
+  { href:'manager.html',   icon:'✅', roles:['Manager','Admin'],
+    vi:{ t:'Quản lý bán hàng', d:'Tổng quan kho DL1, xem chi tiết từng DL1 và nhân viên, duyệt kho, chốt tháng, doanh số, sửa lượt giao.' },
+    en:{ t:'Sales manager',    d:'DL1 stock overview, drill into each DL1 and employee, stock approvals, month close, sales, drop-off fixes.' } },
+  { href:'dashboard.html', icon:'📊', roles:['Admin'],
+    vi:{ t:'Bảng điều khiển',  d:'Báo cáo giao hàng: bản đồ nhiệt, dòng thời gian, bản đồ, sửa đổi & kiểm toán, kiểm tra sao lưu.' },
+    en:{ t:'Dashboard',        d:'Drop-off reporting: heat map, timeline, map, amendments & audit, backup verification.' } },
+];
+const GUIDES = [
+  { href:'guide.html',         vi:'📖 Tất cả hướng dẫn',     en:'📖 All guides' },
+  { href:'guide-sales.html',   vi:'Nhân viên bán hàng',       en:'Sales staff' },
+  { href:'guide-manager.html', vi:'Quản lý',                  en:'Manager' },
+  { href:'guide-admin.html',   vi:'Admin',                    en:'Admin' },
+];
+/* ============================================================================== */
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+document.getElementById('apps').innerHTML = APPS.map(a => `<a class="card" href="${esc(a.href)}">
+  <div class="ic">${a.icon}</div>
+  <h3><span class="vi">${esc(a.vi.t)}</span><span class="en">${esc(a.en.t)}</span></h3>
+  <div class="who">${a.roles.map(r => `<span>${esc(r)}</span>`).join('')}</div>
+  <p><span class="vi">${esc(a.vi.d)}</span><span class="en">${esc(a.en.d)}</span></p>
+  <span class="go"><span class="vi">Mở →</span><span class="en">Open →</span></span></a>`).join('');
+document.getElementById('guides').innerHTML = GUIDES.map(g => `<a href="${esc(g.href)}"><span class="vi">${esc(g.vi)}</span><span class="en">${esc(g.en)}</span></a>`).join('');
+</script>
+</body>
+</html>

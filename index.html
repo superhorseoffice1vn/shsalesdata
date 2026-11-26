@@ -119,6 +119,32 @@
   textarea{width:100%;font:inherit;font-size:16px;padding:10px;border:2px solid var(--line);border-radius:12px;min-height:70px}
   .refresh{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);margin-top:12px}
   .refresh button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 12px;font-weight:700}
+  .seg{display:flex;gap:6px;margin:4px 0 2px}
+  .seg button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 6px;font-weight:800;font-size:14.5px;color:var(--muted)}
+  .seg button.on{border-color:var(--brand);color:var(--brand);background:#F1F6FD}
+  .seg button.pink.on{border-color:#D6246E;color:#D6246E;background:#FDEFF5}
+  select.sel{width:100%;font-size:17px;padding:12px;border:2px solid var(--line);border-radius:12px;background:#fff;font-weight:700}
+  .stile .v.neg{color:var(--red)}
+  .stile .pend{font-size:12.5px;color:#8A4B00;font-weight:700;margin-top:2px}
+  .eom{background:linear-gradient(135deg,#FFF4E0,#FFE7BF);border:1px solid #F3C98A;border-radius:var(--radius);padding:14px;margin-top:12px}
+  .eom b{display:block;font-size:16px;color:#6B3A00} .eom p{margin:4px 0 10px;font-size:13.5px;color:#7A4A00}
+  .eom.done{background:#E3F4E8;border-color:#B5DDC0} .eom.done b{color:#1B5E20}
+  .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .act{border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px 10px;text-align:left;font-weight:800;font-size:14.5px;color:var(--ink);min-height:64px}
+  .act span{display:block;font-size:22px;margin-bottom:2px}
+  .act.wide{grid-column:span 2;background:var(--brand);color:#fff;border-color:var(--brand)}
+  .dispatch{border:2px dashed var(--brand);border-radius:14px;padding:12px;margin-top:10px;display:flex;gap:10px;align-items:center}
+  .dispatch .i{flex:1} .dispatch b{font-size:18px} .dispatch .s{font-size:12.5px;color:var(--muted)}
+  .mv{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .mv:last-child{border-bottom:0}
+  .mv .q{font-weight:900;min-width:58px;text-align:right;font-size:16px}
+  .mv .q.in{color:var(--green)} .mv .q.out{color:var(--ink)}
+  .mv .x{flex:1;min-width:0} .mv .x .m{color:var(--muted);font-size:12.5px}
+  .cmp{display:grid;grid-template-columns:1fr auto auto auto;gap:6px 12px;align-items:center;font-size:15px;margin:12px 0}
+  .cmp .h{font-size:12px;color:var(--muted);font-weight:700}
+  .cmp .d0{color:var(--green);font-weight:900} .cmp .dn{color:var(--red);font-weight:900}
+  .gmini{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-top:10px}
+  .gmini .dot{width:12px;height:12px;box-shadow:none}
   .busy{position:fixed;inset:0;z-index:20;background:linear-gradient(170deg,#1A4FA0 0%,#0F2F63 100%);color:#fff;display:none;
         flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
   .busy .spin{width:74px;height:74px;border-radius:50%;border:7px solid rgba(255,255,255,.25);border-top-color:#F5C84C;animation:spin .9s linear infinite}
@@ -148,6 +174,7 @@
 <div class="tagline hidden" id="tagline" data-i="tagline"></div>
 <nav class="tabs hidden" id="tabs">
   <button id="tabEntry" class="on" data-i="tabEntry"></button>
+  <button id="tabStock"><span data-i="tabStock"></span><span class="badge hidden" id="stockBadge"></span></button>
   <button id="tabMine"><span data-i="tabMine"></span><span class="badge hidden" id="mineBadge"></span></button>
 </nav>
 
@@ -190,7 +217,11 @@
     </div>
 
     <div class="card">
-      <label for="boxes" style="margin-top:0" data-i="boxesLabel"></label>
+      <div id="dl1PickWrap" class="hidden"><label for="dl1Pick" style="margin-top:0" data-i="fromDl1"></label>
+        <select id="dl1Pick" class="sel"></select></div>
+      <label data-i="productLabel" id="prodLbl"></label>
+      <div class="seg" id="prodSeg"><button data-p="SH" class="on">Super Horse Energy Drink</button><button data-p="PINK" class="pink">Super Horse Pink</button></div>
+      <label for="boxes" data-i="boxesLabel"></label>
       <input id="boxes" class="big" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="0">
       <div class="hint" data-i="boxesHint"></div>
       <div class="err" id="boxErr"></div>
@@ -207,6 +238,8 @@
       <div class="big-num" id="rBoxes"></div>
       <div class="center sub" data-i="boxesUnit"></div>
       <div style="margin-top:14px">
+        <div class="row"><span class="k" data-i="rProduct"></span><span class="v" id="rProd"></span></div>
+        <div class="row hidden" id="rDl1Row"><span class="k" data-i="fromDl1"></span><span class="v" id="rDl1"></span></div>
         <div class="row"><span class="k" data-i="rEmployee"></span><span class="v" id="rEmp"></span></div>
         <div class="row"><span class="k" data-i="rTime"></span><span class="v" id="rTime"></span></div>
         <div class="row"><span class="k" data-i="rGps"></span><span class="v" id="rGps"></span></div>
@@ -228,6 +261,13 @@
     </div>
   </section>
 
+  <!-- DL1 STOCK -->
+  <section id="vStock" class="hidden">
+    <div class="refresh"><span id="kUpd"></span><button id="kRefresh" data-i="refresh"></button></div>
+    <div class="err" id="kErr"></div>
+    <div id="stockBody"></div>
+  </section>
+
   <!-- MY SALES (read-only) -->
   <section id="vMine" class="hidden">
     <div class="refresh"><span id="mUpd"></span><button id="mRefresh" data-i="refresh"></button></div>
@@ -235,7 +275,7 @@
     <div id="mineBody"></div>
   </section>
 
-  <div class="foot">SalesData · v3.1</div>
+  <div class="foot">SalesData · v4.0</div>
 </div>
 
 <!-- Welcome / mission screen (once per login) -->
@@ -248,10 +288,62 @@
   </div>
 </div>
 
+<div id="toast" style="position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#1F1F1F;color:#fff;border-radius:12px;padding:11px 16px;font-weight:700;z-index:25;display:none;max-width:90vw;text-align:center"></div>
 <!-- Sending overlay -->
 <div class="busy" id="busy" role="alertdialog" aria-live="assertive">
   <div class="spin"></div>
   <h2 id="busyT"></h2><p id="busyS"></p><div class="bx" id="busyB"></div>
+</div>
+
+<!-- Stock movement / delivery -->
+<div class="modal" id="mvModal">
+  <div class="box" style="max-height:94vh;overflow:auto">
+    <h1 id="mvTitle"></h1>
+    <p class="sub" id="mvSub"></p>
+    <div id="mvProdWrap"><label data-i="productLabel"></label>
+      <div class="seg" id="mvSeg"><button data-p="SH" class="on">Super Horse Energy Drink</button><button data-p="PINK" class="pink">Super Horse Pink</button></div></div>
+    <label for="mvQty" data-i="qtyBoxes"></label>
+    <input id="mvQty" class="big" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" placeholder="0">
+    <label for="mvNote" id="mvNoteLbl"></label>
+    <textarea id="mvNote" maxlength="300"></textarea>
+    <div class="gmini"><span class="dot" id="mvDot"></span><span id="mvGps"></span></div>
+    <div class="err" id="mvErr"></div>
+    <button class="btn green" id="mvSend" disabled></button>
+    <button class="btn ghost" id="mvClose" data-i="cancel"></button>
+  </div>
+</div>
+
+<!-- Blind stocktake -->
+<div class="modal" id="stModal">
+  <div class="box" style="max-height:94vh;overflow:auto">
+    <div id="stStep1">
+      <h1 id="stTitle"></h1>
+      <p class="sub" id="stSub"></p>
+      <label for="stSH">Super Horse Energy Drink</label>
+      <input id="stSH" class="big" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="0">
+      <label for="stPINK">Super Horse Pink</label>
+      <input id="stPINK" class="big" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="0">
+      <p class="hint" data-i="stBlind"></p>
+      <div class="gmini"><span class="dot" id="stDot"></span><span id="stGps"></span></div>
+      <div class="err" id="stErr"></div>
+      <button class="btn green" id="stSend" disabled data-i="stSend"></button>
+      <button class="btn ghost" id="stClose" data-i="cancel"></button>
+    </div>
+    <div id="stStep2" class="hidden">
+      <div class="tick" id="stTick">✓</div>
+      <h1 id="stResT" class="center"></h1>
+      <p class="sub center" id="stResS"></p>
+      <div class="cmp" id="stCmp"></div>
+      <div id="stDiffWrap" class="hidden">
+        <label for="stReason" data-i="stReason"></label>
+        <textarea id="stReason" maxlength="300"></textarea>
+        <div class="err" id="stErr2"></div>
+        <button class="btn" id="stReasonSend" data-i="stReasonSend"></button>
+        <button class="btn ghost" id="stRecount" data-i="stRecount"></button>
+      </div>
+      <button class="btn ghost" id="stDone" data-i="stDone"></button>
+    </div>
+  </div>
 </div>
 
 <!-- Report a mistake -->
@@ -328,8 +420,31 @@ const T = {
     expired:'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
     tagline:'Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển',
     hello:'Xin chào, {n}!',
+    tabStock:'Kho DL1', fromDl1:'Hàng lấy từ DL1', productLabel:'Sản phẩm', rProduct:'Sản phẩm', qtyBoxes:'Số thùng',
+    noDl1:'Bạn chưa được giao DL1 nào. Liên hệ admin nếu bạn phụ trách kho DL1.', curStock:'Tồn kho hiện tại', pendingN:'{n} thùng chờ duyệt',
+    negWarn:'Tồn âm — hãy kiểm kê', expectedT:'Hàng đang về', dispatchLine:'Phiếu {no} · dự kiến {d}', confirmReceive:'Nhận hàng',
+    aSale:'Bán tại DL1', aCount:'Kiểm kê', aReturn:'Trả về công ty', aDamaged:'Hàng hỏng / hết hạn', aPromo:'Hàng khuyến mãi',
+    recentT:'Nhập xuất gần đây (cả nhóm)', teamT:'Nhóm', lastCount:'Kiểm kê gần nhất: {d} · @{u}', neverCounted:'Chưa kiểm kê lần nào — hãy kiểm kê để ghi số dư đầu kỳ.',
+    eomT:'Kiểm kê cuối tháng {m}', eomS:'Bắt buộc, hạn chót {d}. Số liệu tính cho ngày cuối tháng; thời gian và GPS thực tế vẫn được ghi lại.', eomBtn:'Kiểm kê cuối tháng',
+    eomDone:'Đã kiểm kê cuối tháng {m} — chờ quản lý xác nhận và chốt.', eomLocked:'Tháng {m} đã chốt ✓',
+    t_receive:'Nhận hàng', t_dropoff:'Giao sau DL1', t_dl1sale:'Bán tại DL1', t_return_hq:'Trả về công ty', t_damaged:'Hỏng / hết hạn', t_promo:'Khuyến mãi', t_count_adj:'Điều chỉnh kiểm kê',
+    s_Pending:'Chờ duyệt', s_Rejected:'Bị từ chối', s_Cancelled:'Đã hủy', s_Posted:'',
+    noteOpt:'Ghi chú (không bắt buộc)', noteReq:'Lý do (bắt buộc)', noteShort:'Ghi chú — bắt buộc nếu số nhận khác số phiếu',
+    mvSend:'Gửi', mvSendApproval:'Gửi để quản lý duyệt', needApproval:'Cần quản lý duyệt trước khi trừ vào kho.',
+    mvOk:'Đã ghi nhận ✓', mvPendOk:'Đã gửi — chờ quản lý duyệt', mvQueued:'Đã lưu trên máy — sẽ tự gửi khi có mạng',
+    receiveT:'Nhận hàng từ công ty', receiveS:'Phiếu {no} · {p} · công ty gửi {n} thùng', saleS:'Ghi mỗi lần DL1 bán hàng (khách lẻ, xe của DL1…).',
+    returnS:'Thùng trả lại công ty.', damagedS:'Thùng hỏng hoặc hết hạn, không bán được.', promoS:'Thùng tặng miễn phí cho chương trình khuyến mãi.',
+    stTitle:'Kiểm kê kho {d}', stTitleEom:'Kiểm kê cuối tháng {m} · {d}', stSub:'Đếm toàn bộ thùng trong kho, rồi nhập số đếm được cho từng sản phẩm.',
+    stBlind:'Ứng dụng chỉ so sánh với hệ thống sau khi bạn gửi — hãy nhập đúng số bạn đã đếm.', stSend:'Gửi kết quả kiểm kê', stNeedNet:'Cần có mạng để kiểm kê.',
+    stMatch:'Khớp với hệ thống', stMatchS:'Không cần điều chỉnh.', stDiffT:'Có chênh lệch', stDiffS:'Yêu cầu điều chỉnh đã gửi quản lý duyệt. Hãy ghi lý do, hoặc bấm Đếm lại nếu bạn nghĩ đã đếm sai.',
+    stOpeningT:'Đã ghi số dư đầu kỳ', stOpeningS:'Số dư đầu kỳ cần quản lý duyệt trước khi có hiệu lực.',
+    cProduct:'Sản phẩm', cCounted:'Đếm', cSystem:'Hệ thống', cDiff:'Chênh', stReason:'Lý do chênh lệch', stReasonSend:'Gửi lý do', stRecount:'Đếm lại', stDone:'Xong', reasonSent:'Đã gửi lý do ✓',
+    gpsMiniWait:'Đang lấy GPS…', gpsMiniOk:'GPS ±{m} m', gpsMiniWeak:'GPS yếu ±{m} m — gửi được sau {s} giây (sẽ được đánh dấu)', gpsMiniWeakOk:'GPS yếu ±{m} m — sẽ được đánh dấu',
+    err_not_assigned:'Bạn không được giao DL1 này.', err_month_locked:'Tháng này đã chốt.', err_note_required:'Cần ghi lý do.', err_not_expected:'Phiếu này đã được xử lý.',
+    err_eom_done:'Tháng này đã kiểm kê cuối tháng.', err_eom_not_open:'Chưa đến thời gian kiểm kê cuối tháng.', err_boxes:'Số thùng không hợp lệ.', err_gps:'Chưa có GPS.',
+    failedN:'{n} mục không gửi được — liên hệ quản lý.', offlineStock:'Đang xem dữ liệu đã lưu (chưa có mạng).', queuedLbl:'Chưa gửi',
     guideLink:'Hướng dẫn sử dụng & câu hỏi thường gặp', sending:'Đang gửi…', sendingSub:'Đã nhận lệnh gửi. Vui lòng chờ — không cần bấm lại.', loggingIn:'Đang đăng nhập…', pleaseWait:'Vui lòng chờ…',
-    tabEntry:'Ghi nhận', tabMine:'Doanh số của tôi', refresh:'Làm mới', updatedAt:'Cập nhật {t}', cancel:'Đóng',
+    tabEntry:'Ghi nhận', tabMine:'Doanh số', refresh:'Làm mới', updatedAt:'Cập nhật {t}', cancel:'Đóng',
     today:'Hôm nay', thisMonth:'Tháng này', boxes:'thùng', dropsN:'{n} lượt giao', vsLast:'{a} so với cùng kỳ tháng trước', noLast:'tháng trước chưa có dữ liệu',
     dailyT:'Số thùng mỗi ngày — tháng này', dailyS:'Cột vàng = hôm nay.', activeDays:'Ngày làm việc', avgDrop:'TB thùng / lượt', bestDay:'Ngày tốt nhất',
     entriesT:'Các lượt giao của tôi', entriesS:'Chỉ xem. Thấy sai? Bấm "Báo lỗi" để quản lý dữ liệu kiểm tra.',
@@ -376,6 +491,29 @@ const T = {
     expired:'Your session has expired. Please log in again.',
     tagline:'Accurate data → Better decisions → Growing together',
     hello:'Hello, {n}!',
+    tabStock:'DL1 stock', fromDl1:'From DL1', productLabel:'Product', rProduct:'Product', qtyBoxes:'Boxes',
+    noDl1:'You are not assigned to a DL1. Contact the admin if you look after a DL1 warehouse.', curStock:'Current stock', pendingN:'{n} boxes pending approval',
+    negWarn:'Below zero — please do a stocktake', expectedT:'Deliveries on the way', dispatchLine:'Note {no} · expected {d}', confirmReceive:'Receive',
+    aSale:'Sold at DL1', aCount:'Stocktake', aReturn:'Return to HQ', aDamaged:'Damaged / expired', aPromo:'Free promotion',
+    recentT:'Recent movements (whole team)', teamT:'Team', lastCount:'Last stocktake: {d} · @{u}', neverCounted:'Never counted — do a stocktake to record the opening balance.',
+    eomT:'Month-end stocktake {m}', eomS:'Required, deadline {d}. Figures count for the last day of the month; the real time and GPS are still recorded.', eomBtn:'Do month-end stocktake',
+    eomDone:'Month-end {m} counted — waiting for the manager to sign off.', eomLocked:'Month {m} is closed ✓',
+    t_receive:'Received', t_dropoff:'Drop-off', t_dl1sale:'Sold at DL1', t_return_hq:'Return to HQ', t_damaged:'Damaged / expired', t_promo:'Promotion', t_count_adj:'Stocktake adjustment',
+    s_Pending:'Pending', s_Rejected:'Rejected', s_Cancelled:'Cancelled', s_Posted:'',
+    noteOpt:'Note (optional)', noteReq:'Reason (required)', noteShort:'Note — required if it differs from the delivery note',
+    mvSend:'Submit', mvSendApproval:'Send for manager approval', needApproval:'Needs manager approval before it comes off stock.',
+    mvOk:'Recorded ✓', mvPendOk:'Sent — waiting for manager approval', mvQueued:'Saved on phone — will send when online',
+    receiveT:'Receive delivery from HQ', receiveS:'Note {no} · {p} · HQ sent {n} boxes', saleS:'Log each time the DL1 sells (walk-in customers, DL1 truck…).',
+    returnS:'Boxes sent back to head office.', damagedS:'Boxes damaged or expired, not sellable.', promoS:'Boxes given away free for a promotion.',
+    stTitle:'Stocktake {d}', stTitleEom:'Month-end stocktake {m} · {d}', stSub:'Count every box in the warehouse, then enter what you counted for each product.',
+    stBlind:'The app only compares with the system after you send — enter exactly what you counted.', stSend:'Submit count', stNeedNet:'A stocktake needs signal.',
+    stMatch:'Matches the system', stMatchS:'No adjustment needed.', stDiffT:'There is a difference', stDiffS:'An adjustment request went to the manager. Give a reason, or tap Count again if you think you miscounted.',
+    stOpeningT:'Opening balance recorded', stOpeningS:'The opening balance needs manager approval before it counts.',
+    cProduct:'Product', cCounted:'Counted', cSystem:'System', cDiff:'Diff', stReason:'Reason for the difference', stReasonSend:'Send reason', stRecount:'Count again', stDone:'Done', reasonSent:'Reason sent ✓',
+    gpsMiniWait:'Getting GPS…', gpsMiniOk:'GPS ±{m} m', gpsMiniWeak:'Weak GPS ±{m} m — can send in {s} s (will be flagged)', gpsMiniWeakOk:'Weak GPS ±{m} m — will be flagged',
+    err_not_assigned:'You are not assigned to this DL1.', err_month_locked:'This month is closed.', err_note_required:'A reason is required.', err_not_expected:'This delivery was already handled.',
+    err_eom_done:'Month-end stocktake already done.', err_eom_not_open:'Month-end stocktake is not open yet.', err_boxes:'Invalid number of boxes.', err_gps:'No GPS yet.',
+    failedN:'{n} item(s) could not be sent — contact your manager.', offlineStock:'Showing saved data (no signal).', queuedLbl:'Not sent',
     guideLink:'User guide & FAQ', sending:'Sending…', sendingSub:'Submit received. Please wait — no need to tap again.', loggingIn:'Logging in…', pleaseWait:'Please wait…',
     tabEntry:'Record', tabMine:'My sales', refresh:'Refresh', updatedAt:'Updated {t}', cancel:'Close',
     today:'Today', thisMonth:'This month', boxes:'boxes', dropsN:'{n} drop-offs', vsLast:'{a} vs same point last month', noLast:'no data last month',
@@ -412,19 +550,21 @@ function applyLang(){
   document.documentElement.lang=lang;
   document.querySelectorAll('[data-i]').forEach(el=>el.textContent=t(el.dataset.i));
   $('langBtn').textContent = lang==='vi'?'EN':'VI'; $('helpBtn').href=$('helpLink').href='guide-sales.html?from=app&lang='+lang;
-  renderHeader(); renderGps(); updateConfirm(); renderQueue(); if(mine) renderMine();
+  renderHeader(); renderGps(); updateConfirm(); renderQueue(); if(mine) renderMine(); if(stock&&session) renderStock();
   if($('mission').style.display==='flex') showMission();
 }
 $('langBtn').onclick=()=>{lang=lang==='vi'?'en':'vi';S.set('sh_lang',lang);applyLang()};
 
 /* ---------- views ---------- */
 function show(v){
-  ['vLogin','vEntry','vReview','vDone','vMine'].forEach(x=>$(x).classList.toggle('hidden',x!==v));
+  ['vLogin','vEntry','vReview','vDone','vMine','vStock'].forEach(x=>$(x).classList.toggle('hidden',x!==v));
   $('tagline').classList.toggle('hidden',v==='vLogin');
   $('tabs').classList.toggle('hidden',v==='vLogin'||v==='vReview');
-  $('tabEntry').classList.toggle('on',v!=='vMine'); $('tabMine').classList.toggle('on',v==='vMine');
+  $('tabEntry').classList.toggle('on',v!=='vMine'&&v!=='vStock'); $('tabMine').classList.toggle('on',v==='vMine'); $('tabStock').classList.toggle('on',v==='vStock');
   if(v==='vMine') loadMine();
-  if(v==='vEntry') startGps(); else if(v!=='vReview') stopGps();
+  if(v==='vStock') loadStock();
+  if(v==='vEntry') fillDl1Pick();
+  if(v==='vEntry'||v==='vStock') startGps(); else if(v!=='vReview') stopGps();
   window.scrollTo(0,0);
 }
 
@@ -445,7 +585,7 @@ function renderHeader(){
     $('logoutBtn').classList.add('hidden');
   }
 }
-$('logoutBtn').onclick=()=>{session=null;mine=null;S.del('sh_session');S.del('sh_mine');renderHeader();show('vLogin')};
+$('logoutBtn').onclick=()=>{session=null;mine=null;stock=null;S.del('sh_session');S.del('sh_mine');S.del('sh_stock');renderHeader();show('vLogin')};
 
 /* ---------- API ---------- */
 function busy(on,title,sub,boxes){
@@ -476,7 +616,7 @@ $('loginBtn').onclick=async()=>{
     if(res.ok){
       session={token:res.token,username:res.username,name:res.name,role:res.role||'',expires:nextMidnightVN()}; mine=null;
       S.set('sh_session',session); S.set('sh_lastUser',u);
-      $('uPin').value=''; renderHeader(); show('vEntry'); flushQueue(); showMission();
+      $('uPin').value=''; stock=null; renderHeader(); show('vEntry'); flushQueue(); showMission(); loadStock(true);
     }else{
       $('loginErr').textContent = res.error==='locked'?t('errLocked'):t('errLogin');
     }
@@ -528,7 +668,7 @@ function gpsOk(){
 }
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden) stopGps();
-  else if(!$('vEntry').classList.contains('hidden')) startGps();
+  else if(!$('vEntry').classList.contains('hidden')||!$('vStock').classList.contains('hidden')) startGps();
 });
 
 /* ---------- boxes ---------- */
@@ -553,7 +693,9 @@ $('confirmBtn').onclick=()=>{
   const n=boxVal();
   const go=()=>{
     const f=gps.best;
-    pending={id:uid(),boxes:n,lat:f.lat,lng:f.lng,acc:f.acc,gpsStatus:band(f.acc),deviceTime:new Date().toISOString()};
+    const myD=dl1sMine(), dl1=myD.length===1?myD[0].code:(myD.length>1?$('dl1Pick').value:'');
+    pending={id:uid(),boxes:n,lat:f.lat,lng:f.lng,acc:f.acc,gpsStatus:band(f.acc),deviceTime:new Date().toISOString(),product:prod,dl1:dl1};
+    $('rProd').textContent=P[prod]; $('rDl1Row').classList.toggle('hidden',!dl1); $('rDl1').textContent=dl1?dl1Label(dl1):'';
     $('rBoxes').textContent=n.toLocaleString(lang==='vi'?'vi-VN':'en-US');
     $('rEmp').textContent=(session.name||'')+' (@'+session.username+')';
     $('rTime').textContent=fmtTime(new Date(pending.deviceTime));
@@ -591,7 +733,7 @@ $('submitBtn').onclick=async()=>{
   $('dTitle').textContent=t(sent?'doneTitle':'queuedTitle');
   $('dSub').textContent=t(sent?'doneSub':'queuedSub');
   $('dBoxes').textContent=rec.boxes.toLocaleString(lang==='vi'?'vi-VN':'en-US')+' '+t('boxesUnit');
-  pending=null; $('boxes').value=''; show('vDone'); renderQueue();
+  pending=null; $('boxes').value=''; setProd('SH'); show('vDone'); renderQueue(); if(sent) setTimeout(()=>loadStock(true),500);
 };
 $('newBtn').onclick=()=>{
   if(!sessionValid()){session=null;S.del('sh_session');renderHeader();show('vLogin');return}
@@ -607,11 +749,15 @@ async function flushQueue(){
   const keep=[];
   for(const rec of q){
     try{
-      const res=await api({action:'submit',...rec});
-      if(!res.ok) keep.push(rec);   // keep on any failure; server ignores duplicates by id
+      const res=await api({...rec,action:rec._action||'submit'});
+      if(!res.ok){
+        if(res.error==='auth'||res.error==='server') keep.push(rec);   // retry later; server ignores duplicates by id
+        else { const f=S.get('sh_failed',[]); f.push({rec,error:res.error,at:Date.now()}); S.set('sh_failed',f); }
+      }
     }catch(e){keep.push(rec)}
   }
-  S.set('sh_queue',keep); flushing=false; renderQueue();
+  const sent=keep.length<q.length;
+  S.set('sh_queue',keep); flushing=false; renderQueue(); if(sent&&session) loadStock(true);
 }
 function renderQueue(){
   const n=S.get('sh_queue',[]).length, el=$('queueBanner');
@@ -627,6 +773,197 @@ function showMission(){
   $('mission').style.display='flex';
 }
 $('mOk').onclick=()=>{$('mission').style.display='none';updateConfirm()};
+
+/* ---------- DL1 STOCK ---------- */
+const P={SH:'Super Horse Energy Drink',PINK:'Super Horse Pink'};
+const APPROVE_TYPES=['damaged','promo'];
+let stock=S.get('sh_stock',null), curDl1=S.get('sh_curDl1',null), prod='SH', mv=null, st=null, miniTimer=null;
+function dl1sMine(){ return stock&&session&&stock.u===session.username ? (stock.dl1s||[]) : []; }
+function dl1Label(code){ const d=dl1sMine().find(x=>x.code===code); return d?code+' · '+d.name:code; }
+function setProd(p){ prod=p; document.querySelectorAll('#prodSeg button').forEach(b=>b.classList.toggle('on',b.dataset.p===p)); }
+document.querySelectorAll('#prodSeg button').forEach(b=>b.onclick=()=>setProd(b.dataset.p));
+function fillDl1Pick(){
+  const list=dl1sMine(); $('dl1PickWrap').classList.toggle('hidden',list.length<2);
+  if(list.length<2) return;
+  const cur=$('dl1Pick').value||curDl1;
+  $('dl1Pick').innerHTML=list.map(d=>`<option value="${esc(d.code)}">${esc(d.code+' · '+d.name)}</option>`).join('');
+  $('dl1Pick').value=list.some(d=>d.code===cur)?cur:list[0].code;
+}
+$('dl1Pick').onchange=()=>{curDl1=$('dl1Pick').value;S.set('sh_curDl1',curDl1)};
+$('tabStock').onclick=()=>{ if(!sessionValid()){show('vLogin');return} show('vStock'); };
+$('kRefresh').onclick=()=>loadStock();
+
+async function loadStock(quiet){
+  if(!session) return;
+  if(!quiet) renderStock();
+  if(!navigator.onLine){ if(!quiet) $('kErr').textContent=stock?t('offlineStock'):t('loadFail'); return; }
+  $('kRefresh').disabled=true; if(!quiet) $('kErr').textContent='';
+  try{
+    const r=await api({action:'stock_home',token:session.token},20000);
+    if(r.ok){ stock={...r,u:session.username}; S.set('sh_stock',stock); renderStock(); fillDl1Pick(); }
+    else if(r.error==='auth'&&!quiet){ alert(t('expired')); session=null; S.del('sh_session'); renderHeader(); show('vLogin'); }
+  }catch(e){ if(!quiet) $('kErr').textContent=stock?t('offlineStock'):t('loadFail'); }
+  $('kRefresh').disabled=false;
+}
+const fmtD=k=>k?k.slice(8,10)+'/'+k.slice(5,7)+'/'+k.slice(0,4):'';
+const monthLbl=m=>m.slice(5,7)+'/'+m.slice(0,4);
+function renderStock(){
+  const list=dl1sMine();
+  const failed=S.get('sh_failed',[]).filter(f=>f.rec.username===(session&&session.username));
+  let html=failed.length?`<div class="banner" style="display:block">${esc(t('failedN',{n:failed.length}))}</div>`:'';
+  if(!list.length){ $('stockBody').innerHTML=html+(stock?`<div class="card"><p class="sub">${esc(t('noDl1'))}</p></div>`:''); $('stockBadge').classList.add('hidden'); return; }
+  if(!list.some(d=>d.code===curDl1)) curDl1=list[0].code;
+  const d=list.find(x=>x.code===curDl1);
+  const queued=S.get('sh_queue',[]).filter(q=>q._action&&q.username===session.username&&q.dl1===d.code);
+  const queuedDisp=new Set(queued.filter(q=>q._action==='receive').map(q=>q.dispatchId));
+  if(list.length>1) html+=`<select class="sel" id="kDl1" style="margin-top:8px">${list.map(x=>`<option value="${esc(x.code)}"${x.code===d.code?' selected':''}>${esc(x.code+' · '+x.name)}</option>`).join('')}</select>`;
+  else html+=`<p class="ctitle" style="margin:10px 0 0">${esc(d.code+' · '+d.name)}</p>`;
+  // month-end banner
+  if(d.eom){
+    if(d.eom.needed) html+=`<div class="eom"><b>📋 ${esc(t('eomT',{m:monthLbl(d.eom.month)}))}</b><p>${esc(t('eomS',{d:fmtD(d.eom.deadline)}))}</p><button class="btn" style="margin:0" id="kEom">${esc(t('eomBtn'))}</button></div>`;
+    else html+=`<div class="eom done"><b>${esc(d.eom.status==='Locked'?t('eomLocked',{m:monthLbl(d.eom.month)}):t('eomDone',{m:monthLbl(d.eom.month)}))}</b></div>`;
+  }
+  // balances
+  html+=`<div class="tiles" style="margin-top:12px">${['SH','PINK'].map(p=>{ const b=d.bal[p]||0, pe=d.pend[p]||0;
+    return `<div class="tile stile"><div class="l">${esc(P[p])}</div><div class="v${b<0?' neg':''}">${nf(b)}</div><div class="u">${esc(t('boxes'))}</div>${pe?`<div class="pend">${esc(t('pendingN',{n:nf(pe)}))}</div>`:''}${b<0?`<div class="pend" style="color:var(--red)">${esc(t('negWarn'))}</div>`:''}</div>`; }).join('')}</div>`;
+  // expected deliveries
+  const disp=(d.dispatches||[]).filter(x=>!queuedDisp.has(x.id));
+  if(disp.length) html+=`<div class="card"><p class="ctitle">🚚 ${esc(t('expectedT'))}</p>${disp.map(x=>`<div class="dispatch"><div class="i"><b>${nf(x.boxes)}</b> ${esc(t('boxes'))} · ${esc(P[x.p])}<div class="s">${esc(t('dispatchLine',{no:x.noteNo,d:fmtD(x.expected)}))}</div></div><button class="btn" style="margin:0;width:auto;padding:12px 14px" data-recv="${esc(x.id)}">${esc(t('confirmReceive'))}</button></div>`).join('')}</div>`;
+  // actions
+  html+=`<div class="card"><div class="acts">
+    <button class="act wide" data-mv="dl1sale"><span>🛒</span>${esc(t('aSale'))}</button>
+    <button class="act" id="kCount"><span>📋</span>${esc(t('aCount'))}</button>
+    <button class="act" data-mv="return_hq"><span>↩️</span>${esc(t('aReturn'))}</button>
+    <button class="act" data-mv="damaged"><span>⚠️</span>${esc(t('aDamaged'))}</button>
+    <button class="act" data-mv="promo"><span>🎁</span>${esc(t('aPromo'))}</button></div>
+    <p class="hint" style="margin-top:10px">${esc(d.lastCount?t('lastCount',{d:fmtTime(new Date(d.lastCount.t)),u:d.lastCount.u}):t('neverCounted'))}</p></div>`;
+  // recent movements
+  const rows=queued.map(q=>({q:true,t:Date.parse(q.deviceTime),n:session.name,u:session.username,type:q.type||'receive',p:q.product,qty:(q.type==='dl1sale'||q.type==='return_hq'||q.type==='damaged'||q.type==='promo'?-1:1)*q.qty,status:'Queued',note:q.note}))
+    .concat(d.moves||[]);
+  html+=`<div class="card"><p class="ctitle">${esc(t('recentT'))}</p>${rows.length?rows.slice(0,60).map(m=>{
+    const pill=m.q?`<span class="pill p-q">⏳ ${esc(t('queuedLbl'))}</span>`:(m.status!=='Posted'?`<span class="pill ${m.status==='Pending'?'p-pend':m.status==='Rejected'?'p-rej':'p-void'}">${esc(t('s_'+m.status))}</span>`:'');
+    return `<div class="mv"><div class="q ${m.qty>0?'in':'out'}">${m.qty>0?'+':''}${nf(m.qty)}</div><div class="x"><b>${esc(t('t_'+m.type))}</b> · ${esc(m.p==='PINK'?'Pink':'SH')} ${pill}
+      <div class="m">${esc(fmtTime(new Date(m.t)))} · ${esc(m.n||m.u)}${m.note?' · '+esc(m.note):''}${m.reviewNote?' · '+esc(m.reviewNote):''}</div></div></div>`; }).join('')
+    :`<p class="sub">—</p>`}
+    <p class="hint">${esc(t('teamT'))}: ${(d.team||[]).map(x=>esc(x.n)).join(', ')}</p></div>`;
+  $('stockBody').innerHTML=html;
+  const pendN=(d.moves||[]).filter(m=>m.status==='Pending').length;
+  $('stockBadge').textContent=d.eom&&d.eom.needed?'!':pendN; $('stockBadge').classList.toggle('hidden',!(d.eom&&d.eom.needed)&&!pendN);
+  if(stock&&stock.generated) $('kUpd').textContent=t('updatedAt',{t:hm(stock.generated)});
+  if($('kDl1')) $('kDl1').onchange=()=>{curDl1=$('kDl1').value;S.set('sh_curDl1',curDl1);renderStock()};
+  $('stockBody').querySelectorAll('[data-mv]').forEach(b=>b.onclick=()=>openMove(b.dataset.mv));
+  $('stockBody').querySelectorAll('[data-recv]').forEach(b=>b.onclick=()=>openMove('receive',(d.dispatches||[]).find(x=>x.id===b.dataset.recv)));
+  if($('kCount')) $('kCount').onclick=()=>openCount('spot');
+  if($('kEom')) $('kEom').onclick=()=>openCount('eom');
+}
+
+/* GPS for stock forms: green/orange straight away; weak (red) accepted after 60 s and flagged */
+function stockGps(since){
+  if(!gps.best) return {ok:false,txt:t('gpsMiniWait'),cls:'wait'};
+  const b=band(gps.best.acc);
+  if(b!=='red') return {ok:true,txt:t('gpsMiniOk',{m:gps.best.acc}),cls:b};
+  const left=60-Math.floor((Date.now()-since)/1000);
+  return left<=0?{ok:true,txt:t('gpsMiniWeakOk',{m:gps.best.acc}),cls:'red'}:{ok:false,txt:t('gpsMiniWeak',{m:gps.best.acc,s:left}),cls:'red'};
+}
+function tickMini(){
+  if(mv){ const g=stockGps(mv.since); $('mvDot').className='dot '+g.cls; $('mvGps').textContent=g.txt; $('mvSend').disabled=!mvValid(); }
+  if(st){ const g=stockGps(st.since); $('stDot').className='dot '+g.cls; $('stGps').textContent=g.txt; $('stSend').disabled=!stValid(); }
+}
+function openMini(){ startGps(); clearInterval(miniTimer); miniTimer=setInterval(tickMini,1000); tickMini(); }
+function closeMini(){ clearInterval(miniTimer); miniTimer=null; }
+
+/* stock movement + receive */
+function setMvProd(p){ mv.p=p; document.querySelectorAll('#mvSeg button').forEach(b=>b.classList.toggle('on',b.dataset.p===p)); }
+document.querySelectorAll('#mvSeg button').forEach(b=>b.onclick=()=>{setMvProd(b.dataset.p);tickMini()});
+function openMove(type,disp){
+  const d=dl1sMine().find(x=>x.code===curDl1); if(!d) return;
+  mv={type,disp,dl1:d.code,p:disp?disp.p:'SH',since:Date.now()};
+  $('mvErr').textContent=''; $('mvNote').value=''; setMvProd(mv.p);
+  $('mvProdWrap').classList.toggle('hidden',!!disp);
+  const titles={receive:'receiveT',dl1sale:'aSale',return_hq:'aReturn',damaged:'aDamaged',promo:'aPromo'};
+  const subs={dl1sale:'saleS',return_hq:'returnS',damaged:'damagedS',promo:'promoS'};
+  $('mvTitle').textContent=t(titles[type]);
+  $('mvSub').textContent=(disp?t('receiveS',{no:disp.noteNo,p:P[disp.p],n:nf(disp.boxes)}):t(subs[type]))+' · '+d.code+(APPROVE_TYPES.includes(type)?' · '+t('needApproval'):'');
+  $('mvQty').value=disp?String(disp.boxes):'';
+  $('mvNoteLbl').textContent=t(type==='receive'?'noteShort':type==='dl1sale'?'noteOpt':'noteReq');
+  $('mvSend').textContent=t(APPROVE_TYPES.includes(type)?'mvSendApproval':'mvSend');
+  $('mvModal').style.display='flex'; openMini(); if(!disp) setTimeout(()=>$('mvQty').focus(),60);
+}
+function mvValid(){
+  if(!mv) return false;
+  const v=$('mvQty').value, n=/^\d+$/.test(v)?parseInt(v,10):NaN, note=$('mvNote').value.trim();
+  if(mv.type==='receive'){ if(!(n>=0&&n<=20000)) return false; if(n!==mv.disp.boxes&&!note) return false; }
+  else { if(!(n>=1&&n<=MAX_BOXES)) return false; if(mv.type!=='dl1sale'&&!note) return false; }
+  return stockGps(mv.since).ok;
+}
+$('mvQty').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').replace(/^0+(?=\d)/,'').slice(0,5);tickMini()});
+$('mvNote').addEventListener('input',tickMini);
+$('mvClose').onclick=()=>{ $('mvModal').style.display='none'; mv=null; closeMini(); };
+$('mvSend').onclick=async()=>{
+  if(!mvValid()) return;
+  const f=gps.best, n=parseInt($('mvQty').value,10);
+  const rec={_action:mv.type==='receive'?'receive':'stock_move',id:uid(),dl1:mv.dl1,product:mv.p,type:mv.type,qty:n,note:$('mvNote').value.trim(),
+    dispatchId:mv.disp?mv.disp.id:'',lat:f.lat,lng:f.lng,acc:f.acc,deviceTime:new Date().toISOString(),token:session.token,username:session.username,name:session.name};
+  $('mvSend').disabled=true; busy(true,t('sending'),t('sendingSub'),nf(n)+' '+t('boxes'));
+  let res=null;
+  if(navigator.onLine){ try{ res=await api({...rec,action:rec._action},15000); }catch(e){} }
+  busy(false);
+  if(res&&!res.ok&&res.error!=='server'){
+    if(res.error==='auth'){ alert(t('expired')); session=null; S.del('sh_session'); renderHeader(); $('mvModal').style.display='none'; mv=null; closeMini(); show('vLogin'); return; }
+    $('mvErr').textContent=errT(res.error); $('mvSend').disabled=false; return;
+  }
+  const queued=!res||!res.ok;
+  if(queued){ rec.offline=true; const q=S.get('sh_queue',[]); q.push(rec); S.set('sh_queue',q); renderQueue(); }
+  $('mvModal').style.display='none'; const ty=mv.type; mv=null; closeMini();
+  toast(queued?t('mvQueued'):(APPROVE_TYPES.includes(ty)?t('mvPendOk'):t('mvOk')));
+  renderStock(); if(!queued) loadStock(true);
+};
+
+/* blind stocktake */
+function openCount(kind){
+  if(!navigator.onLine){ alert(t('stNeedNet')); return; }
+  const d=dl1sMine().find(x=>x.code===curDl1); if(!d) return;
+  st={kind,dl1:d.code,since:Date.now(),id:null};
+  $('stTitle').textContent=kind==='eom'?t('stTitleEom',{m:monthLbl(d.eom.month),d:d.code}):t('stTitle',{d:d.code});
+  $('stSub').textContent=t('stSub'); $('stSH').value=''; $('stPINK').value=''; $('stErr').textContent='';
+  $('stStep1').classList.remove('hidden'); $('stStep2').classList.add('hidden');
+  $('stModal').style.display='flex'; openMini(); setTimeout(()=>$('stSH').focus(),60);
+}
+function stValid(){ return st && /^\d+$/.test($('stSH').value) && /^\d+$/.test($('stPINK').value) && stockGps(st.since).ok; }
+['stSH','stPINK'].forEach(id=>$(id).addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').replace(/^0+(?=\d)/,'').slice(0,6);tickMini()}));
+$('stClose').onclick=()=>{ $('stModal').style.display='none'; st=null; closeMini(); };
+$('stSend').onclick=async()=>{
+  if(!stValid()) return;
+  const f=gps.best; $('stSend').disabled=true; busy(true,t('sending'),t('sendingSub'));
+  let r=null; try{ r=await api({action:'stocktake',token:session.token,id:uid(),dl1:st.dl1,kind:st.kind,counts:{SH:parseInt($('stSH').value,10),PINK:parseInt($('stPINK').value,10)},lat:f.lat,lng:f.lng,acc:f.acc},20000); }catch(e){}
+  busy(false);
+  if(!r){ $('stErr').textContent=t('stNeedNet'); $('stSend').disabled=false; return; }
+  if(!r.ok){ $('stErr').textContent=errT(r.error); $('stSend').disabled=false; return; }
+  st.id=r.stocktakeId; closeMini();
+  $('stStep1').classList.add('hidden'); $('stStep2').classList.remove('hidden');
+  $('stTick').className='tick'+(r.matched?'':' amber'); $('stTick').textContent=r.matched?'✓':'!';
+  $('stResT').textContent=r.matched?t('stMatch'):(r.opening?t('stOpeningT'):t('stDiffT'));
+  $('stResS').textContent=r.matched?t('stMatchS'):(r.opening?t('stOpeningS'):t('stDiffS'));
+  $('stCmp').innerHTML=`<span class="h">${esc(t('cProduct'))}</span><span class="h">${esc(t('cCounted'))}</span><span class="h">${esc(t('cSystem'))}</span><span class="h">${esc(t('cDiff'))}</span>`+
+    ['SH','PINK'].map(p=>{const x=r.result[p];return `<span>${esc(p==='SH'?'Super Horse':'Super Horse Pink')}</span><b>${nf(x.counted)}</b><span>${nf(x.system)}</span><span class="${x.diff?'dn':'d0'}">${x.diff>0?'+':''}${nf(x.diff)}</span>`}).join('');
+  $('stDiffWrap').classList.toggle('hidden',r.matched); $('stReason').value=''; $('stErr2').textContent='';
+};
+$('stReasonSend').onclick=async()=>{
+  const note=$('stReason').value.trim(); if(!note){ $('stErr2').textContent=t('err_note_required'); return; }
+  $('stReasonSend').disabled=true;
+  try{ const r=await api({action:'stocktake_note',token:session.token,stocktakeId:st.id,note},15000); $('stErr2').textContent=r.ok?'':errT(r.error); if(r.ok) toast(t('reasonSent')); }catch(e){ $('stErr2').textContent=t('stNeedNet'); }
+  $('stReasonSend').disabled=false;
+};
+$('stRecount').onclick=async()=>{
+  $('stRecount').disabled=true;
+  try{ await api({action:'stocktake_recount',token:session.token,stocktakeId:st.id},15000); }catch(e){}
+  $('stRecount').disabled=false;
+  const kind=st.kind; $('stModal').style.display='none'; st=null; await loadStock(true); openCount(kind);
+};
+$('stDone').onclick=()=>{ $('stModal').style.display='none'; st=null; closeMini(); loadStock(); };
+
+function errT(e){ const k='err_'+e, v=t(k); return v===k?t('errServer'):v; }
+function toast(m){ const el=$('toast'); el.textContent=m; el.style.display='block'; clearTimeout(toast.t); toast.t=setTimeout(()=>el.style.display='none',2800); }
 
 /* ---------- MY SALES (read-only) ---------- */
 let mine = S.get('sh_mine', null);          // last loaded copy, so the tab opens instantly
@@ -681,7 +1018,7 @@ function renderMine(){
   const showFrom = mine.earliestReport < mStart ? mine.earliestReport : mStart;
   const corrBy = {}; (mine.corrections||[]).forEach(c=>{ (corrBy[c.entryId]=corrBy[c.entryId]||[]).push(c); });
   const list = mine.rows.filter(r=>dkey(r.t)>=showFrom).sort((a,b)=>b.t-a.t);
-  const queued = S.get('sh_queue',[]).filter(q=>q.username===session.username);
+  const queued = S.get('sh_queue',[]).filter(q=>q.username===session.username && !q._action);
   let html='', cur='';
   if(queued.length){ html+=`<div class="dayh"><span>⏳ ${esc(t('stQueued'))}</span></div>`;
     queued.forEach(q=>{ html+=`<div class="ent"><div class="tm">${hm(Date.parse(q.deviceTime))}</div><div class="bx"><b>${nf(q.boxes)}</b> ${esc(t('boxes'))}<div class="st"><span class="pill p-q">${esc(t('stQueued'))}</span></div></div></div>`; }); }

@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A4FA0">
+<title>SalesData HQ</title>
+<link rel="icon" href="icon.png">
+<style>
+  :root{ --brand:#1A4FA0; --brand-dark:#0F2F63; --gold:#F5C84C; --bg:#F2F3F5; --surface:#FFFFFF; --surface-2:#F0EFEC; --line:#E2E1DC;
+         --ink:#0B0B0B; --ink-2:#52514E; --muted:#7A7975; --good:#1E9E4A; --warn:#B86E00; --bad:#C62828; }
+  @media (prefers-color-scheme: dark){ :root:where(:not([data-theme="light"])){ --bg:#111; --surface:#1A1A19; --surface-2:#262624; --line:#33332F; --ink:#F0EFEC; --ink-2:#C3C2B7; --muted:#9A998F; } }
+  :root[data-theme="dark"]{ --bg:#111; --surface:#1A1A19; --surface-2:#262624; --line:#33332F; --ink:#F0EFEC; --ink-2:#C3C2B7; --muted:#9A998F; }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.4;font-variant-numeric:tabular-nums}
+  button,select,input,textarea{font:inherit;color:inherit}
+  .hidden{display:none!important}
+  header{background:var(--brand);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
+  .hdr{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px}
+  .hdr img{height:44px;background:#fff;border-radius:10px;padding:2px 4px}
+  .hdr .ttl{flex:1;min-width:0} .hdr .ttl b{display:block;font-size:17px} .hdr .ttl span{font-size:12.5px;opacity:.85}
+  .chip{border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:999px;padding:6px 11px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none}
+  .tagline{background:var(--brand-dark);color:var(--gold);text-align:center;font-size:12.5px;font-weight:700;padding:6px 10px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px 40px}
+  .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+  @media(min-width:900px){ .grid{grid-template-columns:360px 1fr} }
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+  h2{font-size:17px;margin:0 0 4px} .sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+  label{display:block;font-weight:700;font-size:13.5px;margin:12px 0 5px}
+  input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:15.5px}
+  input.big{font-size:26px;font-weight:800;text-align:center}
+  .seg{display:flex;gap:6px} .seg button{flex:1;border:2px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 6px;font-weight:800;font-size:13.5px;color:var(--muted);cursor:pointer}
+  .seg button.on{border-color:var(--brand);color:var(--brand)} .seg button.pink.on{border-color:#D6246E;color:#D6246E}
+  .btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:11px 14px;font-weight:800;cursor:pointer;width:100%;margin-top:14px;font-size:15.5px}
+  .btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)} .btn.sm{width:auto;margin:0;padding:5px 10px;font-size:13px}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .err{color:var(--bad);font-weight:600;font-size:14px;margin-top:8px;min-height:1em}
+  .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+  .bar select,.bar input{width:auto;min-height:38px;padding:7px 10px}
+  .upd{font-size:12.5px;color:var(--muted);margin-left:auto}
+  .box{overflow:auto;max-height:72vh;border:1px solid var(--line);border-radius:10px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:left;font-size:12px;color:var(--ink-2);font-weight:600;padding:8px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surface);position:sticky;top:0}
+  td{padding:8px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top}
+  td.num,th.num{text-align:right}
+  .pill{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px}
+  .p-exp{background:#E3EDFB;color:#123A78} .p-ok{background:#E3F4E8;color:#1B5E20} .p-short{background:#FFF1DB;color:#8A4B00} .p-can{background:#EEE;color:#555}
+  .muted{color:var(--muted);font-size:12.5px}
+  .login{max-width:380px;margin:40px auto;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+  .login h1{font-size:20px;margin:0 0 4px}
+  .login input{font-size:18px;padding:12px;border-width:2px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:30;padding:16px}
+  .modal .in{background:var(--surface);border-radius:16px;padding:20px;width:100%;max-width:440px}
+  .sum{background:var(--surface-2);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:14.5px}
+  .sum b{font-size:22px}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1F1F1F;color:#fff;border-radius:12px;padding:10px 16px;font-weight:700;z-index:40;display:none}
+</style>
+</head>
+<body>
+<header><div class="hdr">
+  <img src="logo.png" alt="Super Horse" onerror="this.remove()">
+  <div class="ttl"><b>SalesData · <span data-i="title" style="font-size:inherit;opacity:1"></span></b><span id="who"></span></div>
+  <a class="chip" href="portal.html" title="SalesData home / Trang chủ" aria-label="Home" style="text-decoration:none;font-weight:800">⌂</a>
+      <button class="chip" id="langBtn">EN</button>
+  <button class="chip hidden" id="logoutBtn" data-i="logout"></button>
+</div></header>
+<div class="tagline" data-i="tagline"></div>
+
+<div class="wrap">
+  <div class="login hidden" id="vLogin">
+    <h1 data-i="loginTitle"></h1>
+    <p class="sub" data-i="loginSub"></p>
+    <label for="uName" data-i="username"></label>
+    <input id="uName" autocomplete="username" autocapitalize="none" spellcheck="false">
+    <label for="uPin" data-i="pin"></label>
+    <input id="uPin" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" style="letter-spacing:10px;text-align:center;font-weight:800">
+    <div class="err" id="loginErr"></div>
+    <button class="btn" id="loginBtn" data-i="loginBtn"></button>
+  </div>
+
+  <div id="vApp" class="hidden">
+    <div class="grid">
+      <div class="card">
+        <h2 data-i="newT"></h2><p class="sub" data-i="newS"></p>
+        <label for="fDl1">DL1</label><select id="fDl1"></select>
+        <label data-i="product"></label>
+        <div class="seg" id="fSeg"><button data-p="SH" class="on">Super Horse Energy Drink</button><button data-p="PINK" class="pink">Super Horse Pink</button></div>
+        <label for="fBoxes" data-i="boxes"></label><input id="fBoxes" class="big" inputmode="numeric" maxlength="5" placeholder="0">
+        <label for="fNo" data-i="noteNo"></label><input id="fNo" placeholder="PX-2026-…" maxlength="60">
+        <label for="fDate" data-i="expected"></label><input id="fDate" type="date">
+        <label for="fNote" data-i="note"></label><textarea id="fNote" rows="2" maxlength="300"></textarea>
+        <div class="err" id="fErr"></div>
+        <button class="btn" id="fGo" data-i="review" disabled></button>
+      </div>
+      <div class="card">
+        <div class="bar">
+          <select id="lStatus" aria-label="Status">
+            <option value="" data-i="sAll"></option><option value="Expected" data-i="sExpected"></option>
+            <option value="Received" data-i="sReceived"></option><option value="diff" data-i="sDiff"></option><option value="Cancelled" data-i="sCancelled"></option>
+          </select>
+          <select id="lDl1" aria-label="DL1"></select>
+          <input id="lSearch" data-ph="searchPh" style="min-width:160px">
+          <button class="btn ghost sm" id="lRefresh" data-i="refresh"></button>
+          <span class="upd" id="lUpd"></span>
+        </div>
+        <div class="box" id="list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="okModal"><div class="in">
+  <h2 data-i="confirmT"></h2>
+  <div class="sum" id="okSum"></div>
+  <div class="err" id="okErr"></div>
+  <button class="btn" id="okYes" data-i="create"></button>
+  <button class="btn ghost" id="okNo" data-i="back"></button>
+</div></div>
+<div class="modal" id="cxModal"><div class="in">
+  <h2 data-i="cancelT"></h2>
+  <div class="sum" id="cxSum"></div>
+  <label for="cxReason" data-i="cancelReason"></label><textarea id="cxReason" rows="2" maxlength="300"></textarea>
+  <div class="err" id="cxErr"></div>
+  <button class="btn" id="cxYes" data-i="cancelDo" style="background:var(--bad)"></button>
+  <button class="btn ghost" id="cxNo" data-i="back"></button>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbwx9JWqWJlHNZlQ2IWpJFFvySi3-HYgj1av-EY830c0ryAxt7UlTzAwJwNkxhgjPYYx/exec';
+const VN = 7 * 3600e3, P = {SH:'Super Horse Energy Drink', PINK:'Super Horse Pink'};
+const T = {
+  vi:{ title:'Xuất hàng (HQ)', logout:'Thoát', tagline:'Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển',
+    loginTitle:'Đăng nhập phòng kinh doanh HQ', loginSub:'Dùng tên đăng nhập và mã PIN SalesData (vai trò hq hoặc admin).', username:'Tên đăng nhập', pin:'Mã PIN', loginBtn:'Đăng nhập',
+    errLogin:'Sai tên đăng nhập hoặc mã PIN.', errLocked:'Nhập sai quá nhiều lần. Thử lại sau 15 phút.', errForbidden:'Tài khoản này không có quyền nhập phiếu xuất (cần Role = hq).', errNet:'Không kết nối được máy chủ.', errFill:'Nhập tên đăng nhập và mã PIN 4 số.',
+    newT:'Phiếu xuất hàng mới', newS:'Nhập trước mỗi chuyến hàng gửi tới DL1. Nhân viên tại DL1 sẽ xác nhận số thực nhận.', product:'Sản phẩm', boxes:'Số thùng', noteNo:'Số phiếu xuất / phiếu giao hàng', expected:'Ngày dự kiến đến', note:'Ghi chú (xe, tài xế…)',
+    review:'Kiểm tra', confirmT:'Xác nhận phiếu xuất', create:'Tạo phiếu', back:'Quay lại', refresh:'Làm mới', updated:'Cập nhật {t}',
+    sAll:'Tất cả trạng thái', sExpected:'Đang về', sReceived:'Đã nhận', sDiff:'Nhận lệch số', sCancelled:'Đã hủy', allDl1:'Tất cả DL1', searchPh:'Tìm số phiếu…',
+    cCreated:'Tạo lúc', cDl1:'DL1', cProduct:'SP', cBoxes:'Gửi', cNo:'Số phiếu', cExp:'Dự kiến', cStatus:'Trạng thái', cRecv:'Thực nhận', cBy:'Người nhận', cNote:'Ghi chú',
+    st_Expected:'Đang về', st_Received:'Đã nhận', 'st_Received short':'Nhận thiếu', 'st_Received over':'Nhận dư', st_Cancelled:'Đã hủy',
+    cancel:'Hủy', cancelT:'Hủy phiếu xuất', cancelReason:'Lý do hủy (bắt buộc)', cancelDo:'Hủy phiếu', created:'Đã tạo phiếu {id}', cancelled:'Đã hủy phiếu', none:'Chưa có phiếu nào.',
+    late:'quá 24 giờ chưa nhận', err_boxes:'Số thùng 1–20.000.', err_dl1:'Chọn DL1.', err_note_no_required:'Cần nhập số phiếu.', err_duplicate_note_no:'Số phiếu này đã có cho sản phẩm này.', err_note_required:'Cần ghi lý do.', err_not_expected:'Phiếu đã được xử lý.' },
+  en:{ title:'Dispatches (HQ)', logout:'Log out', tagline:'Accurate data → Better decisions → Growing together',
+    loginTitle:'HQ sales office login', loginSub:'Use your SalesData username and PIN (role hq or admin).', username:'Username', pin:'PIN', loginBtn:'Log in',
+    errLogin:'Wrong username or PIN.', errLocked:'Too many attempts. Try again in 15 minutes.', errForbidden:'This account cannot enter dispatches (needs Role = hq).', errNet:'Cannot reach the server.', errFill:'Enter username and 4-digit PIN.',
+    newT:'New dispatch', newS:'Enter each delivery to a DL1 before it leaves. The employee at the DL1 confirms what actually arrived.', product:'Product', boxes:'Boxes', noteNo:'Dispatch / delivery note number', expected:'Expected arrival', note:'Note (truck, driver…)',
+    review:'Review', confirmT:'Confirm dispatch', create:'Create dispatch', back:'Back', refresh:'Refresh', updated:'Updated {t}',
+    sAll:'All statuses', sExpected:'On the way', sReceived:'Received', sDiff:'Received with difference', sCancelled:'Cancelled', allDl1:'All DL1s', searchPh:'Search note number…',
+    cCreated:'Created', cDl1:'DL1', cProduct:'Product', cBoxes:'Sent', cNo:'Note no.', cExp:'Expected', cStatus:'Status', cRecv:'Received', cBy:'Received by', cNote:'Note',
+    st_Expected:'On the way', st_Received:'Received', 'st_Received short':'Received short', 'st_Received over':'Received over', st_Cancelled:'Cancelled',
+    cancel:'Cancel', cancelT:'Cancel dispatch', cancelReason:'Reason (required)', cancelDo:'Cancel dispatch', created:'Dispatch {id} created', cancelled:'Dispatch cancelled', none:'No dispatches yet.',
+    late:'not received after 24 h', err_boxes:'Boxes 1–20,000.', err_dl1:'Choose a DL1.', err_note_no_required:'Note number is required.', err_duplicate_note_no:'This note number already exists for this product.', err_note_required:'A reason is required.', err_not_expected:'Already handled.' }
+};
+const S = { get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}, del(k){try{localStorage.removeItem(k)}catch(e){}} };
+const $ = id => document.getElementById(id);
+let lang = S.get('sd_hq_lang','vi'), session = S.get('sd_hq_session', null), D = null, prod = 'SH', cx = null;
+const t = (k,v) => { let s = T[lang][k] ?? T.en[k] ?? k; if (v) for (const x in v) s = s.replace('{'+x+'}', v[x]); return s; };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nf = n => Number(n).toLocaleString(lang==='vi'?'vi-VN':'en-US');
+const dkey = ts => new Date(ts + VN).toISOString().slice(0,10);
+const dt = ts => { if(!ts) return ''; const k = dkey(ts); return k.slice(8,10)+'/'+k.slice(5,7)+' '+new Date(ts+VN).toISOString().slice(11,16); };
+const fd = k => k ? k.slice(8,10)+'/'+k.slice(5,7)+'/'+k.slice(0,4) : '';
+function toast(m){ const el=$('toast'); el.textContent=m; el.style.display='block'; clearTimeout(toast.t); toast.t=setTimeout(()=>el.style.display='none',2600); }
+function errT(e){ const k='err_'+e, v=t(k); return v===k ? t('errNet') : v; }
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i]').forEach(el => el.textContent = t(el.dataset.i));
+  document.querySelectorAll('[data-ph]').forEach(el => el.placeholder = t(el.dataset.ph));
+  $('langBtn').textContent = lang==='vi' ? 'EN' : 'VI';
+  if (D) { fillDl1(); render(); }
+}
+$('langBtn').onclick = () => { lang = lang==='vi'?'en':'vi'; S.set('sd_hq_lang',lang); applyLang(); };
+async function api(p){ const r = await fetch(API_URL,{method:'POST',body:JSON.stringify(p)}); if(!r.ok) throw new Error('http'); return r.json(); }
+function nextMidnightVN(){ const n=Date.now(); return Math.floor((n+VN)/86400e3)*86400e3+86400e3-VN; }
+
+$('uPin').addEventListener('input', e => e.target.value = e.target.value.replace(/\D/g,'').slice(0,4));
+$('uPin').addEventListener('keydown', e => { if (e.key==='Enter') $('loginBtn').click(); });
+$('loginBtn').onclick = async () => {
+  const u=$('uName').value.trim().toLowerCase(), p=$('uPin').value; $('loginErr').textContent='';
+  if (!u || !/^\d{4}$/.test(p)) { $('loginErr').textContent=t('errFill'); return; }
+  $('loginBtn').disabled = true;
+  try {
+    const r = await api({action:'login',username:u,pin:p,app:'hq'});
+    if (!r.ok) $('loginErr').textContent = r.error==='locked' ? t('errLocked') : t('errLogin');
+    else if (r.role!=='hq' && r.role!=='admin') $('loginErr').textContent = t('errForbidden');
+    else { session={token:r.token,username:r.username,name:r.name,role:r.role,expires:nextMidnightVN()}; S.set('sd_hq_session',session); S.set('sd_hq_user',u); $('uPin').value=''; showApp(); }
+  } catch(e) { $('loginErr').textContent = t('errNet'); }
+  $('loginBtn').disabled = false;
+};
+$('logoutBtn').onclick = () => { session=null; S.del('sd_hq_session'); showLogin(); };
+function showLogin(){ $('vLogin').classList.remove('hidden'); $('vApp').classList.add('hidden'); $('logoutBtn').classList.add('hidden'); $('who').textContent=''; }
+function showApp(){ $('vLogin').classList.add('hidden'); $('vApp').classList.remove('hidden'); $('logoutBtn').classList.remove('hidden'); $('who').textContent=session.name+' · @'+session.username; load(); }
+function authFail(r){ if (r && (r.error==='auth'||r.error==='forbidden')) { session=null; S.del('sd_hq_session'); showLogin(); return true; } return false; }
+
+async function load(){
+  $('lRefresh').disabled = true;
+  try { const r = await api({action:'dispatch_list',token:session.token,days:90}); if (authFail(r)) return; if (r.ok) { D = r; fillDl1(); render(); } }
+  catch(e) { toast(t('errNet')); }
+  $('lRefresh').disabled = false;
+}
+$('lRefresh').onclick = load;
+setInterval(() => { if (!document.hidden && session) load(); }, 3*60e3);
+function fillDl1(){
+  const cur = $('fDl1').value, cur2 = $('lDl1').value;
+  $('fDl1').innerHTML = `<option value="">—</option>` + D.dl1s.map(d=>`<option value="${esc(d.code)}">${esc(d.code+' · '+d.name)}</option>`).join('');
+  $('fDl1').value = cur;
+  $('lDl1').innerHTML = `<option value="">${esc(t('allDl1'))}</option>` + D.dl1s.map(d=>`<option value="${esc(d.code)}">${esc(d.code+' · '+d.name)}</option>`).join('');
+  $('lDl1').value = cur2;
+}
+// form
+document.querySelectorAll('#fSeg button').forEach(b => b.onclick = () => { prod=b.dataset.p; document.querySelectorAll('#fSeg button').forEach(x=>x.classList.toggle('on',x===b)); });
+$('fDate').value = dkey(Date.now());
+function fValid(){ const n=parseInt($('fBoxes').value,10); return $('fDl1').value && n>=1 && n<=20000 && $('fNo').value.trim(); }
+['fDl1','fBoxes','fNo'].forEach(id => $(id).addEventListener('input', () => $('fGo').disabled = !fValid()));
+$('fDl1').addEventListener('change', () => $('fGo').disabled = !fValid());
+$('fBoxes').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g,'').replace(/^0+/,'').slice(0,5); $('fGo').disabled=!fValid(); });
+$('fGo').onclick = () => {
+  if (!fValid()) return;
+  const d = D.dl1s.find(x=>x.code===$('fDl1').value);
+  $('okSum').innerHTML = `<b>${nf($('fBoxes').value)}</b> ${lang==='vi'?'thùng':'boxes'} · ${esc(P[prod])}<br>→ <b style="font-size:16px">${esc(d.code+' · '+d.name)}</b><br>${esc(t('noteNo'))}: <b style="font-size:15px">${esc($('fNo').value.trim())}</b><br>${esc(t('expected'))}: ${esc(fd($('fDate').value))}${$('fNote').value.trim()?'<br>'+esc($('fNote').value.trim()):''}`;
+  $('okErr').textContent=''; $('okModal').style.display='flex';
+};
+$('okNo').onclick = () => $('okModal').style.display='none';
+$('okYes').onclick = async () => {
+  $('okYes').disabled = true;
+  try {
+    const r = await api({action:'dispatch_create',token:session.token,dl1:$('fDl1').value,product:prod,boxes:parseInt($('fBoxes').value,10),noteNo:$('fNo').value.trim(),expected:$('fDate').value,note:$('fNote').value.trim()});
+    if (authFail(r)) return;
+    if (r.ok) { $('okModal').style.display='none'; toast(t('created',{id:r.id})); $('fBoxes').value=''; $('fNo').value=''; $('fNote').value=''; $('fGo').disabled=true; await load(); }
+    else $('okErr').textContent = errT(r.error);
+  } catch(e) { $('okErr').textContent = t('errNet'); }
+  $('okYes').disabled = false;
+};
+// list
+['lStatus','lDl1'].forEach(id => $(id).onchange = () => D && render());
+$('lSearch').oninput = () => D && render();
+function render(){
+  const st=$('lStatus').value, dl=$('lDl1').value, q=$('lSearch').value.trim().toLowerCase(), names=new Map(D.dl1s.map(d=>[d.code,d.name]));
+  const rows = D.dispatches.filter(x => (!dl||x.dl1===dl) && (!q||x.noteNo.toLowerCase().includes(q)||x.id.toLowerCase().includes(q)) &&
+    (!st || (st==='diff' ? (x.status==='Received short'||x.status==='Received over') : st==='Received' ? x.status.startsWith('Received') : x.status===st)));
+  const cls = {Expected:'p-exp',Received:'p-ok','Received short':'p-short','Received over':'p-short',Cancelled:'p-can'};
+  $('lUpd').textContent = rows.length + ' · ' + t('updated',{t:new Date(D.generated+VN).toISOString().slice(11,16)});
+  $('list').innerHTML = rows.length ? `<table><thead><tr><th>${esc(t('cCreated'))}</th><th>${esc(t('cDl1'))}</th><th>${esc(t('cProduct'))}</th><th class="num">${esc(t('cBoxes'))}</th><th>${esc(t('cNo'))}</th><th>${esc(t('cExp'))}</th><th>${esc(t('cStatus'))}</th><th class="num">${esc(t('cRecv'))}</th><th>${esc(t('cBy'))}</th><th>${esc(t('cNote'))}</th><th></th></tr></thead><tbody>${
+    rows.map(x => { const late = x.status==='Expected' && Date.now()-x.createdAt > 24*3600e3;
+      return `<tr><td>${esc(dt(x.createdAt))}<div class="muted">@${esc(x.createdBy)}</div></td><td><b>${esc(x.dl1)}</b><div class="muted">${esc(names.get(x.dl1)||'')}</div></td>
+      <td>${x.p==='PINK'?'Pink':'SH'}</td><td class="num"><b>${nf(x.boxes)}</b></td><td>${esc(x.noteNo)}</td><td>${esc(fd(x.expected))}</td>
+      <td><span class="pill ${cls[x.status]||'p-can'}">${esc(t('st_'+x.status))}</span>${late?`<div class="muted" style="color:var(--warn)">⚠ ${esc(t('late'))}</div>`:''}</td>
+      <td class="num">${x.receivedQty!=null?`<b>${nf(x.receivedQty)}</b>`:''}${x.receivedQty!=null&&x.receivedQty!==x.boxes?`<div class="muted" style="color:var(--warn)">${x.receivedQty-x.boxes>0?'+':''}${nf(x.receivedQty-x.boxes)}</div>`:''}</td>
+      <td>${x.receivedBy?'@'+esc(x.receivedBy)+'<div class="muted">'+esc(dt(x.receivedAt))+'</div>':''}</td>
+      <td style="white-space:normal;min-width:140px">${esc([x.note,x.receiveNote,x.cancelReason].filter(Boolean).join(' · '))}</td>
+      <td>${x.status==='Expected'?`<button class="btn ghost sm" data-cx="${esc(x.id)}">${esc(t('cancel'))}</button>`:''}</td></tr>`; }).join('')}</tbody></table>`
+    : `<p class="sub" style="padding:20px;text-align:center">${esc(t('none'))}</p>`;
+  $('list').querySelectorAll('[data-cx]').forEach(b => b.onclick = () => openCancel(D.dispatches.find(x=>x.id===b.dataset.cx)));
+}
+function openCancel(x){ cx = x; $('cxSum').innerHTML = `<b>${nf(x.boxes)}</b> · ${esc(P[x.p])} → <b style="font-size:15px">${esc(x.dl1)}</b><br>${esc(x.noteNo)}`; $('cxReason').value=''; $('cxErr').textContent=''; $('cxModal').style.display='flex'; }
+$('cxNo').onclick = () => $('cxModal').style.display='none';
+$('cxYes').onclick = async () => {
+  const reason = $('cxReason').value.trim(); if (!reason) { $('cxErr').textContent = t('err_note_required'); return; }
+  $('cxYes').disabled = true;
+  try { const r = await api({action:'dispatch_cancel',token:session.token,id:cx.id,reason}); if (authFail(r)) return;
+    if (r.ok) { $('cxModal').style.display='none'; toast(t('cancelled')); await load(); } else $('cxErr').textContent = errT(r.error); }
+  catch(e) { $('cxErr').textContent = t('errNet'); }
+  $('cxYes').disabled = false;
+};
+
+$('uName').value = S.get('sd_hq_user','');
+applyLang();
+if (session && Date.now() < session.expires) showApp(); else { session=null; S.del('sd_hq_session'); showLogin(); }
+</script>
+</body>
+</html>
