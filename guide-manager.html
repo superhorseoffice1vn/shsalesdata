@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1A4FA0">
-<title data-vi="Hướng dẫn quản lý dữ liệu · SalesData" data-en="Data manager guide · SalesData">Hướng dẫn quản lý dữ liệu · SalesData</title>
+<title data-vi="Hướng dẫn quản lý bán hàng · SalesData" data-en="Sales manager guide · SalesData">Hướng dẫn quản lý bán hàng · SalesData</title>
 <link rel="icon" href="icon.png">
 <link rel="stylesheet" href="guide.css">
 <script src="guide.js"></script>
@@ -12,7 +12,7 @@
 <body>
 <header class="top"><div class="in">
   <img src="logo.png" alt="Super Horse">
-  <div class="t">SalesData <small><span class="vi">Hướng dẫn quản lý dữ liệu</span><span class="en">Data manager guide</span></small></div>
+  <div class="t">SalesData <small><span class="vi">Hướng dẫn quản lý bán hàng</span><span class="en">Sales manager guide</span></small></div>
   <a class="chip" id="backBtn" href="manager.html" style="display:none"><span class="vi">← Về trang quản lý</span><span class="en">← Back to manager</span></a>
   <button class="chip" id="langBtn">English</button>
 </div></header>
@@ -22,10 +22,10 @@
 <nav class="toc" id="toc"></nav>
 <main>
   <div class="hero">
-    <span class="role"><span class="vi">Quản lý dữ liệu</span><span class="en">Data manager</span></span>
-    <h1><span class="vi">Duyệt và sửa dữ liệu bán hàng</span><span class="en">Reviewing and correcting sales data</span></h1>
-    <p><span class="vi">Bạn giữ cho dữ liệu chính xác: kiểm tra yêu cầu báo lỗi của nhân viên, duyệt hoặc từ chối, và sửa trực tiếp khi cần — mọi thao tác đều được ghi lại.</span>
-       <span class="en">You keep the data accurate: check the mistakes staff report, approve or reject them, and make direct fixes when needed. Every action is logged.</span></p>
+    <span class="role"><span class="vi">Quản lý bán hàng</span><span class="en">Sales manager</span></span>
+    <h1><span class="vi">Kho DL1, doanh số và kiểm soát dữ liệu</span><span class="en">DL1 stock, sales and data control</span></h1>
+    <p><span class="vi">Bạn theo dõi tồn kho của từng DL1, duyệt các điều chỉnh kho, chốt số liệu cuối tháng, xem doanh số theo nhóm và nhân viên, và duyệt các yêu cầu sửa lượt giao — mọi thao tác đều được ghi lại.</span>
+       <span class="en">You watch each DL1's stock, approve stock adjustments, close the month's figures, see sales by team and employee, and review drop-off corrections. Every action is logged.</span></p>
   </div>
   <details class="mtoc" id="mtoc"></details>
 
@@ -35,12 +35,13 @@
       <tr><td><b><span class="vi">Dữ liệu gốc không bao giờ bị thay đổi</span><span class="en">The original is never changed</span></b></td><td><span class="vi">Sửa = tạo một bản sửa đã duyệt bên cạnh bản gốc. Hủy = đánh dấu "Đã hủy", không xóa.</span><span class="en">A fix is an approved correction recorded next to the original. Voiding marks an entry as void; nothing is deleted.</span></td></tr>
       <tr><td><b><span class="vi">Không tự duyệt</span><span class="en">No self-approval</span></b></td><td><span class="vi">Bạn không thể duyệt yêu cầu do chính bạn tạo. Quản lý còn lại hoặc admin phải duyệt.</span><span class="en">You can't approve a request you created. The other manager or the admin must review it.</span></td></tr>
       <tr><td><b><span class="vi">Luôn có lý do</span><span class="en">Always give a reason</span></b></td><td><span class="vi">Bắt buộc khi từ chối và khi sửa trực tiếp. Nhân viên sẽ thấy lý do từ chối.</span><span class="en">Required to reject and to make a direct fix. Staff see your rejection reason.</span></td></tr>
+      <tr><td><b><span class="vi">Mọi chênh lệch kho đều cần duyệt</span><span class="en">Every stock difference needs approval</span></b></td><td><span class="vi">Chênh lệch kiểm kê, hàng hỏng/hết hạn và hàng khuyến mãi chỉ trừ vào kho sau khi bạn duyệt.</span><span class="en">Stocktake differences, damaged/expired and promotion boxes only come off stock after you approve them.</span></td></tr>
       <tr><td><b><span class="vi">Chỉ sửa được số thùng</span><span class="en">Only the box count can change</span></b></td><td><span class="vi">Hoặc hủy cả mục. GPS và thời gian không bao giờ sửa được.</span><span class="en">Or the whole entry can be voided. GPS and time can never be changed.</span></td></tr>
       <tr><td><b><span class="vi">Chỉ làm việc qua trang quản lý</span><span class="en">Work only through the manager page</span></b></td><td><span class="vi">Bạn không có quyền mở Google Sheet. Mọi thay đổi đi qua manager.html để được ghi nhật ký.</span><span class="en">You don't have access to the Google Sheet. Every change goes through manager.html so it's logged.</span></td></tr>
     </table></div>
     <div class="flow">
       <div class="b"><b><span class="vi">Yêu cầu</span><span class="en">Request</span></b><span class="vi">Nhân viên báo lỗi, hoặc bạn sửa trực tiếp</span><span class="en">Staff report it, or you make a direct fix</span></div><div class="a">→</div>
-      <div class="b"><b><span class="vi">Chờ duyệt</span><span class="en">Pending</span></b><span class="vi">Hiện trong tab Chờ duyệt</span><span class="en">Appears in the Pending tab</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Chờ duyệt</span><span class="en">Pending</span></b><span class="vi">Hiện trong tab Duyệt kho / Sửa lượt giao</span><span class="en">Appears under Stock approvals / Drop-off fixes</span></div><div class="a">→</div>
       <div class="b"><b><span class="vi">Người khác duyệt</span><span class="en">Someone else reviews</span></b><span class="vi">Duyệt ✓ hoặc Từ chối ✕ (kèm lý do)</span><span class="en">Approve ✓ or Reject ✕ (with reason)</span></div><div class="a">→</div>
       <div class="b"><b><span class="vi">Ghi nhật ký</span><span class="en">Logged</span></b><span class="vi">Báo cáo dùng số đã duyệt; bản gốc giữ nguyên</span><span class="en">Reports use the approved number; the original stays</span></div>
     </div>
@@ -48,16 +49,102 @@
 
   <section>
     <h2 id="login"><span class="n">2</span><span class="vi">Đăng nhập</span><span class="en">Logging in</span></h2>
-    <p><span class="vi">Mở trang <b>manager.html</b> (link do admin gửi), dùng tên đăng nhập và mã PIN SalesData của bạn. Tài khoản phải có Role = <code>manager</code>. Đăng nhập mỗi ngày (hết hạn lúc nửa đêm). Dùng được trên điện thoại hoặc máy tính.</span>
-       <span class="en">Open <b>manager.html</b> (the link the admin sends you) and use your SalesData username and PIN. Your account must have Role = <code>manager</code>. Log in each day (it ends at midnight). Works on phone or computer.</span></p>
+    <p><span class="vi">Mở trang <b>manager.html</b> (link do admin gửi), dùng tên đăng nhập và mã PIN SalesData của bạn. Tài khoản phải có Role = <code>manager</code>. Đăng nhập mỗi ngày (hết hạn lúc nửa đêm). Dùng được trên điện thoại hoặc máy tính. Mẹo: lưu trang chủ <b>portal.html</b> — từ đó mở được mọi ứng dụng.</span>
+       <span class="en">Open <b>manager.html</b> (the link the admin sends you) and use your SalesData username and PIN. Your account must have Role = <code>manager</code>. Log in each day (it ends at midnight). Works on phone or computer. Tip: bookmark the home page <b>portal.html</b>; every app opens from there.</span></p>
+    <div class="tbl"><table>
+      <tr><th>Tab</th><th><span class="vi">Dùng để</span><span class="en">Used for</span></th></tr>
+      <tr><td><b><span class="vi">Tổng quan DL1</span><span class="en">DL1 overview</span></b></td><td><span class="vi">Tồn kho và nhập/xuất của mọi DL1; bấm vào để xem chi tiết (mục 3–4)</span><span class="en">Stock and in/out for every DL1; click to drill down (sections 3–4)</span></td></tr>
+      <tr><td><b><span class="vi">Duyệt kho</span><span class="en">Stock approvals</span></b></td><td><span class="vi">Chênh lệch kiểm kê, hàng hỏng, khuyến mãi (mục 5)</span><span class="en">Stocktake differences, damaged, promotions (section 5)</span></td></tr>
+      <tr><td><b><span class="vi">Chốt tháng</span><span class="en">Month close</span></b></td><td><span class="vi">Xác nhận và khóa số liệu cuối tháng (mục 6)</span><span class="en">Agree and lock month-end figures (section 6)</span></td></tr>
+      <tr><td><b><span class="vi">Doanh số</span><span class="en">Sales</span></b></td><td><span class="vi">Doanh số theo nhóm DL1 và nhân viên (mục 7)</span><span class="en">Sales by DL1 team and employee (section 7)</span></td></tr>
+      <tr><td><b><span class="vi">Sửa lượt giao · Tra cứu & sửa · Lịch sử</span><span class="en">Drop-off fixes · Search & fix · History</span></b></td><td><span class="vi">Yêu cầu sửa lượt giao (mục 8–10)</span><span class="en">Drop-off corrections (sections 8–10)</span></td></tr>
+    </table></div>
     <p class="tip"><span class="vi">Mỗi sáng lúc 7:00, nếu có yêu cầu đang chờ, bạn sẽ nhận một email liệt kê chúng. Không có yêu cầu thì không có email.</span><span class="en">At 07:00 each morning, if requests are waiting, you get one email listing them. No requests, no email.</span></p>
   </section>
 
   <section>
-    <h2 id="queue"><span class="n">3</span><span class="vi">Duyệt yêu cầu (tab Chờ duyệt)</span><span class="en">Reviewing requests (Pending tab)</span></h2>
+    <h2 id="overview"><span class="n">3</span><span class="vi">Tổng quan DL1</span><span class="en">DL1 overview</span></h2>
+    <p><span class="vi">Trang mở ra ở tab này. Chọn tháng ở trên cùng: cột nhập/xuất là của tháng đó; tồn kho luôn là <b>hiện tại</b>.</span>
+       <span class="en">The page opens on this tab. Pick the month at the top: in/out columns are for that month; stock is always <b>current</b>.</span></p>
+    <div class="figs"><figure class="wide"><img src="guide-img/v4-m-overview.jpg" alt="" loading="lazy"><figcaption><span class="vi">Tổng quan DL1</span><span class="en">DL1 overview</span></figcaption></figure></div>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Cột</span><span class="en">Column</span></th><th><span class="vi">Ý nghĩa</span><span class="en">Meaning</span></th></tr>
+      <tr><td><b><span class="vi">Tồn SH / Tồn Pink</span><span class="en">SH now / Pink now</span></b></td><td><span class="vi">Tồn hiện tại. Số cam bên dưới = đang chờ duyệt. Số đỏ = tồn âm.</span><span class="en">Current stock. Orange number below = pending approval. Red = below zero.</span></td></tr>
+      <tr><td><b><span class="vi">Đủ bán (ngày)</span><span class="en">Days of cover</span></b></td><td><span class="vi">Tồn SH ÷ lượng bán trung bình mỗi ngày (28 ngày gần nhất).</span><span class="en">SH stock ÷ average daily sales (last 28 days).</span></td></tr>
+      <tr><td><b><span class="vi">Nhập · Bán · Xuất khác · Điều chỉnh</span><span class="en">In · Sales · Other out · Adjust.</span></b></td><td><span class="vi">Trong tháng: hàng nhận từ HQ; giao sau DL1 + bán tại DL1; trả hàng + hỏng + khuyến mãi; chênh lệch kiểm kê đã duyệt.</span><span class="en">For the month: received from HQ; drop-offs + sold at DL1; returns + damaged + promotions; approved stocktake differences.</span></td></tr>
+      <tr><td><b><span class="vi">Cuối tháng</span><span class="en">Month-end</span></b></td><td><span class="vi">Trạng thái kiểm kê cuối tháng: Chưa kiểm kê / Đã kiểm kê / Đã chốt.</span><span class="en">Month-end status: Not counted / Counted / Closed.</span></td></tr>
+    </table></div>
+    <h3><span class="vi">Cảnh báo</span><span class="en">Alerts</span></h3>
+    <div class="tbl"><table>
+      <tr><td><span class="pill p-rej"><span class="vi">Tồn âm</span><span class="en">Below zero</span></span></td><td><span class="vi">Thiếu lần nhận hàng hoặc ghi xuất quá số → yêu cầu kiểm kê.</span><span class="en">A receipt is missing or too much was logged out; ask for a stocktake.</span></td></tr>
+      <tr><td><span class="pill p-pend"><span class="vi">Sắp hết</span><span class="en">Low stock</span></span></td><td><span class="vi">Dưới mức tồn tối thiểu, hoặc đủ bán dưới 7 ngày.</span><span class="en">Below the minimum stock, or under 7 days of cover.</span></td></tr>
+      <tr><td><span class="pill p-pend"><span class="vi">Hàng chưa nhận</span><span class="en">Delivery not received</span></span></td><td><span class="vi">Phiếu xuất HQ quá 24 giờ chưa được xác nhận.</span><span class="en">An HQ dispatch not confirmed after 24 hours.</span></td></tr>
+      <tr><td><span class="pill p-am"><span class="vi">Chờ duyệt</span><span class="en">Pending</span></span></td><td><span class="vi">Có mục kho đang chờ bạn duyệt.</span><span class="en">Stock items are waiting for your approval.</span></td></tr>
+      <tr><td><span class="pill p-void"><span class="vi">Lâu chưa kiểm kê</span><span class="en">Count overdue</span></span></td><td><span class="vi">Hơn 31 ngày chưa kiểm kê.</span><span class="en">No stocktake for over 31 days.</span></td></tr>
+      <tr><td><span class="pill p-rej"><span class="vi">Quá hạn kiểm kê CT</span><span class="en">Month-end overdue</span></span></td><td><span class="vi">Đã qua ngày 5 mà chưa kiểm kê cuối tháng.</span><span class="en">Past the 5th without a month-end count.</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2 id="detail"><span class="n">4</span><span class="vi">Xem chi tiết một DL1 và từng nhân viên</span><span class="en">Drilling into a DL1 and each employee</span></h2>
+    <ol class="steps">
+      <li><b><span class="vi">Bấm vào một DL1 trong bảng tổng quan</span><span class="en">Click a DL1 in the overview</span></b><span class="vi">Hiện vị trí kho, nhóm, tồn hiện tại và tồn đầu kỳ.</span><span class="en">Shows the warehouse location, team, current and opening stock.</span></li>
+      <li><b><span class="vi">Bấm tên một nhân viên</span><span class="en">Click an employee's name</span></b><span class="vi">Mọi bảng và bản đồ chỉ còn dữ liệu của người đó, kèm tóm tắt: thùng bán, số ngày, số lượt, số lần nhận hàng và kiểm kê.</span><span class="en">Every table and the map filter to that person, with a summary: boxes sold, days, entries, receipts and stocktakes.</span></li>
+      <li><b><span class="vi">Lọc theo loại và sản phẩm</span><span class="en">Filter by type and product</span></b><span class="vi">Ví dụ chọn "Nhận hàng" để xem các điểm nhận hàng có tập trung tại ★ kho DL1 không.</span><span class="en">For example choose "Received" to check whether receipts cluster at the ★ DL1 warehouse.</span></li>
+    </ol>
+    <div class="figs">
+      <figure class="wide"><img src="guide-img/v4-m-detail.jpg" alt="" loading="lazy"><figcaption><span class="vi">Chi tiết DL1: bản đồ và nhật ký</span><span class="en">DL1 detail: map and log</span></figcaption></figure>
+      <figure class="wide"><img src="guide-img/v4-m-emp.jpg" alt="" loading="lazy"><figcaption><span class="vi">Đã chọn một nhân viên</span><span class="en">One employee selected</span></figcaption></figure>
+    </div>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Trong nhật ký</span><span class="en">In the log</span></th><th></th></tr>
+      <tr><td><b><span class="vi">Thời gian thực / Tính vào ngày</span><span class="en">Real time / Counts for</span></b></td><td><span class="vi">Lúc thực sự ghi. "Tính vào ngày" khác khi ví dụ kiểm kê cuối tháng làm ngày 3 được tính cho ngày 30.</span><span class="en">When it was actually entered. "Counts for" differs e.g. when a month-end count made on the 3rd counts for the 30th.</span></td></tr>
+      <tr><td><b><span class="vi">Dấu hiệu</span><span class="en">Flags</span></b></td><td><span class="vi">GPS yếu · Nhập muộn (hơn 6 giờ sau) · Tồn âm · Sau chốt (tới sau khi tháng đã khóa) · Lệch phiếu · offline.</span><span class="en">Weak GPS · Late entry (6+ hours later) · Below zero · After close (arrived after the month was locked) · Qty mismatch · offline.</span></td></tr>
+    </table></div>
+    <p><span class="vi">Bên dưới: lịch sử kiểm kê (đếm / hệ thống / chênh), phiếu xuất HQ và các tháng đã chốt.</span><span class="en">Below: stocktake history (counted / system / difference), HQ dispatches and closed months.</span></p>
+  </section>
+
+  <section>
+    <h2 id="stockq"><span class="n">5</span><span class="vi">Duyệt kho</span><span class="en">Stock approvals</span></h2>
+    <p><span class="vi">Mỗi thẻ là một mục chờ duyệt: chênh lệch kiểm kê, hàng hỏng/hết hạn, hoặc khuyến mãi. Số trên tab là số mục đang chờ.</span>
+       <span class="en">Each card is one item waiting: a stocktake difference, damaged/expired or promotion boxes. The number on the tab is how many are waiting.</span></p>
+    <div class="figs"><figure><img src="guide-img/v4-m-approve.jpg" alt="" loading="lazy"><figcaption><span class="vi">Một mục chờ duyệt</span><span class="en">An item waiting for approval</span></figcaption></figure></div>
+    <ol class="steps">
+      <li><b><span class="vi">Đọc thẻ</span><span class="en">Read the card</span></b><span class="vi">Số thùng (+/−), sản phẩm, DL1, nhân viên, lý do. Với kiểm kê: số đếm, số hệ thống, chênh lệch; nhãn <b>Số dư đầu kỳ</b> (lần kiểm kê đầu tiên) hoặc <b>Cuối tháng</b>.</span><span class="en">Boxes (+/−), product, DL1, employee, reason. For counts: counted, system, difference; labelled <b>Opening balance</b> (first count) or <b>Month-end</b>.</span></li>
+      <li><b><span class="vi">Kiểm tra nếu cần</span><span class="en">Check if needed</span></b><span class="vi">Mở bản đồ, xem nhật ký DL1, gọi nhân viên — nhất là chênh lệch lớn.</span><span class="en">Open the map, look at the DL1 log, call the employee, especially for large differences.</span></li>
+      <li><b><span class="vi">Duyệt hoặc từ chối</span><span class="en">Approve or reject</span></b><span class="vi">Từ chối cần lý do — nhân viên sẽ thấy. Duyệt thì số tồn được sửa ngay.</span><span class="en">Rejecting needs a reason, which the employee sees. Approving updates the stock at once.</span></li>
+    </ol>
+    <p class="warn"><span class="vi">Lần kiểm kê đầu tiên của mỗi DL1 tạo <b>số dư đầu kỳ</b>. Hãy duyệt các mục này ngay khi đưa vào sử dụng.</span><span class="en">Each DL1's first stocktake creates its <b>opening balance</b>. Approve these promptly at go-live.</span></p>
+  </section>
+
+  <section>
+    <h2 id="close"><span class="n">6</span><span class="vi">Chốt tháng</span><span class="en">Month close</span></h2>
+    <div class="flow">
+      <div class="b"><b><span class="vi">Nhân viên kiểm kê</span><span class="en">Staff count</span></b><span class="vi">Từ ngày 28 đến hết ngày 5</span><span class="en">28th to end of the 5th</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Bạn duyệt chênh lệch</span><span class="en">You approve differences</span></b><span class="vi">Tab Duyệt kho</span><span class="en">Stock approvals tab</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Đồng ý & chốt</span><span class="en">Agree & close</span></b><span class="vi">Tab Chốt tháng</span><span class="en">Month close tab</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Đã khóa</span><span class="en">Locked</span></b><span class="vi">Chỉ admin mở lại được</span><span class="en">Only an admin can reopen</span></div>
+    </div>
+    <div class="figs"><figure class="wide"><img src="guide-img/v4-m-close.jpg" alt="" loading="lazy"><figcaption><span class="vi">Chốt tháng</span><span class="en">Month close</span></figcaption></figure></div>
+    <ul>
+      <li><span class="vi">Nút <b>Đồng ý & chốt</b> chỉ hiện khi DL1 đã kiểm kê cuối tháng, và bị khóa nếu còn mục chờ duyệt.</span><span class="en">The <b>Agree & close</b> button only shows once the DL1 has done its month-end count, and stays disabled while anything is pending.</span></li>
+      <li><span class="vi">Sau khi chốt: tồn cuối tháng được lưu; mọi mục ghi muộn cho tháng đó được tính sang ngày nhận và đánh dấu "Sau chốt".</span><span class="en">After closing: the closing stock is saved; anything arriving late for that month is posted to the day it arrived and flagged "After close".</span></li>
+      <li><span class="vi">Cần sửa tháng đã chốt? Liên hệ admin để mở lại (phải có lý do).</span><span class="en">Need to change a closed month? Ask an admin to reopen it (a reason is required).</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 id="sales"><span class="n">7</span><span class="vi">Doanh số theo nhóm và nhân viên</span><span class="en">Sales by team and employee</span></h2>
+    <p><span class="vi"><b>Doanh số = giao sau DL1 + bán tại DL1.</b> Không gồm trả hàng, hàng hỏng, khuyến mãi. Bảng nhóm theo DL1, có tổng từng nhóm và tổng cộng; nhân viên không thuộc DL1 nằm ở bảng riêng. Bấm <b>Xuất CSV</b> để tính hoa hồng bên ngoài hệ thống.</span>
+       <span class="en"><b>Sales = drop-offs + sold at DL1.</b> Returns, damaged and promotions are excluded. Grouped by DL1 with team and grand totals; staff without a DL1 are listed separately. Click <b>Export CSV</b> for commission calculated outside the system.</span></p>
+    <div class="figs"><figure class="wide"><img src="guide-img/v4-m-sales.jpg" alt="" loading="lazy"><figcaption><span class="vi">Doanh số theo nhân viên</span><span class="en">Sales by employee</span></figcaption></figure></div>
+  </section>
+
+  <section>
+    <h2 id="queue"><span class="n">8</span><span class="vi">Sửa lượt giao (yêu cầu báo lỗi)</span><span class="en">Drop-off fixes (reported mistakes)</span></h2>
     <p><span class="vi">Mỗi yêu cầu là một thẻ. Thẻ có viền cam <b>⚠ Thay đổi lớn</b> (từ 200 thùng) được xếp lên đầu.</span><span class="en">Each request is a card. Cards with an orange edge marked <b>⚠ Large change</b> (200 boxes or more) are listed first.</span></p>
     <div class="figs">
-      <figure><img src="guide-img/m1-queue.jpg" alt="" loading="lazy"><figcaption><span class="vi">Tab Chờ duyệt</span><span class="en">Pending tab</span></figcaption></figure>
+      <figure><img src="guide-img/m1-queue.jpg" alt="" loading="lazy"><figcaption><span class="vi">Tab Sửa lượt giao</span><span class="en">Drop-off fixes tab</span></figcaption></figure>
       <figure><img src="guide-img/m2-card.jpg" alt="" loading="lazy"><figcaption><span class="vi">Thẻ yêu cầu, đang xem các lượt cùng ngày</span><span class="en">A request card with same-day drop-offs shown</span></figcaption></figure>
     </div>
     <h3><span class="vi">Đọc một thẻ yêu cầu</span><span class="en">Reading a request card</span></h3>
@@ -78,7 +165,7 @@
   </section>
 
   <section>
-    <h2 id="fix"><span class="n">4</span><span class="vi">Tra cứu & sửa trực tiếp</span><span class="en">Search & direct fixes</span></h2>
+    <h2 id="fix"><span class="n">9</span><span class="vi">Tra cứu & sửa trực tiếp</span><span class="en">Search & direct fixes</span></h2>
     <p><span class="vi">Dùng khi bạn phát hiện lỗi mà nhân viên chưa báo, hoặc khi đã quá hạn báo lỗi.</span><span class="en">Use it when you find a mistake staff haven't reported, or when it's past their reporting deadline.</span></p>
     <ol class="steps">
       <li><b><span class="vi">Tìm lượt giao</span><span class="en">Find the entry</span></b><span class="vi">Chọn khoảng ngày, nhân viên, trạng thái (đã sửa / đã hủy / đang chờ), bấm <span class="btnlike">Tìm</span>.</span><span class="en">Pick a date range, employee and status (amended / voided / pending), then tap <span class="btnlike">Search</span>.</span></li>
@@ -94,15 +181,18 @@
   </section>
 
   <section>
-    <h2 id="history"><span class="n">5</span><span class="vi">Lịch sử</span><span class="en">History</span></h2>
+    <h2 id="history"><span class="n">10</span><span class="vi">Lịch sử</span><span class="en">History</span></h2>
     <p><span class="vi">Tab <b>Lịch sử</b> liệt kê mọi yêu cầu đã xử lý trong 60 ngày gần nhất: Đã duyệt, Từ chối, Đã hủy yêu cầu — kèm người yêu cầu, người duyệt, thời gian và ghi chú. Lọc theo trạng thái ở trên cùng.</span>
        <span class="en">The <b>History</b> tab lists every decided request from the last 60 days (Approved, Rejected, Cancelled) with who asked, who reviewed, when, and the notes. Filter by status at the top.</span></p>
     <div class="figs"><figure class="wide"><img src="guide-img/m5-history.jpg" alt="" loading="lazy"><figcaption><span class="vi">Lịch sử</span><span class="en">History</span></figcaption></figure></div>
   </section>
 
   <section>
-    <h2 id="practice"><span class="n">6</span><span class="vi">Cách làm tốt</span><span class="en">Good practice</span></h2>
+    <h2 id="practice"><span class="n">11</span><span class="vi">Cách làm tốt</span><span class="en">Good practice</span></h2>
     <ul>
+      <li><span class="vi">Mỗi sáng xem <b>Tổng quan DL1</b>: xử lý cảnh báo đỏ (tồn âm, quá hạn) trước.</span><span class="en">Each morning check the <b>DL1 overview</b>: deal with red alerts (below zero, overdue) first.</span></li>
+      <li><span class="vi">Từ ngày 28: nhắc các DL1 kiểm kê cuối tháng; đến ngày 5 duyệt hết chênh lệch và chốt tháng.</span><span class="en">From the 28th: remind DL1s to do the month-end count; by the 5th approve all differences and close the month.</span></li>
+      <li><span class="vi">Chênh lệch kiểm kê lặp lại ở cùng một DL1 hoặc cùng một người là dấu hiệu cần tìm hiểu.</span><span class="en">Repeated stocktake differences at the same DL1 or by the same person are worth investigating.</span></li>
       <li><span class="vi">Xử lý hàng chờ <b>mỗi ngày</b>, đặc biệt trước ngày 3 hằng tháng để chốt số liệu tháng trước.</span><span class="en">Clear the queue <b>every day</b>, especially before the 3rd of each month so last month's figures can be closed.</span></li>
       <li><span class="vi">Với <b>thay đổi lớn</b> (⚠): luôn gọi xác nhận với nhân viên hoặc đại lý trước khi duyệt.</span><span class="en">For <b>large changes</b> (⚠), always confirm by phone with the employee or distributor before approving.</span></li>
       <li><span class="vi">Với <b>mục trùng</b>: mở "các lượt cùng ngày" — hai lượt cùng số thùng, cách nhau vài phút, cùng vị trí là dấu hiệu rõ.</span><span class="en">For <b>duplicates</b>, open the same-day list. Two entries with the same boxes, minutes apart, at the same spot are a clear sign.</span></li>
@@ -114,6 +204,15 @@
   <section>
     <h2 id="faq"><span class="vi">Câu hỏi thường gặp</span><span class="en">FAQ</span></h2>
     <div class="faqtools"><button data-faq="open"><span class="vi">Mở tất cả</span><span class="en">Open all</span></button><button data-faq="close"><span class="vi">Đóng tất cả</span><span class="en">Close all</span></button></div>
+    <details class="q"><summary><span class="vi">Một DL1 bị tồn âm — làm gì?</span><span class="en">A DL1 is below zero. What should I do?</span></summary><div class="a">
+      <span class="vi">Mở chi tiết DL1, kiểm tra phiếu xuất HQ có lần nào chưa được nhận không, rồi yêu cầu nhân viên kiểm kê. Chênh lệch kiểm kê sẽ đưa số tồn về đúng sau khi bạn duyệt.</span>
+      <span class="en">Open the DL1 detail, check for any HQ dispatch not yet received, then ask the employee to do a stocktake. The count difference corrects the balance once you approve it.</span></div></details>
+    <details class="q"><summary><span class="vi">Tôi tự kiểm kê được không? Tự duyệt được không?</span><span class="en">Can I count or approve my own entries?</span></summary><div class="a">
+      <span class="vi">Kiểm kê và nhập/xuất do nhân viên tại DL1 ghi. Không ai duyệt được mục do chính mình tạo.</span><span class="en">Stocktakes and movements are logged by the DL1 staff. Nobody can approve an entry they created.</span></div></details>
+    <details class="q"><summary><span class="vi">Tháng đã chốt nhưng phát hiện sai?</span><span class="en">A month is closed but I found a mistake?</span></summary><div class="a">
+      <span class="vi">Liên hệ admin để mở lại tháng (cần lý do, được ghi nhật ký). Sau khi sửa, kiểm kê/duyệt lại và chốt lại.</span><span class="en">Ask an admin to reopen it (reason required, logged). After fixing, re-count/approve and close again.</span></div></details>
+    <details class="q"><summary><span class="vi">Doanh số có tính hàng khuyến mãi không?</span><span class="en">Do promotions count as sales?</span></summary><div class="a">
+      <span class="vi">Không. Doanh số chỉ gồm giao sau DL1 và bán tại DL1.</span><span class="en">No. Sales are drop-offs plus sold at DL1 only.</span></div></details>
     <details class="q"><summary><span class="vi">Tại sao tôi không duyệt được yêu cầu của chính mình?</span><span class="en">Why can't I approve my own request?</span></summary><div class="a">
       <span class="vi">Để mọi thay đổi đều được hai người kiểm tra. Đây là nguyên tắc kiểm toán cơ bản.</span><span class="en">So every change is checked by two people. It's a basic audit rule.</span></div></details>
     <details class="q"><summary><span class="vi">Tôi duyệt nhầm. Làm sao đảo lại?</span><span class="en">I approved something by mistake. How do I undo it?</span></summary><div class="a">
@@ -130,7 +229,7 @@
     <details class="q"><summary><span class="vi">Tôi không nhận được email buổi sáng.</span><span class="en">I don't get the morning email.</span></summary><div class="a">
       <span class="vi">Email chỉ gửi khi có yêu cầu chờ. Kiểm tra thư rác, và nhờ admin kiểm tra địa chỉ email của bạn trong danh sách người dùng.</span><span class="en">It's only sent when requests are waiting. Check spam, and ask the admin to check your email address in the user list.</span></div></details>
     <details class="q"><summary><span class="vi">Trang tự cập nhật không?</span><span class="en">Does the page update by itself?</span></summary><div class="a">
-      <span class="vi">Hàng chờ tự làm mới mỗi 3 phút. Bấm <b>Làm mới</b> để cập nhật ngay.</span><span class="en">The queue refreshes every 3 minutes. Tap <b>Refresh</b> to update now.</span></div></details>
+      <span class="vi">Các tab tự làm mới định kỳ. Bấm <b>Làm mới</b> để cập nhật ngay.</span><span class="en">Tabs refresh regularly. Tap <b>Refresh</b> to update now.</span></div></details>
     <details class="q"><summary><span class="vi">Quên mã PIN?</span><span class="en">Forgot my PIN?</span></summary><div class="a">
       <span class="vi">Liên hệ admin để được cấp mã mới. Sai 5 lần sẽ bị khóa 15 phút.</span><span class="en">Ask the admin for a new one. After 5 wrong tries, login is locked for 15 minutes.</span></div></details>
   </section>

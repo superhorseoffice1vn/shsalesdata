@@ -100,7 +100,7 @@ kbd,.btnlike{display:inline-block;font:inherit;font-size:14px;font-weight:700;ba
 .flow .b{flex:1 1 140px;background:var(--surface-2);border-radius:12px;padding:10px 12px;font-size:14.5px;border-top:4px solid var(--brand)}
 .flow .b b{display:block;font-size:15px}
 .flow .a{align-self:center;color:var(--muted);font-weight:800;font-size:20px}
-@media(max-width:600px){ .flow{flex-direction:column} .flow .a{transform:rotate(90deg);align-self:center} }
+@media(max-width:600px){ .flow{flex-direction:column} .flow .b{flex:0 0 auto} .flow .a{transform:rotate(90deg);align-self:center;line-height:1} }
 
 /* FAQ */
 details.q{border-bottom:1px solid var(--line);padding:4px 0}

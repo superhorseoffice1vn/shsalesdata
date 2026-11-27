@@ -61,7 +61,8 @@
   <img src="logo.png" alt="Super Horse" onerror="this.remove()">
   <div class="ttl"><b>SalesData · <span data-i="title" style="font-size:inherit;opacity:1"></span></b><span id="who"></span></div>
   <a class="chip" href="portal.html" title="SalesData home / Trang chủ" aria-label="Home" style="text-decoration:none;font-weight:800">⌂</a>
-      <button class="chip" id="langBtn">EN</button>
+      <a class="chip" id="helpBtn" href="guide-hq.html?from=app" title="Help / Hướng dẫn" aria-label="Help" style="text-decoration:none;font-weight:800;min-width:34px;text-align:center">?</a>
+  <button class="chip" id="langBtn">EN</button>
   <button class="chip hidden" id="logoutBtn" data-i="logout"></button>
 </div></header>
 <div class="tagline" data-i="tagline"></div>
@@ -166,7 +167,7 @@ function applyLang(){
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-i]').forEach(el => el.textContent = t(el.dataset.i));
   document.querySelectorAll('[data-ph]').forEach(el => el.placeholder = t(el.dataset.ph));
-  $('langBtn').textContent = lang==='vi' ? 'EN' : 'VI';
+  $('langBtn').textContent = lang==='vi' ? 'EN' : 'VI'; $('helpBtn').href='guide-hq.html?from=app&lang='+lang;
   if (D) { fillDl1(); render(); }
 }
 $('langBtn').onclick = () => { lang = lang==='vi'?'en':'vi'; S.set('sd_hq_lang',lang); applyLang(); };

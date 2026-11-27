@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A4FA0">
+<title>SalesData Admin</title>
+<link rel="icon" href="icon.png">
+<style>
+  :root{ --brand:#1A4FA0; --brand-dark:#0F2F63; --gold:#F5C84C; --bg:#F2F3F5; --surface:#FFFFFF; --surface-2:#F0EFEC; --line:#E2E1DC;
+         --ink:#0B0B0B; --ink-2:#52514E; --muted:#7A7975; --good:#1E9E4A; --warn:#B86E00; --bad:#C62828; }
+  @media (prefers-color-scheme: dark){ :root:where(:not([data-theme="light"])){ --bg:#111; --surface:#1A1A19; --surface-2:#262624; --line:#33332F; --ink:#F0EFEC; --ink-2:#C3C2B7; --muted:#9A998F; } }
+  :root[data-theme="dark"]{ --bg:#111; --surface:#1A1A19; --surface-2:#262624; --line:#33332F; --ink:#F0EFEC; --ink-2:#C3C2B7; --muted:#9A998F; }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.4;font-variant-numeric:tabular-nums}
+  button,select,input,textarea{font:inherit;color:inherit}
+  .hidden{display:none!important}
+  header{background:var(--brand);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
+  .hdr{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px}
+  .hdr img{height:44px;background:#fff;border-radius:10px;padding:2px 4px}
+  .hdr .ttl{flex:1;min-width:0} .hdr .ttl b{display:block;font-size:17px} .hdr .ttl span{font-size:12.5px;opacity:.85}
+  .chip{border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:999px;padding:6px 11px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none}
+  .tagline{background:var(--brand-dark);color:var(--gold);text-align:center;font-size:12.5px;font-weight:700;padding:6px 10px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px 40px}
+  .tabs{display:flex;gap:4px;margin-top:14px;border-bottom:1px solid var(--line);overflow-x:auto}
+  .tabs button{border:0;background:transparent;padding:10px 14px;font-weight:700;color:var(--muted);border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+  .tabs button.on{color:var(--brand);border-bottom-color:var(--brand)}
+  .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+  .bar select,.bar input[type=text],.bar input[type=search]{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-height:38px}
+  .bar label{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-2)}
+  .upd{font-size:12.5px;color:var(--muted);margin-left:auto}
+  .btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:9px 14px;min-height:38px;font-weight:800;cursor:pointer}
+  .btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)} .btn.bad{background:var(--bad)} .btn.sm{min-height:30px;padding:4px 10px;font-size:13px}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:auto;max-height:72vh}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:left;font-size:12px;color:var(--ink-2);font-weight:600;padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surface);position:sticky;top:0}
+  td{padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+  tr.off td{color:var(--muted)}
+  .muted{color:var(--muted);font-size:12.5px}
+  .pill{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap}
+  .r-sales{background:var(--surface-2);color:var(--ink-2)} .r-hq{background:#E8F0E0;color:#2F5A12} .r-manager{background:#E3EDFB;color:#123A78} .r-admin{background:#F5C84C;color:#3A2B00}
+  .s-on{background:#E3F4E8;color:#1B5E20} .s-off{background:#FCE4E4;color:#8F1C1C} .s-future{background:#E3EDFB;color:#123A78} .s-ended{background:#EEE;color:#555}
+  .login{max-width:380px;margin:40px auto;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+  .login h1{font-size:20px;margin:0 0 4px}
+  label.f{display:block;font-weight:700;font-size:13.5px;margin:12px 0 5px}
+  .in input,.in select,.login input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:15.5px}
+  .login input{font-size:18px;padding:12px;border-width:2px}
+  .login .btn{width:100%;margin-top:16px;padding:14px;font-size:17px}
+  .err{color:var(--bad);font-weight:600;font-size:14px;margin-top:8px;min-height:1em}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:30;padding:16px}
+  .modal .in{background:var(--surface);border-radius:16px;padding:20px;width:100%;max-width:460px;max-height:92vh;overflow:auto}
+  .modal h2{margin:0 0 4px;font-size:19px}
+  .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .lock{background:#FFF4E0;border:1px solid #F3C98A;color:#6B3A00;border-radius:10px;padding:10px 12px;font-size:13.5px;margin-top:10px}
+  .pinbox{font-size:56px;font-weight:900;letter-spacing:14px;text-align:center;background:var(--surface-2);border-radius:14px;padding:14px 0 14px 14px;margin:14px 0 8px;font-variant-numeric:tabular-nums}
+  .check{display:flex;align-items:center;gap:8px;margin-top:14px;font-weight:700}
+  .check input{width:20px;height:20px}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1F1F1F;color:#fff;border-radius:12px;padding:10px 16px;font-weight:700;z-index:40;display:none}
+</style>
+</head>
+<body>
+<header><div class="hdr">
+  <img src="logo.png" alt="Super Horse" onerror="this.remove()">
+  <div class="ttl"><b>SalesData · <span data-i="title" style="font-size:inherit;opacity:1"></span></b><span id="who"></span></div>
+  <a class="chip" href="portal.html" title="SalesData home / Trang chủ" aria-label="Home" style="font-weight:800">⌂</a>
+  <a class="chip" id="helpBtn" href="guide-admin.html?from=app" title="Help / Hướng dẫn" aria-label="Help" style="text-decoration:none;font-weight:800;min-width:34px;text-align:center">?</a>
+  <button class="chip" id="langBtn">EN</button>
+  <button class="chip hidden" id="logoutBtn" data-i="logout"></button>
+</div></header>
+<div class="tagline" data-i="tagline"></div>
+
+<div class="wrap">
+  <div class="login hidden" id="vLogin">
+    <h1 data-i="loginTitle"></h1>
+    <p class="muted" data-i="loginSub"></p>
+    <label class="f" for="uName" data-i="username"></label>
+    <input id="uName" autocomplete="username" autocapitalize="none" spellcheck="false">
+    <label class="f" for="uPin" data-i="pin"></label>
+    <input id="uPin" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" style="letter-spacing:10px;text-align:center;font-weight:800">
+    <div class="err" id="loginErr"></div>
+    <button class="btn" id="loginBtn" data-i="loginBtn"></button>
+  </div>
+
+  <div id="vApp" class="hidden">
+    <div class="tabs"><button data-tab="users" class="on" data-i="tUsers"></button><button data-tab="asg" data-i="tAsg"></button></div>
+
+    <section id="pUsers">
+      <div class="bar">
+        <button class="btn" id="addUser">+ <span data-i="addUser"></span></button>
+        <input type="search" id="uSearch" data-ph="searchPh" style="min-width:180px">
+        <select id="uRole" aria-label="Role"><option value="*" data-i="allRoles"></option><option value="" data-i="r_"></option><option value="hq" data-i="r_hq"></option><option value="manager" data-i="r_manager"></option><option value="admin" data-i="r_admin"></option></select>
+        <label><input type="checkbox" id="uShowOff"> <span data-i="showBlocked"></span></label>
+        <button class="btn ghost" id="refresh" data-i="refresh"></button>
+        <span class="upd" id="uUpd"></span>
+      </div>
+      <div class="box" id="users"></div>
+    </section>
+
+    <section id="pAsg" class="hidden">
+      <div class="bar">
+        <button class="btn" id="addAsg">+ <span data-i="addAsg"></span></button>
+        <select id="aDl1" aria-label="DL1"></select>
+        <input type="search" id="aSearch" data-ph="searchPh" style="min-width:160px">
+        <select id="aStatus" aria-label="Status"><option value="now" data-i="aNow"></option><option value="all" data-i="aAll"></option><option value="ended" data-i="aEnded"></option></select>
+        <span class="upd" id="aUpd"></span>
+      </div>
+      <p class="muted" data-i="asgHint"></p>
+      <div class="box" id="asg"></div>
+    </section>
+  </div>
+</div>
+
+<!-- add / edit user -->
+<div class="modal" id="uModal"><div class="in">
+  <h2 id="umTitle"></h2>
+  <label class="f" for="umUser" data-i="username"></label><input id="umUser" autocapitalize="none" spellcheck="false" maxlength="30">
+  <div class="hint" id="umUserHint" data-i="userHint"></div>
+  <label class="f" for="umName" data-i="fullName"></label><input id="umName" maxlength="80">
+  <label class="f" for="umRole" data-i="role"></label>
+  <select id="umRole"><option value="" data-i="r_"></option><option value="hq" data-i="r_hq"></option><option value="manager" data-i="r_manager"></option></select>
+  <div class="hint" data-i="noAdminHint"></div>
+  <label class="f" for="umEmail" data-i="email"></label><input id="umEmail" type="email" maxlength="120">
+  <div class="hint" data-i="emailHint"></div>
+  <div id="umNew"><label class="f" for="umDl1" data-i="assignNow"></label><select id="umDl1"></select>
+    <label class="f" for="umFrom" data-i="from"></label><input id="umFrom" type="date"></div>
+  <label class="check hidden" id="umActiveWrap"><input type="checkbox" id="umActive"> <span data-i="activeLbl"></span></label>
+  <div class="lock hidden" id="umLock"></div>
+  <div class="err" id="umErr"></div>
+  <div class="acts"><button class="btn" id="umSave"></button><button class="btn ghost hidden" id="umReset" data-i="resetPin"></button><button class="btn ghost" id="umClose" data-i="close"></button></div>
+</div></div>
+
+<!-- PIN shown once -->
+<div class="modal" id="pinModal"><div class="in" style="text-align:center">
+  <h2 id="pinTitle"></h2>
+  <p class="muted" id="pinFor"></p>
+  <div class="pinbox" id="pinVal"></div>
+  <p style="font-size:14px;color:var(--warn);font-weight:700" data-i="pinOnce"></p>
+  <div class="acts" style="justify-content:center"><button class="btn ghost" id="pinCopy" data-i="copy"></button><button class="btn" id="pinDone" data-i="pinDone"></button></div>
+</div></div>
+
+<!-- add / end assignment -->
+<div class="modal" id="aModal"><div class="in">
+  <h2 id="amTitle"></h2>
+  <p class="muted" id="amSub"></p>
+  <div id="amAddFields">
+    <label class="f" for="amUser" data-i="employee"></label><select id="amUser"></select>
+    <label class="f" for="amDl1">DL1</label><select id="amDl1"></select>
+    <label class="f" for="amFrom" data-i="from"></label><input id="amFrom" type="date">
+  </div>
+  <label class="f" for="amTo" id="amToLbl"></label><input id="amTo" type="date">
+  <div class="err" id="amErr"></div>
+  <div class="acts"><button class="btn" id="amSave"></button><button class="btn ghost" id="amClose" data-i="close"></button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbwx9JWqWJlHNZlQ2IWpJFFvySi3-HYgj1av-EY830c0ryAxt7UlTzAwJwNkxhgjPYYx/exec';
+const VN = 7 * 3600e3;
+const T = {
+  vi:{ title:'Quản trị', logout:'Thoát', tagline:'Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển',
+    loginTitle:'Đăng nhập admin', loginSub:'Chỉ dành cho admin.', username:'Tên đăng nhập', pin:'Mã PIN', loginBtn:'Đăng nhập',
+    errLogin:'Sai tên đăng nhập hoặc mã PIN.', errLocked:'Nhập sai quá nhiều lần. Thử lại sau 15 phút.', errForbidden:'Chỉ admin mới mở được trang này.', errNet:'Không kết nối được máy chủ.', errFill:'Nhập tên đăng nhập và mã PIN 4 số.',
+    tUsers:'Người dùng', tAsg:'Phân công DL1', addUser:'Thêm người dùng', addAsg:'Thêm phân công', searchPh:'Tìm tên hoặc tên đăng nhập…', allRoles:'Tất cả vai trò',
+    r_:'Nhân viên bán hàng', r_hq:'Văn phòng HQ', r_manager:'Quản lý bán hàng', r_admin:'Admin', showBlocked:'Hiện tài khoản bị khóa', refresh:'Làm mới', updated:'Cập nhật {t}',
+    cUser:'Người dùng', cRole:'Vai trò', cDl1:'DL1 hiện tại', cEmail:'Email', cStatus:'Trạng thái', cLast:'Đăng nhập gần nhất', active:'Hoạt động', blocked:'Bị khóa', edit:'Sửa', never:'Chưa đăng nhập',
+    newUserT:'Thêm người dùng', editUserT:'Sửa người dùng', userHint:'Chữ thường, không dấu, không khoảng trắng — ví dụ an.nguyen. Không đổi được sau khi tạo.', fullName:'Họ và tên', role:'Vai trò',
+    noAdminHint:'Không thể cấp quyền admin tại đây.', email:'Email (không bắt buộc)', emailHint:'Quản lý bán hàng nhận email nhắc việc lúc 7:00.', assignNow:'Giao DL1 ngay (không bắt buộc)', noDl1:'— Không giao —', from:'Từ ngày',
+    activeLbl:'Tài khoản đang hoạt động (bỏ chọn để khóa ngay lập tức)', create:'Tạo & cấp mã PIN', save:'Lưu', resetPin:'Cấp mã PIN mới', close:'Đóng',
+    adminLocked:'Tài khoản admin được khóa trên trang này. Chỉ sửa được trong Google Sheet.', adminSelf:'Đây là tài khoản của bạn. Bạn chỉ có thể cấp mã PIN mới cho chính mình tại đây.',
+    confirmReset:'Cấp mã PIN mới cho {u}? Mã cũ và các phiên đăng nhập hiện tại sẽ ngừng hoạt động ngay.', confirmBlock:'Khóa {u}? Người này sẽ bị đăng xuất ngay.',
+    pinNewT:'Mã PIN mới', pinCreatedT:'Đã tạo người dùng', pinFor:'{n} · @{u}', pinOnce:'Mã chỉ hiển thị MỘT LẦN. Hãy ghi lại và gửi riêng cho người dùng.', copy:'Sao chép', pinDone:'Đã ghi lại', copied:'Đã sao chép',
+    saved:'Đã lưu', nothing:'Không có thay đổi', aNow:'Đang làm & sắp bắt đầu', aAll:'Tất cả', aEnded:'Đã kết thúc', allDl1:'Tất cả DL1', employee:'Nhân viên',
+    asgHint:'Phân công quyết định nhân viên được ghi nhập/xuất kho cho DL1 nào. Khi nhân viên chuyển DL1: kết thúc dòng cũ rồi thêm dòng mới — lịch sử được giữ nguyên.',
+    cFrom:'Từ ngày', cTo:'Đến ngày', st_now:'Đang làm', st_future:'Sắp bắt đầu', st_ended:'Đã kết thúc', open:'(không thời hạn)', end:'Kết thúc', del:'Xóa',
+    addAsgT:'Thêm phân công DL1', endAsgT:'Kết thúc phân công', toOpt:'Đến ngày (không bắt buộc)', lastDay:'Ngày làm việc cuối cùng', confirmDel:'Xóa dòng phân công {u} → {d}? Chỉ nên xóa khi nhập nhầm; nếu nhân viên chuyển DL1, hãy dùng "Kết thúc".',
+    err_bad_username:'Tên đăng nhập 3–30 ký tự: chữ thường, số, dấu chấm, gạch dưới hoặc gạch ngang.', err_username_taken:'Tên đăng nhập đã tồn tại.', err_name_required:'Cần nhập họ tên.',
+    err_bad_role:'Vai trò không hợp lệ.', err_bad_email:'Email không hợp lệ.', err_admin_locked:'Tài khoản admin không sửa được ở đây.', err_not_found:'Không tìm thấy.', err_dl1:'Chọn DL1.',
+    err_overlap:'Nhân viên đã được giao DL1 này trong khoảng thời gian đó.', err_bad_dates:'Ngày kết thúc phải sau ngày bắt đầu.', err_changed:'Dữ liệu đã thay đổi — bấm Làm mới.' },
+  en:{ title:'Admin', logout:'Log out', tagline:'Accurate data → Better decisions → Growing together',
+    loginTitle:'Admin login', loginSub:'Admins only.', username:'Username', pin:'PIN', loginBtn:'Log in',
+    errLogin:'Wrong username or PIN.', errLocked:'Too many attempts. Try again in 15 minutes.', errForbidden:'Only admins can open this page.', errNet:'Cannot reach the server.', errFill:'Enter username and 4-digit PIN.',
+    tUsers:'Users', tAsg:'DL1 assignments', addUser:'Add user', addAsg:'Add assignment', searchPh:'Search name or username…', allRoles:'All roles',
+    r_:'Sales staff', r_hq:'HQ office', r_manager:'Sales manager', r_admin:'Admin', showBlocked:'Show blocked accounts', refresh:'Refresh', updated:'Updated {t}',
+    cUser:'User', cRole:'Role', cDl1:'Current DL1', cEmail:'Email', cStatus:'Status', cLast:'Last login', active:'Active', blocked:'Blocked', edit:'Edit', never:'Never',
+    newUserT:'Add user', editUserT:'Edit user', userHint:'Lowercase, no accents or spaces — e.g. an.nguyen. Cannot be changed later.', fullName:'Full name', role:'Role',
+    noAdminHint:'The admin role cannot be given here.', email:'Email (optional)', emailHint:'Sales managers get the 07:00 reminder email.', assignNow:'Assign a DL1 now (optional)', noDl1:'— None —', from:'From',
+    activeLbl:'Account active (untick to block immediately)', create:'Create & issue PIN', save:'Save', resetPin:'Issue new PIN', close:'Close',
+    adminLocked:'Admin accounts are locked on this page. Change them in the Google Sheet only.', adminSelf:'This is your account. Here you can only issue yourself a new PIN.',
+    confirmReset:'Issue a new PIN for {u}? The old PIN and any open logins stop working immediately.', confirmBlock:'Block {u}? They will be logged out immediately.',
+    pinNewT:'New PIN', pinCreatedT:'User created', pinFor:'{n} · @{u}', pinOnce:'Shown ONCE only. Note it down and give it to the user privately.', copy:'Copy', pinDone:"I've noted it", copied:'Copied',
+    saved:'Saved', nothing:'No changes', aNow:'Current & upcoming', aAll:'All', aEnded:'Ended', allDl1:'All DL1s', employee:'Employee',
+    asgHint:'Assignments decide which DL1s a person can record stock for. When someone moves DL1: end the old row, then add a new one — history is kept.',
+    cFrom:'From', cTo:'To', st_now:'Current', st_future:'Upcoming', st_ended:'Ended', open:'(open-ended)', end:'End', del:'Delete',
+    addAsgT:'Add DL1 assignment', endAsgT:'End assignment', toOpt:'To (optional)', lastDay:'Last working day', confirmDel:'Delete the assignment {u} → {d}? Only delete entries made by mistake; when someone moves DL1, use "End".',
+    err_bad_username:'Username 3–30 characters: lowercase letters, numbers, dot, underscore or hyphen.', err_username_taken:'That username already exists.', err_name_required:'Name is required.',
+    err_bad_role:'Invalid role.', err_bad_email:'Invalid email.', err_admin_locked:'Admin accounts cannot be changed here.', err_not_found:'Not found.', err_dl1:'Choose a DL1.',
+    err_overlap:'This person is already assigned to that DL1 for those dates.', err_bad_dates:'End date must be after the start date.', err_changed:'Data changed — tap Refresh.' }
+};
+const S = { get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}, del(k){try{localStorage.removeItem(k)}catch(e){}} };
+const $ = id => document.getElementById(id);
+let lang = S.get('sd_adm_lang','vi'), session = S.get('sd_adm_session', null), D = null, edit = null, am = null;
+const t = (k,v) => { let s = T[lang][k] ?? T.en[k] ?? k; if (v) for (const x in v) s = s.replace('{'+x+'}', v[x]); return s; };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dkey = ts => new Date(ts + VN).toISOString().slice(0,10);
+const fd = k => k ? k.slice(8,10)+'/'+k.slice(5,7)+'/'+k.slice(0,4) : '';
+const dt = ts => ts ? fd(dkey(ts))+' '+new Date(ts+VN).toISOString().slice(11,16) : '';
+const errT = e => { const k='err_'+e, v=t(k); return v===k ? t('errNet') : v; };
+function toast(m){ const el=$('toast'); el.textContent=m; el.style.display='block'; clearTimeout(toast.t); toast.t=setTimeout(()=>el.style.display='none',2600); }
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i]').forEach(el => el.textContent = t(el.dataset.i));
+  document.querySelectorAll('[data-ph]').forEach(el => el.placeholder = t(el.dataset.ph));
+  $('langBtn').textContent = lang==='vi' ? 'EN' : 'VI'; $('helpBtn').href='guide-admin.html?from=app&lang='+lang;
+  if (D) { fillSelects(); renderUsers(); renderAsg(); }
+}
+$('langBtn').onclick = () => { lang = lang==='vi'?'en':'vi'; S.set('sd_adm_lang',lang); applyLang(); };
+async function api(p){ const r = await fetch(API_URL,{method:'POST',body:JSON.stringify(p)}); if(!r.ok) throw new Error('http'); return r.json(); }
+function nextMidnightVN(){ const n=Date.now(); return Math.floor((n+VN)/86400e3)*86400e3+86400e3-VN; }
+function authFail(r){ if (r && (r.error==='auth'||r.error==='forbidden')) { session=null; S.del('sd_adm_session'); showLogin(); if (r.error==='forbidden') $('loginErr').textContent=t('errForbidden'); return true; } return false; }
+
+/* login */
+$('uPin').addEventListener('input', e => e.target.value = e.target.value.replace(/\D/g,'').slice(0,4));
+$('uPin').addEventListener('keydown', e => { if (e.key==='Enter') $('loginBtn').click(); });
+$('loginBtn').onclick = async () => {
+  const u=$('uName').value.trim().toLowerCase(), p=$('uPin').value; $('loginErr').textContent='';
+  if (!u || !/^\d{4}$/.test(p)) { $('loginErr').textContent=t('errFill'); return; }
+  $('loginBtn').disabled = true;
+  try {
+    const r = await api({action:'login',username:u,pin:p,app:'admin'});
+    if (!r.ok) $('loginErr').textContent = r.error==='locked' ? t('errLocked') : t('errLogin');
+    else if (r.role!=='admin') $('loginErr').textContent = t('errForbidden');
+    else { session={token:r.token,username:r.username,name:r.name,expires:nextMidnightVN()}; S.set('sd_adm_session',session); S.set('sd_adm_user',u); $('uPin').value=''; showApp(); }
+  } catch(e) { $('loginErr').textContent = t('errNet'); }
+  $('loginBtn').disabled = false;
+};
+$('logoutBtn').onclick = () => { session=null; S.del('sd_adm_session'); showLogin(); };
+function showLogin(){ $('vLogin').classList.remove('hidden'); $('vApp').classList.add('hidden'); $('logoutBtn').classList.add('hidden'); $('who').textContent=''; }
+function showApp(){ $('vLogin').classList.add('hidden'); $('vApp').classList.remove('hidden'); $('logoutBtn').classList.remove('hidden'); $('who').textContent=session.name+' · @'+session.username+' · admin'; load(); }
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x===b));
+  $('pUsers').classList.toggle('hidden', b.dataset.tab!=='users'); $('pAsg').classList.toggle('hidden', b.dataset.tab!=='asg');
+});
+
+/* data */
+async function load(){
+  $('refresh').disabled = true;
+  try { const r = await api({action:'users_list',token:session.token}); if (authFail(r)) return; if (r.ok) { D = r; fillSelects(); renderUsers(); renderAsg(); } else toast(errT(r.error)); }
+  catch(e) { toast(t('errNet')); }
+  $('refresh').disabled = false;
+}
+$('refresh').onclick = load;
+function asgStatus(a){ const k = D.today; if (a.to && a.to < k) return 'ended'; if (a.from && a.from > k) return 'future'; return 'now'; }
+function fillSelects(){
+  const dl = D.dl1s.filter(d=>d.active);
+  const cur = $('aDl1').value;
+  $('aDl1').innerHTML = `<option value="">${esc(t('allDl1'))}</option>` + dl.map(d=>`<option value="${esc(d.code)}">${esc(d.code+' · '+d.name)}</option>`).join(''); $('aDl1').value = cur;
+  const opts = dl.map(d=>`<option value="${esc(d.code)}">${esc(d.code+' · '+d.name)}</option>`).join('');
+  $('umDl1').innerHTML = `<option value="">${esc(t('noDl1'))}</option>` + opts;
+  $('amDl1').innerHTML = opts;
+  $('amUser').innerHTML = D.users.filter(u=>u.role!=='admin').sort((a,b)=>a.n.localeCompare(b.n,'vi')).map(u=>`<option value="${esc(u.u)}">${esc(u.n+' · @'+u.u)}${u.active?'':' ✕'}</option>`).join('');
+}
+
+/* users */
+['uSearch','uRole','uShowOff'].forEach(id => $(id).addEventListener('input', () => D && renderUsers()));
+function renderUsers(){
+  const q=$('uSearch').value.trim().toLowerCase(), role=$('uRole').value, off=$('uShowOff').checked;
+  const cur = new Map(); D.assignments.filter(a=>asgStatus(a)==='now').forEach(a => { if(!cur.has(a.u)) cur.set(a.u,[]); cur.get(a.u).push(a.dl1); });
+  const rows = D.users.filter(u => (off || u.active) && (role==='*' || u.role===role) && (!q || u.u.includes(q) || u.n.toLowerCase().includes(q)))
+    .sort((a,b) => (b.active-a.active) || a.n.localeCompare(b.n,'vi'));
+  $('uUpd').textContent = rows.length + ' · ' + t('updated',{t:new Date(D.generated+VN).toISOString().slice(11,16)});
+  $('users').innerHTML = `<table><thead><tr><th>${esc(t('cUser'))}</th><th>${esc(t('cRole'))}</th><th>${esc(t('cDl1'))}</th><th>${esc(t('cEmail'))}</th><th>${esc(t('cStatus'))}</th><th>${esc(t('cLast'))}</th><th></th></tr></thead><tbody>${
+    rows.map(u => `<tr class="${u.active?'':'off'}"><td><b>${esc(u.n)}</b><div class="muted">@${esc(u.u)}</div></td>
+      <td><span class="pill r-${u.role||'sales'}">${esc(t('r_'+u.role))}</span></td><td>${(cur.get(u.u)||[]).map(esc).join(', ')||'<span class="muted">—</span>'}</td>
+      <td>${esc(u.email)||'<span class="muted">—</span>'}</td><td><span class="pill ${u.active?'s-on':'s-off'}">${esc(t(u.active?'active':'blocked'))}</span></td>
+      <td>${u.last?esc(dt(u.last)):'<span class="muted">'+esc(t('never'))+'</span>'}</td>
+      <td><button class="btn ghost sm" data-edit="${esc(u.u)}">${esc(t('edit'))}</button></td></tr>`).join('')}</tbody></table>`;
+  $('users').querySelectorAll('[data-edit]').forEach(b => b.onclick = () => openUser(D.users.find(u=>u.u===b.dataset.edit)));
+}
+$('addUser').onclick = () => openUser(null);
+function openUser(u){
+  edit = u; $('umErr').textContent='';
+  const isAdmin = u && u.role==='admin', self = u && u.u===session.username;
+  $('umTitle').textContent = t(u?'editUserT':'newUserT');
+  $('umUser').value = u?u.u:''; $('umUser').disabled = !!u; $('umUserHint').classList.toggle('hidden', !!u);
+  $('umName').value = u?u.n:''; $('umEmail').value = u?u.email:'';
+  $('umRole').value = u && !isAdmin ? u.role : ''; $('umActive').checked = u ? u.active : true;
+  $('umNew').classList.toggle('hidden', !!u); $('umDl1').value=''; $('umFrom').value = D.today;
+  $('umActiveWrap').classList.toggle('hidden', !u || isAdmin);
+  ['umName','umRole','umEmail'].forEach(id => $(id).disabled = isAdmin);
+  $('umLock').classList.toggle('hidden', !isAdmin); $('umLock').textContent = isAdmin ? t(self?'adminSelf':'adminLocked') : '';
+  $('umSave').textContent = t(u?'save':'create'); $('umSave').classList.toggle('hidden', isAdmin);
+  $('umReset').classList.toggle('hidden', !u || (isAdmin && !self));
+  $('uModal').style.display='flex'; if (!u) setTimeout(()=>$('umUser').focus(),50);
+}
+$('umUser').addEventListener('input', e => e.target.value = e.target.value.toLowerCase().replace(/\s/g,''));
+$('umClose').onclick = () => $('uModal').style.display='none';
+$('umSave').onclick = async () => {
+  $('umErr').textContent=''; $('umSave').disabled = true;
+  try {
+    if (!edit) {
+      const r = await api({action:'user_create',token:session.token,username:$('umUser').value.trim(),name:$('umName').value.trim(),role:$('umRole').value,email:$('umEmail').value.trim(),dl1:$('umDl1').value,from:$('umFrom').value});
+      if (authFail(r)) return;
+      if (r.ok) { $('uModal').style.display='none'; showPin(t('pinCreatedT'), $('umName').value.trim(), r.username, r.pin); load(); }
+      else $('umErr').textContent = errT(r.error);
+    } else {
+      const active = $('umActive').checked;
+      if (edit.active && !active && !confirm(t('confirmBlock',{u:'@'+edit.u}))) { $('umSave').disabled=false; return; }
+      const r = await api({action:'user_update',token:session.token,username:edit.u,name:$('umName').value.trim(),role:$('umRole').value,email:$('umEmail').value.trim(),active});
+      if (authFail(r)) return;
+      if (r.ok) { $('uModal').style.display='none'; toast(r.changed.length?t('saved'):t('nothing')); load(); } else $('umErr').textContent = errT(r.error);
+    }
+  } catch(e) { $('umErr').textContent = t('errNet'); }
+  $('umSave').disabled = false;
+};
+$('umReset').onclick = async () => {
+  if (!confirm(t('confirmReset',{u:'@'+edit.u}))) return;
+  $('umReset').disabled = true;
+  try { const r = await api({action:'user_reset_pin',token:session.token,username:edit.u}); if (authFail(r)) return;
+    if (r.ok) { $('uModal').style.display='none'; showPin(t('pinNewT'), edit.n, r.username, r.pin); } else $('umErr').textContent = errT(r.error); }
+  catch(e) { $('umErr').textContent = t('errNet'); }
+  $('umReset').disabled = false;
+};
+function showPin(title, name, u, pin){ $('pinTitle').textContent=title; $('pinFor').textContent=t('pinFor',{n:name,u}); $('pinVal').textContent=pin; $('pinModal').style.display='flex'; }
+$('pinCopy').onclick = async () => { try { await navigator.clipboard.writeText($('pinVal').textContent); toast(t('copied')); } catch(e) {} };
+$('pinDone').onclick = () => { $('pinVal').textContent=''; $('pinModal').style.display='none'; };
+
+/* assignments */
+['aDl1','aSearch','aStatus'].forEach(id => $(id).addEventListener('input', () => D && renderAsg()));
+function renderAsg(){
+  const dl=$('aDl1').value, q=$('aSearch').value.trim().toLowerCase(), st=$('aStatus').value;
+  const names = new Map(D.users.map(u=>[u.u,u.n])), dn = new Map(D.dl1s.map(d=>[d.code,d.name]));
+  const rows = D.assignments.filter(a => (!dl||a.dl1===dl) && (!q || a.u.includes(q) || (names.get(a.u)||'').toLowerCase().includes(q)) &&
+    (st==='all' || (st==='ended' ? asgStatus(a)==='ended' : asgStatus(a)!=='ended')))
+    .sort((a,b) => a.dl1.localeCompare(b.dl1) || (names.get(a.u)||a.u).localeCompare(names.get(b.u)||b.u,'vi'));
+  $('aUpd').textContent = rows.length;
+  const cls = {now:'s-on',future:'s-future',ended:'s-ended'};
+  $('asg').innerHTML = `<table><thead><tr><th>DL1</th><th>${esc(t('employee'))}</th><th>${esc(t('cFrom'))}</th><th>${esc(t('cTo'))}</th><th>${esc(t('cStatus'))}</th><th></th></tr></thead><tbody>${
+    rows.map(a => { const s = asgStatus(a); return `<tr class="${s==='ended'?'off':''}"><td><b>${esc(a.dl1)}</b> <span class="muted">${esc(dn.get(a.dl1)||'')}</span></td>
+      <td>${esc(names.get(a.u)||a.u)} <span class="muted">@${esc(a.u)}</span></td><td>${a.from?esc(fd(a.from)):'<span class="muted">—</span>'}</td>
+      <td>${a.to?esc(fd(a.to)):'<span class="muted">'+esc(t('open'))+'</span>'}</td><td><span class="pill ${cls[s]}">${esc(t('st_'+s))}</span></td>
+      <td>${s!=='ended'?`<button class="btn ghost sm" data-end="${a.row}">${esc(t('end'))}</button> `:''}<button class="btn ghost sm" data-del="${a.row}">${esc(t('del'))}</button></td></tr>`; }).join('')}</tbody></table>`;
+  $('asg').querySelectorAll('[data-end]').forEach(b => b.onclick = () => openAsg('end', D.assignments.find(a=>a.row===+b.dataset.end)));
+  $('asg').querySelectorAll('[data-del]').forEach(b => b.onclick = () => delAsg(D.assignments.find(a=>a.row===+b.dataset.del)));
+}
+$('addAsg').onclick = () => openAsg('add', null);
+function openAsg(mode, a){
+  am = {mode, a}; $('amErr').textContent='';
+  const names = new Map(D.users.map(u=>[u.u,u.n]));
+  $('amTitle').textContent = t(mode==='add'?'addAsgT':'endAsgT');
+  $('amSub').textContent = a ? `${names.get(a.u)||a.u} → ${a.dl1}` : '';
+  $('amAddFields').classList.toggle('hidden', mode!=='add');
+  $('amToLbl').textContent = t(mode==='add'?'toOpt':'lastDay');
+  $('amFrom').value = D.today; $('amTo').value = mode==='add' ? '' : D.today;
+  if (mode==='add' && $('aDl1').value) $('amDl1').value = $('aDl1').value;
+  $('amSave').textContent = t(mode==='add'?'save':'end');
+  $('aModal').style.display='flex';
+}
+$('amClose').onclick = () => $('aModal').style.display='none';
+$('amSave').onclick = async () => {
+  $('amSave').disabled = true; $('amErr').textContent='';
+  try {
+    const r = am.mode==='add'
+      ? await api({action:'assign_add',token:session.token,username:$('amUser').value,dl1:$('amDl1').value,from:$('amFrom').value,to:$('amTo').value})
+      : await api({action:'assign_end',token:session.token,row:am.a.row,username:am.a.u,dl1:am.a.dl1,to:$('amTo').value});
+    if (authFail(r)) return;
+    if (r.ok) { $('aModal').style.display='none'; toast(t('saved')); await load(); } else $('amErr').textContent = errT(r.error);
+  } catch(e) { $('amErr').textContent = t('errNet'); }
+  $('amSave').disabled = false;
+};
+async function delAsg(a){
+  const names = new Map(D.users.map(u=>[u.u,u.n]));
+  if (!confirm(t('confirmDel',{u:names.get(a.u)||a.u,d:a.dl1}))) return;
+  try { const r = await api({action:'assign_delete',token:session.token,row:a.row,username:a.u,dl1:a.dl1}); if (authFail(r)) return;
+    if (r.ok) { toast(t('saved')); load(); } else toast(errT(r.error)); } catch(e) { toast(t('errNet')); }
+}
+
+$('uName').value = S.get('sd_adm_user','');
+applyLang();
+if (session && Date.now() < session.expires) showApp(); else { session=null; S.del('sd_adm_session'); showLogin(); }
+</script>
+</body>
+</html>

@@ -31,7 +31,11 @@
     if (b) b.onclick = function () { lang = lang === 'vi' ? 'en' : 'vi'; set('sd_guide_lang', lang); apply(); };
     // "Back to app" when opened from inside an app
     var back = document.getElementById('backBtn');
-    if (back && q.get('from') === 'app') back.style.display = '';
+    if (back && q.get('from') === 'app') {
+      back.style.display = '';
+      try { var r = document.referrer && new URL(document.referrer);
+        if (r && r.origin === location.origin && /\.html$|\/$/.test(r.pathname) && !/guide/.test(r.pathname)) back.href = r.pathname + r.search; } catch (e) {}
+    }
     // FAQ open/close all
     document.querySelectorAll('[data-faq]').forEach(function (btn) {
       btn.onclick = function () {

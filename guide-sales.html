@@ -24,8 +24,8 @@
   <div class="hero">
     <span class="role"><span class="vi">Nhân viên bán hàng</span><span class="en">Sales staff</span></span>
     <h1><span class="vi">Hướng dẫn sử dụng SalesData</span><span class="en">How to use SalesData</span></h1>
-    <p><span class="vi">Ghi nhận mỗi lần giao thùng Super Horse cho khách hàng sau đại lý cấp 1, xem doanh số của bạn, và báo lỗi khi nhập sai.</span>
-       <span class="en">Record every drop-off of Super Horse boxes to customers below DL1 distributors, see your own sales, and report a mistake if you entered something wrong.</span></p>
+    <p><span class="vi">Ghi nhận mỗi lần giao thùng Super Horse, quản lý nhập – xuất – tồn kho tại DL1 của bạn, xem doanh số, và báo lỗi khi nhập sai.</span>
+       <span class="en">Record every drop-off of Super Horse boxes, look after stock in and out at your DL1, see your own sales, and report a mistake if you entered something wrong.</span></p>
   </div>
   <details class="mtoc" id="mtoc"></details>
 
@@ -59,6 +59,12 @@
         <span class="en">Enter your username and PIN and tap <span class="btnlike">Log in</span>. Your login ends at midnight. Logging in needs signal, so do it before you head out.</span></li>
       <li><b><span class="vi">Đọc lời chào và bấm OK</span><span class="en">Read the welcome message and tap OK</span></b></li>
     </ol>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Tab</span><span class="en">Tab</span></th><th><span class="vi">Dùng để</span><span class="en">Used for</span></th></tr>
+      <tr><td><b><span class="vi">Ghi nhận</span><span class="en">Record</span></b></td><td><span class="vi">Ghi mỗi lượt giao hàng sau DL1 (mục 2).</span><span class="en">Each drop-off below DL1 (section 2).</span></td></tr>
+      <tr><td><b><span class="vi">Kho DL1</span><span class="en">DL1 stock</span></b></td><td><span class="vi">Nhận hàng, bán tại DL1, trả hàng, hàng hỏng, khuyến mãi, kiểm kê (mục 3).</span><span class="en">Deliveries in, DL1 sales, returns, damaged stock, promotions, stocktakes (section 3).</span></td></tr>
+      <tr><td><b><span class="vi">Doanh số</span><span class="en">My sales</span></b></td><td><span class="vi">Doanh số và các lượt giao của bạn; báo lỗi (mục 4–5).</span><span class="en">Your sales and drop-offs; report a mistake (sections 4–5).</span></td></tr>
+    </table></div>
     <div class="figs">
       <figure><img src="guide-img/s1-login.jpg" alt="" loading="lazy"><figcaption><span class="vi">Màn hình đăng nhập</span><span class="en">Login screen</span></figcaption></figure>
       <figure><img src="guide-img/s2-welcome.jpg" alt="" loading="lazy"><figcaption><span class="vi">Lời chào sau khi đăng nhập</span><span class="en">Welcome message after login</span></figcaption></figure>
@@ -78,6 +84,9 @@
           <tr><td><span class="dot o"></span><b><span class="vi">Cam</span><span class="en">Orange</span></b> ±21–50 m</td><td><span class="vi">Gửi được sau 20 giây chờ (hoặc chờ chuyển xanh).</span><span class="en">You can submit after waiting 20 seconds (or wait for green).</span></td></tr>
           <tr><td><span class="dot r"></span><b><span class="vi">Đỏ</span><span class="en">Red</span></b> &gt;50 m</td><td><span class="vi">Chưa gửi được. Ra chỗ thoáng.</span><span class="en">Cannot submit yet. Move to an open spot.</span></td></tr>
         </table></div></li>
+      <li><b><span class="vi">Chọn sản phẩm (và DL1 nếu được hỏi)</span><span class="en">Choose the product (and DL1 if asked)</span></b>
+        <span class="vi">Mặc định là <b>Super Horse Energy Drink</b>; chạm <b>Super Horse Pink</b> nếu giao Pink. Nếu bạn phụ trách nhiều DL1, chọn DL1 mà hàng được lấy ra — số thùng sẽ được trừ khỏi kho DL1 đó.</span>
+        <span class="en">The default is <b>Super Horse Energy Drink</b>; tap <b>Super Horse Pink</b> for Pink. If you cover more than one DL1, choose the DL1 the boxes came from; they come off that DL1's stock.</span></li>
       <li><b><span class="vi">Nhập số thùng</span><span class="en">Enter the number of boxes</span></b>
         <span class="vi">Từ 1 đến 2.400 thùng. Trên 500 thùng, ứng dụng hỏi lại để tránh gõ nhầm.</span>
         <span class="en">From 1 to 2,400 boxes. Above 500, the app asks you to double-check to catch typos.</span></li>
@@ -93,7 +102,7 @@
         <span class="en">✓ <b>Sent successfully</b>: saved. ⏳ <b>Saved on phone</b>: no signal, it will send automatically later. Tap <span class="btnlike">New entry</span> for your next drop-off.</span></li>
     </ol>
     <div class="figs">
-      <figure><img src="guide-img/s4-entry-ready.jpg" alt="" loading="lazy"><figcaption><span class="vi">GPS xanh, đã nhập số thùng</span><span class="en">Green GPS, boxes entered</span></figcaption></figure>
+      <figure><img src="guide-img/v4-s-entry.jpg" alt="" loading="lazy"><figcaption><span class="vi">GPS xanh, chọn sản phẩm, nhập số thùng</span><span class="en">Green GPS, product chosen, boxes entered</span></figcaption></figure>
       <figure><img src="guide-img/s3b-gps-orange.jpg" alt="" loading="lazy"><figcaption><span class="vi">GPS cam — chờ 20 giây</span><span class="en">Orange GPS: wait 20 seconds</span></figcaption></figure>
       <figure><img src="guide-img/s5-review.jpg" alt="" loading="lazy"><figcaption><span class="vi">Kiểm tra lại trước khi gửi</span><span class="en">Check before sending</span></figcaption></figure>
       <figure><img src="guide-img/s6-sending.jpg" alt="" loading="lazy"><figcaption><span class="vi">Đang gửi — không cần bấm lại</span><span class="en">Sending: no need to tap again</span></figcaption></figure>
@@ -103,8 +112,73 @@
   </section>
 
   <section>
-    <h2 id="mine"><span class="n">3</span><span class="vi">Xem doanh số của tôi</span><span class="en">See my sales</span></h2>
-    <p><span class="vi">Chạm tab <b>Doanh số của tôi</b>. Đây là màn hình <b>chỉ xem</b> — bạn không thể sửa dữ liệu ở đây.</span>
+    <h2 id="stock"><span class="n">3</span><span class="vi">Kho DL1: nhập – xuất – tồn</span><span class="en">DL1 stock: in, out and balance</span></h2>
+    <p><span class="vi">Bạn chịu trách nhiệm ghi <b>mọi thùng vào và ra</b> tại kho DL1 của mình. Tồn kho được <b>tính tự động</b> từ các lần ghi này — không ai nhập tay số tồn. Mọi lần ghi đều có thời gian và GPS.</span>
+       <span class="en">You are responsible for logging <b>every box in and out</b> of your DL1 warehouse. The stock balance is <b>calculated automatically</b> from these entries; nobody types it in. Every entry has a time and GPS.</span></p>
+    <div class="figs">
+      <figure><img src="guide-img/v4-s-stock.jpg" alt="" loading="lazy"><figcaption><span class="vi">Tab Kho DL1</span><span class="en">DL1 stock tab</span></figcaption></figure>
+      <figure><img src="guide-img/v4-s-actions.jpg" alt="" loading="lazy"><figcaption><span class="vi">Các nút ghi nhập/xuất</span><span class="en">The in/out buttons</span></figcaption></figure>
+    </div>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Phần trên màn hình</span><span class="en">On screen</span></th><th></th></tr>
+      <tr><td><b><span class="vi">Tồn kho</span><span class="en">Stock tiles</span></b></td><td><span class="vi">Số thùng hiện có cho từng sản phẩm. "Chờ duyệt" = thùng hỏng/khuyến mãi/chênh lệch kiểm kê đang chờ quản lý. Số đỏ = tồn âm → hãy kiểm kê.</span><span class="en">Boxes on hand per product. "Pending" = damaged, promotion or count differences waiting for the manager. Red = below zero, so do a stocktake.</span></td></tr>
+      <tr><td><b><span class="vi">Hàng đang về</span><span class="en">Deliveries on the way</span></b></td><td><span class="vi">Phiếu xuất HQ đã gửi tới DL1 của bạn, chờ bạn xác nhận.</span><span class="en">Dispatches HQ has sent to your DL1, waiting for you to confirm.</span></td></tr>
+      <tr><td><b><span class="vi">Nhập xuất gần đây</span><span class="en">Recent movements</span></b></td><td><span class="vi">Mọi lần ghi của cả nhóm tại DL1 này — cả nhóm thấy cùng một số tồn.</span><span class="en">Every entry by your whole DL1 team, so everyone sees the same balance.</span></td></tr>
+    </table></div>
+    <p class="tip"><span class="vi">Nếu bạn phụ trách nhiều DL1, chọn DL1 ở ô trên cùng. Nếu không thấy DL1 nào, bạn chưa được phân công — liên hệ admin.</span><span class="en">If you cover several DL1s, pick one in the box at the top. If no DL1 shows, you haven't been assigned yet; contact the admin.</span></p>
+
+    <h3><span class="vi">Các loại nhập / xuất</span><span class="en">Types of movement</span></h3>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Nút</span><span class="en">Button</span></th><th><span class="vi">Khi nào</span><span class="en">When</span></th><th><span class="vi">Quản lý duyệt?</span><span class="en">Approval?</span></th></tr>
+      <tr><td>🚚 <b><span class="vi">Nhận hàng</span><span class="en">Receive</span></b></td><td><span class="vi">Xe hàng HQ tới kho DL1</span><span class="en">An HQ delivery arrives at the warehouse</span></td><td><span class="vi">Không</span><span class="en">No</span></td></tr>
+      <tr><td>🛒 <b><span class="vi">Bán tại DL1</span><span class="en">Sold at DL1</span></b></td><td><span class="vi">Mỗi lần DL1 bán hàng (khách lẻ, xe của DL1…)</span><span class="en">Each time the DL1 sells (walk-ins, DL1 truck…)</span></td><td><span class="vi">Không</span><span class="en">No</span></td></tr>
+      <tr><td>↩️ <b><span class="vi">Trả về công ty</span><span class="en">Return to HQ</span></b></td><td><span class="vi">Thùng gửi trả về công ty (cần lý do)</span><span class="en">Boxes sent back to head office (reason needed)</span></td><td><span class="vi">Không</span><span class="en">No</span></td></tr>
+      <tr><td>⚠️ <b><span class="vi">Hàng hỏng / hết hạn</span><span class="en">Damaged / expired</span></b></td><td><span class="vi">Thùng không bán được (cần lý do)</span><span class="en">Boxes that can't be sold (reason needed)</span></td><td>✅ <span class="vi">Có</span><span class="en">Yes</span></td></tr>
+      <tr><td>🎁 <b><span class="vi">Hàng khuyến mãi</span><span class="en">Free promotion</span></b></td><td><span class="vi">Thùng tặng cho chương trình (cần lý do)</span><span class="en">Boxes given away for a promotion (reason needed)</span></td><td>✅ <span class="vi">Có</span><span class="en">Yes</span></td></tr>
+      <tr><td>📦 <b><span class="vi">Giao sau DL1</span><span class="en">Drop-off</span></b></td><td><span class="vi">Ghi ở tab Ghi nhận (mục 2) — tự động trừ kho</span><span class="en">Logged in the Record tab (section 2); comes off stock automatically</span></td><td><span class="vi">Không</span><span class="en">No</span></td></tr>
+    </table></div>
+    <p><span class="vi">Mục cần duyệt chỉ trừ vào kho <b>sau khi</b> quản lý duyệt. Nếu bị từ chối, lý do hiện ngay trong danh sách.</span><span class="en">Items needing approval only come off stock <b>after</b> the manager approves. If rejected, the reason shows in the list.</span></p>
+
+    <h3><span class="vi">Nhận hàng từ công ty</span><span class="en">Receiving a delivery from HQ</span></h3>
+    <ol class="steps">
+      <li><b><span class="vi">Đếm số thùng thực nhận</span><span class="en">Count what actually arrived</span></b></li>
+      <li><b><span class="vi">Bấm "Nhận hàng" trên phiếu đang về</span><span class="en">Tap "Receive" on the delivery</span></b><span class="vi">Số thùng của phiếu đã được điền sẵn.</span><span class="en">The delivery note's quantity is already filled in.</span></li>
+      <li><b><span class="vi">Sửa số nếu khác</span><span class="en">Change it if different</span></b><span class="vi">Nếu nhận thiếu/dư hoặc hàng móp, nhập số thực nhận và <b>bắt buộc</b> ghi chú lý do.</span><span class="en">If short, over or damaged, enter what you actually received; a note is <b>required</b>.</span></li>
+      <li><b><span class="vi">Bấm Gửi</span><span class="en">Tap Submit</span></b><span class="vi">Hàng được cộng vào kho ngay; HQ thấy trạng thái "Đã nhận" hoặc "Nhận thiếu".</span><span class="en">The boxes are added to stock at once; HQ sees "Received" or "Received short".</span></li>
+    </ol>
+    <div class="figs">
+      <figure><img src="guide-img/v4-s-receive.jpg" alt="" loading="lazy"><figcaption><span class="vi">Nhận thiếu — cần ghi chú</span><span class="en">Received short: note required</span></figcaption></figure>
+      <figure><img src="guide-img/v4-s-sale.jpg" alt="" loading="lazy"><figcaption><span class="vi">Bán tại DL1 — nhập ngay khi bán</span><span class="en">Sold at DL1: enter it as you sell</span></figcaption></figure>
+    </div>
+    <p class="tip"><span class="vi"><b>Bán tại DL1:</b> ghi ngay mỗi lần bán — không cần ghi chép riêng. Chỉ mất khoảng 5 giây: bấm nút, nhập số thùng, Gửi.</span><span class="en"><b>Sold at DL1:</b> log it each time you sell; no separate notes needed. About 5 seconds: tap, enter boxes, Submit.</span></p>
+
+    <h3><span class="vi">Kiểm kê (đếm kho)</span><span class="en">Stocktake (counting the warehouse)</span></h3>
+    <p><span class="vi">Kiểm kê được làm <b>bất kỳ ngày nào</b>, và <b>bắt buộc cuối mỗi tháng</b>. Đây là kiểm kê "mù": bạn nhập số đếm được <b>trước</b>, rồi ứng dụng mới cho thấy số của hệ thống.</span>
+       <span class="en">You can do a stocktake <b>any day</b>, and it is <b>required at the end of every month</b>. It's a "blind" count: you enter what you counted <b>first</b>, and only then does the app show the system figure.</span></p>
+    <ol class="steps">
+      <li><b><span class="vi">Đếm toàn bộ thùng trong kho</span><span class="en">Count every box in the warehouse</span></b><span class="vi">Đếm riêng Super Horse và Super Horse Pink (nhập 0 nếu không có).</span><span class="en">Count Super Horse and Super Horse Pink separately (enter 0 if none).</span></li>
+      <li><b><span class="vi">Bấm Kiểm kê, nhập số đếm, Gửi</span><span class="en">Tap Stocktake, enter your counts, Send</span></b><span class="vi">Cần có mạng.</span><span class="en">Needs signal.</span></li>
+      <li><b><span class="vi">Xem kết quả</span><span class="en">See the result</span></b><span class="vi">✓ <b>Khớp</b>: xong. <b>Có chênh lệch</b>: yêu cầu điều chỉnh được gửi quản lý. Hãy ghi lý do, hoặc bấm <b>Đếm lại</b> nếu bạn nghĩ đã đếm sai.</span><span class="en">✓ <b>Matches</b>: done. <b>Difference</b>: an adjustment goes to the manager. Give a reason, or tap <b>Count again</b> if you think you miscounted.</span></li>
+    </ol>
+    <div class="figs">
+      <figure><img src="guide-img/v4-s-count1.jpg" alt="" loading="lazy"><figcaption><span class="vi">Nhập số đếm được</span><span class="en">Enter what you counted</span></figcaption></figure>
+      <figure><img src="guide-img/v4-s-count2.jpg" alt="" loading="lazy"><figcaption><span class="vi">Có chênh lệch — ghi lý do hoặc đếm lại</span><span class="en">Difference: give a reason or count again</span></figcaption></figure>
+    </div>
+
+    <h3><span class="vi">Kiểm kê cuối tháng (bắt buộc)</span><span class="en">Month-end stocktake (required)</span></h3>
+    <p><span class="vi">Từ ngày <b>28</b>, một khung màu cam hiện trên tab Kho DL1. Hoàn thành <b>trước hết ngày 5</b> tháng sau. Nếu bạn đếm vào ngày 1–5, số liệu vẫn được tính cho ngày cuối tháng — thời gian và GPS thực tế vẫn được ghi lại.</span>
+       <span class="en">From the <b>28th</b>, an orange box appears on the DL1 stock tab. Finish it <b>by the end of the 5th</b> of the next month. If you count on the 1st–5th, it still counts for the last day of the month, and the real time and GPS are still recorded.</span></p>
+    <div class="figs"><figure><img src="guide-img/v4-s-eom.jpg" alt="" loading="lazy"><figcaption><span class="vi">Nhắc kiểm kê cuối tháng</span><span class="en">Month-end reminder</span></figcaption></figure></div>
+    <div class="flow">
+      <div class="b"><b><span class="vi">Bạn kiểm kê</span><span class="en">You count</span></b><span class="vi">Trước hết ngày 5</span><span class="en">By the 5th</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Quản lý duyệt</span><span class="en">Manager approves</span></b><span class="vi">Các chênh lệch (nếu có)</span><span class="en">Any differences</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Chốt tháng</span><span class="en">Month closed</span></b><span class="vi">Số liệu tháng bị khóa</span><span class="en">The month's figures are locked</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="mine"><span class="n">4</span><span class="vi">Xem doanh số của tôi</span><span class="en">See my sales</span></h2>
+    <p><span class="vi">Chạm tab <b>Doanh số</b>. Đây là màn hình <b>chỉ xem</b> — bạn không thể sửa dữ liệu ở đây.</span>
        <span class="en">Tap the <b>My sales</b> tab. This screen is <b>view only</b>; you can't change data here.</span></p>
     <div class="tbl"><table>
       <tr><th><span class="vi">Mục</span><span class="en">Item</span></th><th><span class="vi">Ý nghĩa</span><span class="en">What it shows</span></th></tr>
@@ -131,11 +205,11 @@
   </section>
 
   <section>
-    <h2 id="report"><span class="n">4</span><span class="vi">Báo lỗi khi nhập sai</span><span class="en">Report a mistake</span></h2>
+    <h2 id="report"><span class="n">5</span><span class="vi">Báo lỗi khi nhập sai</span><span class="en">Report a mistake</span></h2>
     <p><span class="vi">Bạn không thể tự sửa dữ liệu. Nếu nhập sai, hãy <b>báo lỗi</b> để quản lý dữ liệu kiểm tra. <b>Đừng gửi thêm một lượt mới để "sửa"</b> — sẽ thành trùng.</span>
        <span class="en">You can't edit data yourself. If you entered something wrong, <b>report it</b> so a data manager can check. <b>Don't submit a second entry to "fix" it</b>: that creates a duplicate.</span></p>
     <ol class="steps">
-      <li><b><span class="vi">Mở tab Doanh số của tôi</span><span class="en">Open My sales</span></b><span class="vi">Tìm lượt giao bị sai.</span><span class="en">Find the wrong entry.</span></li>
+      <li><b><span class="vi">Mở tab Doanh số</span><span class="en">Open My sales</span></b><span class="vi">Tìm lượt giao bị sai.</span><span class="en">Find the wrong entry.</span></li>
       <li><b><span class="vi">Bấm ⚠️ Báo lỗi</span><span class="en">Tap ⚠️ Report</span></b></li>
       <li><b><span class="vi">Chọn loại lỗi</span><span class="en">Choose what's wrong</span></b>
         <span class="vi"><b>Sai số thùng</b> (nhập số đúng) · <b>Mục bị trùng</b> (nhập 2 lần) · <b>Không phải lượt giao của tôi</b>. Thêm ghi chú nếu cần.</span>
@@ -154,6 +228,7 @@
       <tr><td><b><span class="vi">Thời hạn</span><span class="en">Time limit</span></b></td><td><span class="vi">Báo lỗi được cho các lượt trong tháng này. Lượt của tháng trước: đến hết ngày 3 tháng này.</span><span class="en">You can report entries from this month. Last month's entries: until the 3rd of this month.</span></td></tr>
       <tr><td><b><span class="vi">Mỗi lần một yêu cầu</span><span class="en">One at a time</span></b></td><td><span class="vi">Một lượt giao chỉ có một yêu cầu đang chờ.</span><span class="en">Each entry can only have one request waiting.</span></td></tr>
       <tr><td><b><span class="vi">Đổi ý?</span><span class="en">Changed your mind?</span></b></td><td><span class="vi">Bấm <span class="btnlike w">Hủy yêu cầu</span> khi yêu cầu còn đang chờ.</span><span class="en">Tap <span class="btnlike w">Cancel request</span> while it's still pending.</span></td></tr>
+      <tr><td><b><span class="vi">Mục kho khác</span><span class="en">Other stock entries</span></b></td><td><span class="vi">Báo lỗi chỉ dùng cho lượt giao. Nếu ghi sai "Bán tại DL1", nhận hàng hoặc trả hàng: làm <b>Kiểm kê</b> — chênh lệch sẽ được quản lý duyệt và số tồn được sửa đúng.</span><span class="en">Report is for drop-offs only. If you logged a wrong DL1 sale, receipt or return, do a <b>Stocktake</b>; the manager approves the difference and the balance is corrected.</span></td></tr>
       <tr><td><b><span class="vi">Dữ liệu gốc</span><span class="en">The original</span></b></td><td><span class="vi">Không bao giờ bị xóa. Mọi thay đổi đều được ghi lại.</span><span class="en">Is never deleted. Every change is logged.</span></td></tr>
     </table></div>
   </section>
@@ -163,16 +238,40 @@
     <div class="faqtools"><button data-faq="open"><span class="vi">Mở tất cả</span><span class="en">Open all</span></button><button data-faq="close"><span class="vi">Đóng tất cả</span><span class="en">Close all</span></button></div>
 
     <details class="q"><summary><span class="vi">Tôi muốn thay đổi dữ liệu đã gửi thì làm thế nào?</span><span class="en">How do I change data I've already sent?</span></summary><div class="a">
-      <span class="vi">Bạn không thể tự sửa dữ liệu. Vào tab <b>Doanh số của tôi</b>, tìm lượt giao cần sửa và bấm <b>⚠️ Báo lỗi</b>: chọn sai số thùng (nhập số đúng), mục bị trùng, hoặc không phải lượt giao của tôi. Quản lý dữ liệu sẽ kiểm tra và duyệt; bạn xem kết quả ngay trong tab đó (xem mục 4). Dữ liệu gốc luôn được giữ lại và mọi thay đổi đều được ghi nhật ký.</span>
-      <span class="en">You can't edit data yourself. Open <b>My sales</b>, find the entry and tap <b>⚠️ Report</b>: choose wrong number of boxes (type the correct number), duplicate, or not my drop-off. A data manager checks and approves it, and you see the result in the same tab (see section 4). The original is always kept and every change is logged.</span></div></details>
+      <span class="vi">Bạn không thể tự sửa dữ liệu. Với <b>lượt giao</b>: vào tab <b>Doanh số</b>, tìm lượt giao cần sửa và bấm <b>⚠️ Báo lỗi</b>: chọn sai số thùng (nhập số đúng), mục bị trùng, hoặc không phải lượt giao của tôi. Quản lý dữ liệu sẽ kiểm tra và duyệt; bạn xem kết quả ngay trong tab đó (xem mục 4). Với <b>mục kho khác</b> (bán tại DL1, nhận hàng, trả hàng): làm Kiểm kê để sửa số tồn. Dữ liệu gốc luôn được giữ lại và mọi thay đổi đều được ghi nhật ký.</span>
+      <span class="en">You can't edit data yourself. For a <b>drop-off</b>: open <b>My sales</b>, find the entry and tap <b>⚠️ Report</b>: choose wrong number of boxes (type the correct number), duplicate, or not my drop-off. A data manager checks and approves it, and you see the result in the same tab (see section 4). For <b>other stock entries</b> (DL1 sale, receipt, return): do a Stocktake to correct the balance. The original is always kept and every change is logged.</span></div></details>
 
     <details class="q"><summary><span class="vi">Thông tin bán hàng được lưu ở đâu?</span><span class="en">Where is the sales information stored?</span></summary><div class="a">
-      <span class="vi">Trên hệ thống Google Sheets của công ty, kèm một bản sao lưu riêng để kiểm toán. Chỉ admin truy cập trực tiếp được; quản lý dữ liệu làm việc qua trang quản lý; nhân viên chỉ xem dữ liệu của chính mình trong ứng dụng. Khi không có mạng, lượt giao được lưu tạm trên điện thoại (⏳) cho đến khi gửi được.</span>
-      <span class="en">In the company's Google Sheets, with a separate backup copy for audit. Only the admin has direct access; data managers work through the manager page; staff see only their own data in the app. Without signal, a drop-off waits on your phone (⏳) until it can be sent.</span></div></details>
+      <span class="vi">Trên hệ thống Google Sheets của công ty (cả lượt giao và nhập/xuất kho), kèm một bản sao lưu riêng để kiểm toán. Chỉ admin truy cập trực tiếp được; quản lý dữ liệu làm việc qua trang quản lý; nhân viên chỉ xem dữ liệu của chính mình trong ứng dụng. Khi không có mạng, lượt giao được lưu tạm trên điện thoại (⏳) cho đến khi gửi được.</span>
+      <span class="en">In the company's Google Sheets (drop-offs and stock movements alike), with a separate backup copy for audit. Only the admin has direct access; data managers work through the manager page; staff see only their own data in the app. Without signal, a drop-off waits on your phone (⏳) until it can be sent.</span></div></details>
 
-    <details class="q"><summary><span class="vi">Có biết được đại lý nhập bao nhiêu, bán bao nhiêu và tồn kho bao nhiêu không?</span><span class="en">Can we see how much a distributor buys, sells and has in stock?</span></summary><div class="a">
-      <span class="vi">Hiện tại chưa. Ứng dụng chỉ ghi nhận <b>nơi thùng được giao sau đại lý cấp 1</b> (ai giao, bao nhiêu thùng, khi nào, ở đâu). Ứng dụng chưa ghi hàng đến từ đại lý nào và chưa có số liệu tồn kho. Tính năng này đang được xem xét cho phiên bản sau.</span>
-      <span class="en">Not yet. The app only records <b>where boxes are dropped off below DL1</b> (who, how many, when and where). It doesn't yet record which distributor the boxes came from, and it has no stock figures. This is being considered for a future version.</span></div></details>
+    <details class="q"><summary><span class="vi">Xem tồn kho của DL1 ở đâu?</span><span class="en">Where do I see my DL1's stock?</span></summary><div class="a">
+      <span class="vi">Tab <b>Kho DL1</b> hiện số tồn hiện tại của từng sản phẩm, hàng đang về, và mọi lần nhập/xuất của cả nhóm. Quản lý xem được tồn kho và doanh số của tất cả DL1.</span>
+      <span class="en">The <b>DL1 stock</b> tab shows current stock per product, deliveries on the way and every in/out by your team. Managers see stock and sales for all DL1s.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Trong kho GPS yếu (màu đỏ) — có ghi được không?</span><span class="en">Weak (red) GPS inside the warehouse — can I still log stock?</span></summary><div class="a">
+      <span class="vi">Có. Với nhập/xuất kho, GPS xanh hoặc cam gửi được ngay; GPS đỏ gửi được sau 60 giây và được đánh dấu "GPS yếu". Nếu được, hãy đứng gần cửa kho. (Lượt giao vẫn cần GPS xanh/cam như trước.)</span>
+      <span class="en">Yes. For stock entries, green or orange GPS sends straight away; red GPS can send after 60 seconds and is flagged "weak GPS". Stand near the warehouse door if you can. (Drop-offs still need green/orange GPS.)</span></div></details>
+
+    <details class="q"><summary><span class="vi">Xe hàng tới nhưng không thấy phiếu trong "Hàng đang về"?</span><span class="en">A delivery arrived but isn't under "Deliveries on the way"?</span></summary><div class="a">
+      <span class="vi">Bấm <b>Làm mới</b>. Nếu vẫn không có, HQ chưa nhập phiếu xuất — gọi phòng kinh doanh HQ nhập phiếu, rồi xác nhận nhận hàng. Không ghi hàng nhận bằng cách khác.</span>
+      <span class="en">Tap <b>Refresh</b>. If it's still missing, HQ hasn't entered the dispatch; call the HQ sales office to enter it, then confirm the receipt. Don't record the delivery any other way.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Tồn kho hiện số âm (màu đỏ)?</span><span class="en">Stock shows a negative (red) number?</span></summary><div class="a">
+      <span class="vi">Có thể thiếu một lần nhận hàng hoặc ghi xuất quá số. Ứng dụng vẫn cho ghi tiếp, nhưng hãy <b>kiểm kê</b> sớm để sửa số tồn.</span>
+      <span class="en">A receipt may be missing or too much was logged out. The app still lets you continue, but do a <b>stocktake</b> soon to correct the balance.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Tôi ghi sai số "Bán tại DL1" / nhận hàng. Sửa thế nào?</span><span class="en">I logged the wrong DL1 sale / receipt quantity. How do I fix it?</span></summary><div class="a">
+      <span class="vi">Làm một lần <b>Kiểm kê</b>. Chênh lệch giữa số đếm và hệ thống sẽ được gửi quản lý duyệt; ghi lý do "ghi sai số bán lúc …". Không ghi thêm một mục ngược lại.</span>
+      <span class="en">Do a <b>Stocktake</b>. The difference between your count and the system goes to the manager for approval; give the reason, e.g. "wrong DL1 sale quantity at …". Don't add an opposite entry.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Quên kiểm kê cuối tháng?</span><span class="en">Forgot the month-end stocktake?</span></summary><div class="a">
+      <span class="vi">Hạn chót là hết ngày 5. Sau đó tháng không thể chốt và DL1 của bạn hiện "quá hạn" trên trang quản lý — liên hệ quản lý ngay.</span>
+      <span class="en">The deadline is the end of the 5th. After that the month can't be closed and your DL1 shows as overdue on the manager page; contact your manager straight away.</span></div></details>
+
+    <details class="q"><summary><span class="vi">Không có mạng ở kho thì sao?</span><span class="en">No signal at the warehouse?</span></summary><div class="a">
+      <span class="vi">Nhận hàng, bán tại DL1, trả hàng, hàng hỏng và khuyến mãi được lưu trên máy (⏳) và tự gửi khi có mạng. <b>Kiểm kê cần có mạng</b> vì phải so sánh ngay với hệ thống.</span>
+      <span class="en">Receipts, DL1 sales, returns, damaged and promotion entries are saved on the phone (⏳) and send automatically later. <b>A stocktake needs signal</b>, because it compares with the system straight away.</span></div></details>
 
     <details class="q"><summary><span class="vi">Ứng dụng có làm hao pin không?</span><span class="en">Does the app drain my battery?</span></summary><div class="a">
       <span class="vi">Không. GPS chỉ hoạt động khi màn hình nhập liệu đang mở, và tự tắt khi bạn khóa máy hoặc chuyển ứng dụng. Ứng dụng không theo dõi bạn khi chạy nền.</span>
@@ -199,7 +298,7 @@
       <span class="en">iPhone: Settings → Privacy & Security → Location Services → on, then Safari → "While Using the App". Android: Settings → Location → on; in Chrome: ⋮ → Settings → Site settings → Location → allow the SalesData site. Then reload the app.</span></div></details>
 
     <details class="q"><summary><span class="vi">Tôi nhập sai số thùng. Sửa thế nào?</span><span class="en">I entered the wrong number. How do I fix it?</span></summary><div class="a">
-      <span class="vi">Dùng <b>⚠️ Báo lỗi</b> trong tab Doanh số của tôi (xem mục 4). Không gửi thêm một lượt mới để sửa.</span>
+      <span class="vi">Dùng <b>⚠️ Báo lỗi</b> trong tab Doanh số (xem mục 4). Không gửi thêm một lượt mới để sửa.</span>
       <span class="en">Use <b>⚠️ Report</b> in the My sales tab (see section 4). Don't submit a second entry to correct it.</span></div></details>
 
     <details class="q"><summary><span class="vi">Tôi lỡ gửi một lượt hai lần.</span><span class="en">I sent the same drop-off twice.</span></summary><div class="a">

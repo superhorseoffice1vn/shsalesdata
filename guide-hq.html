@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1A4FA0">
+<title data-vi="Hướng dẫn phòng kinh doanh HQ · SalesData" data-en="HQ sales office guide · SalesData">Hướng dẫn phòng kinh doanh HQ · SalesData</title>
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="guide.css">
+<script src="guide.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <img src="logo.png" alt="Super Horse">
+  <div class="t">SalesData <small><span class="vi">Hướng dẫn HQ</span><span class="en">HQ guide</span></small></div>
+  <a class="chip" id="backBtn" href="hq.html" style="display:none"><span class="vi">← Về trang HQ</span><span class="en">← Back to HQ</span></a>
+  <button class="chip" id="langBtn">English</button>
+</div></header>
+<div class="tagline"><span class="vi">Dữ liệu chính xác → Quyết định tốt hơn → Cùng phát triển</span><span class="en">Accurate data → Better decisions → Growing together</span></div>
+
+<div class="wrap">
+<nav class="toc" id="toc"></nav>
+<main>
+  <div class="hero">
+    <span class="role"><span class="vi">Phòng kinh doanh HQ</span><span class="en">HQ sales office</span></span>
+    <h1><span class="vi">Nhập phiếu xuất hàng cho DL1</span><span class="en">Entering dispatches to DL1s</span></h1>
+    <p><span class="vi">Bạn nhập trước mỗi chuyến hàng gửi tới đại lý cấp 1. Nhân viên tại DL1 xác nhận số thực nhận — đây là điểm bắt đầu của mọi thùng hàng trong kho DL1.</span>
+       <span class="en">You enter each delivery to a DL1 distributor before it leaves. The employee at the DL1 confirms what actually arrived; this is where every box in DL1 stock starts.</span></p>
+  </div>
+  <details class="mtoc" id="mtoc"></details>
+
+  <section>
+    <h2 id="flow"><span class="n">1</span><span class="vi">Quy trình</span><span class="en">How it works</span></h2>
+    <div class="flow">
+      <div class="b"><b><span class="vi">Bạn tạo phiếu</span><span class="en">You create the dispatch</span></b><span class="vi">Trước khi xe chạy</span><span class="en">Before the truck leaves</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Đang về</span><span class="en">On the way</span></b><span class="vi">Hiện trên điện thoại nhân viên DL1</span><span class="en">Shows on the DL1 staff's phones</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Nhân viên nhận hàng</span><span class="en">Staff receive</span></b><span class="vi">Đếm và xác nhận số thực nhận</span><span class="en">Count and confirm what arrived</span></div><div class="a">→</div>
+      <div class="b"><b><span class="vi">Đã nhận</span><span class="en">Received</span></b><span class="vi">Cộng vào kho DL1</span><span class="en">Added to DL1 stock</span></div>
+    </div>
+    <p class="tip"><span class="vi">Đăng nhập tại <b>hq.html</b> (hoặc từ trang chủ portal.html) bằng tên đăng nhập và PIN. Tài khoản phải có vai trò <b>Văn phòng HQ</b>. Dùng tốt trên máy tính.</span><span class="en">Log in at <b>hq.html</b> (or from the home page portal.html) with your username and PIN. Your account needs the <b>HQ office</b> role. Works best on a computer.</span></p>
+  </section>
+
+  <section>
+    <h2 id="new"><span class="n">2</span><span class="vi">Tạo phiếu xuất mới</span><span class="en">Create a new dispatch</span></h2>
+    <ol class="steps">
+      <li><b><span class="vi">Chọn DL1</span><span class="en">Choose the DL1</span></b></li>
+      <li><b><span class="vi">Chọn sản phẩm</span><span class="en">Choose the product</span></b><span class="vi">Super Horse Energy Drink hoặc Super Horse Pink. Mỗi sản phẩm một phiếu.</span><span class="en">Super Horse Energy Drink or Super Horse Pink. One dispatch per product.</span></li>
+      <li><b><span class="vi">Nhập số thùng</span><span class="en">Enter the boxes</span></b><span class="vi">1–20.000.</span><span class="en">1–20,000.</span></li>
+      <li><b><span class="vi">Nhập số phiếu xuất / phiếu giao hàng</span><span class="en">Enter the dispatch / delivery note number</span></b><span class="vi">Bắt buộc, không trùng với phiếu khác của cùng sản phẩm — tránh nhập hai lần.</span><span class="en">Required and must not repeat for the same product, which stops double entry.</span></li>
+      <li><b><span class="vi">Ngày dự kiến đến và ghi chú</span><span class="en">Expected arrival and note</span></b><span class="vi">Ghi chú tùy chọn: xe, tài xế…</span><span class="en">Note is optional: truck, driver…</span></li>
+      <li><b><span class="vi">Bấm Kiểm tra → Tạo phiếu</span><span class="en">Tap Review → Create dispatch</span></b><span class="vi">Kiểm tra lại DL1 và số thùng trên màn hình xác nhận.</span><span class="en">Double-check the DL1 and boxes on the confirm screen.</span></li>
+    </ol>
+    <div class="figs">
+      <figure class="wide"><img src="guide-img/v4-h-page.jpg" alt="" loading="lazy"><figcaption><span class="vi">Trang HQ: phiếu mới và danh sách</span><span class="en">HQ page: new dispatch and list</span></figcaption></figure>
+      <figure><img src="guide-img/v4-h-confirm.jpg" alt="" loading="lazy"><figcaption><span class="vi">Xác nhận phiếu xuất</span><span class="en">Confirm dispatch</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="list"><span class="n">3</span><span class="vi">Theo dõi trạng thái</span><span class="en">Following the status</span></h2>
+    <p><span class="vi">Danh sách bên dưới lọc được theo trạng thái, DL1 và số phiếu.</span><span class="en">The list below filters by status, DL1 and note number.</span></p>
+    <div class="tbl"><table>
+      <tr><th><span class="vi">Trạng thái</span><span class="en">Status</span></th><th><span class="vi">Nghĩa là</span><span class="en">Means</span></th></tr>
+      <tr><td><span class="pill p-pend"><span class="vi">Đang về</span><span class="en">On the way</span></span></td><td><span class="vi">Chưa được DL1 xác nhận. Sau 24 giờ hiện ⚠ "quá 24 giờ chưa nhận" — hãy gọi DL1.</span><span class="en">Not yet confirmed by the DL1. After 24 hours a ⚠ "not received after 24 h" appears; call the DL1.</span></td></tr>
+      <tr><td><span class="pill p-ok"><span class="vi">Đã nhận</span><span class="en">Received</span></span></td><td><span class="vi">Nhận đủ số thùng.</span><span class="en">Received in full.</span></td></tr>
+      <tr><td><span class="pill p-am"><span class="vi">Nhận thiếu / Nhận dư</span><span class="en">Received short / over</span></span></td><td><span class="vi">Số thực nhận khác phiếu. Cột Ghi chú cho biết lý do nhân viên ghi. Kho DL1 tăng theo <b>số thực nhận</b>.</span><span class="en">The received quantity differs. The Note column shows the employee's reason. DL1 stock goes up by the <b>received</b> quantity.</span></td></tr>
+      <tr><td><span class="pill p-void"><span class="vi">Đã hủy</span><span class="en">Cancelled</span></span></td><td><span class="vi">Phiếu đã hủy, không ảnh hưởng kho.</span><span class="en">Cancelled; no effect on stock.</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2 id="cancel"><span class="n">4</span><span class="vi">Hủy phiếu</span><span class="en">Cancelling a dispatch</span></h2>
+    <p><span class="vi">Chỉ hủy được phiếu <b>Đang về</b> (chưa nhận). Bấm <b>Hủy</b> trên dòng đó và ghi lý do (bắt buộc). Nếu nhập sai, hủy rồi tạo phiếu đúng.</span>
+       <span class="en">Only dispatches that are <b>On the way</b> (not yet received) can be cancelled. Tap <b>Cancel</b> on that row and give a reason (required). If you entered something wrong, cancel it and create the correct one.</span></p>
+    <p class="warn"><span class="vi">Phiếu đã nhận không hủy được. Nếu số đã nhận bị sai, nhân viên DL1 sửa bằng kiểm kê — quản lý duyệt chênh lệch.</span><span class="en">A received dispatch can't be cancelled. If the received quantity is wrong, the DL1 staff correct it with a stocktake, and the manager approves the difference.</span></p>
+  </section>
+
+  <section>
+    <h2 id="faq"><span class="vi">Câu hỏi thường gặp</span><span class="en">FAQ</span></h2>
+    <details class="q"><summary><span class="vi">Một chuyến xe chở cả hai sản phẩm?</span><span class="en">One truck carries both products?</span></summary><div class="a">
+      <span class="vi">Tạo hai phiếu — một cho Super Horse, một cho Pink. Có thể dùng cùng số phiếu giao hàng.</span><span class="en">Create two dispatches, one for Super Horse and one for Pink. They can share the same delivery note number.</span></div></details>
+    <details class="q"><summary><span class="vi">Báo "Số phiếu này đã có"?</span><span class="en">"This note number already exists"?</span></summary><div class="a">
+      <span class="vi">Phiếu này có thể đã được nhập. Tìm số phiếu trong danh sách trước khi nhập lại.</span><span class="en">It has probably been entered already. Search for the note number in the list before entering it again.</span></div></details>
+    <details class="q"><summary><span class="vi">DL1 nói đã nhận hàng nhưng vẫn "Đang về"?</span><span class="en">The DL1 says it arrived but it still shows "On the way"?</span></summary><div class="a">
+      <span class="vi">Nhân viên chưa bấm "Nhận hàng" trong ứng dụng, hoặc điện thoại chưa có mạng để gửi. Nhắc họ xác nhận; bấm Làm mới.</span><span class="en">The employee hasn't tapped "Receive" in the app yet, or the phone hasn't had signal to send. Remind them to confirm; tap Refresh.</span></div></details>
+    <details class="q"><summary><span class="vi">Xe hàng không đi / bị hoãn?</span><span class="en">The truck didn't leave or was delayed?</span></summary><div class="a">
+      <span class="vi">Không đi: hủy phiếu kèm lý do. Hoãn: giữ phiếu; cảnh báo 24 giờ sẽ hiện nhưng không sao, nhân viên vẫn nhận bình thường khi hàng tới.</span><span class="en">Not going: cancel with a reason. Delayed: keep it; the 24-hour warning will show, but the staff can still receive it normally when it arrives.</span></div></details>
+    <details class="q"><summary><span class="vi">Tôi xem được tồn kho DL1 không?</span><span class="en">Can I see DL1 stock?</span></summary><div class="a">
+      <span class="vi">Trang HQ chỉ dùng cho phiếu xuất. Tồn kho và doanh số DL1 do quản lý bán hàng theo dõi.</span><span class="en">The HQ page is for dispatches only. DL1 stock and sales are followed by the sales manager.</span></div></details>
+    <details class="q"><summary><span class="vi">Quên tên đăng nhập hoặc PIN?</span><span class="en">Forgot your username or PIN?</span></summary><div class="a">
+      <span class="vi">Liên hệ admin để được cấp PIN mới. Sau 5 lần sai PIN, tài khoản bị tạm khóa 15 phút.</span><span class="en">Contact the admin for a new PIN. After 5 wrong PINs, the account is locked for 15 minutes.</span></div></details>
+  </section>
+</main>
+</div>
+<footer>SalesData · Super Horse Energy Drink · <a href="guide.html"><span class="vi">Tất cả hướng dẫn</span><span class="en">All guides</span></a></footer>
+</body>
+</html>

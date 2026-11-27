@@ -12,7 +12,7 @@
 <style>
   .cards{margin-top:14px}
   @media(min-width:760px){ .cards.c4{grid-template-columns:repeat(2,1fr)} }
-  @media(min-width:1040px){ .cards.c4{grid-template-columns:repeat(4,1fr)} }
+  @media(min-width:1040px){ .cards.c4{grid-template-columns:repeat(3,1fr)} }
   .card{display:flex;flex-direction:column}
   .card p{flex:1}
   .who{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 2px}
@@ -67,11 +67,15 @@ const APPS = [
   { href:'dashboard.html', icon:'📊', roles:['Admin'],
     vi:{ t:'Bảng điều khiển',  d:'Báo cáo giao hàng: bản đồ nhiệt, dòng thời gian, bản đồ, sửa đổi & kiểm toán, kiểm tra sao lưu.' },
     en:{ t:'Dashboard',        d:'Drop-off reporting: heat map, timeline, map, amendments & audit, backup verification.' } },
+  { href:'admin.html',     icon:'⚙️', roles:['Admin'],
+    vi:{ t:'Quản trị',         d:'Quản lý người dùng: thêm người, cấp mã PIN mới, khóa tài khoản, phân công DL1.' },
+    en:{ t:'Admin',            d:'Manage users: add people, issue new PINs, block accounts, DL1 assignments.' } },
 ];
 const GUIDES = [
   { href:'guide.html',         vi:'📖 Tất cả hướng dẫn',     en:'📖 All guides' },
   { href:'guide-sales.html',   vi:'Nhân viên bán hàng',       en:'Sales staff' },
-  { href:'guide-manager.html', vi:'Quản lý',                  en:'Manager' },
+  { href:'guide-manager.html', vi:'Quản lý bán hàng',         en:'Sales manager' },
+  { href:'guide-hq.html',      vi:'Phòng kinh doanh HQ',      en:'HQ sales office' },
   { href:'guide-admin.html',   vi:'Admin',                    en:'Admin' },
 ];
 /* ============================================================================== */
